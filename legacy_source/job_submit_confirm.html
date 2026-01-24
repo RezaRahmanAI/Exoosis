@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Application Success</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1152d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem", 
+                        "lg": "0.5rem", 
+                        "xl": "0.75rem", 
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display antialiased text-[#111318] dark:text-white min-h-screen flex flex-col">
+<!-- Main Container used for centering the modal -->
+<div class="layout-container flex h-full grow flex-col items-center justify-center p-4 sm:p-6">
+<!-- Modal Card -->
+<div class="relative flex w-full max-w-[560px] flex-col items-center gap-6 rounded-xl bg-white dark:bg-[#1a2233] p-8 shadow-2xl ring-1 ring-black/5 dark:ring-white/10 sm:p-12">
+<!-- Close Button (Accessibility) -->
+<button aria-label="Close modal" class="absolute right-4 top-4 rounded-full p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-white/5 dark:hover:text-gray-200">
+<span class="material-symbols-outlined text-2xl">close</span>
+</button>
+<!-- Success Icon with Pulse Effect -->
+<div class="relative flex items-center justify-center pt-2">
+<!-- Pulse Animation Ring -->
+<div class="absolute h-24 w-24 rounded-full bg-green-500/20 animate-pulse"></div>
+<!-- Icon Container -->
+<div class="relative flex h-20 w-20 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400">
+<span class="material-symbols-outlined text-[40px] fill-1">check_circle</span>
+</div>
+</div>
+<!-- Content Container -->
+<div class="flex flex-col items-center gap-2 text-center">
+<h1 class="text-3xl font-bold tracking-tight text-[#111318] dark:text-white sm:text-4xl">
+                    Application Received!
+                </h1>
+<div class="mt-2 max-w-[440px]">
+<p class="text-base font-normal leading-relaxed text-slate-600 dark:text-slate-400">
+                        Thank you for applying to EXOSISTECH. Our recruitment team has received your profile and will be reviewing your qualifications. Expect to hear from us within 3-5 business days.
+                    </p>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex w-full flex-col items-center justify-center gap-3 pt-4 sm:flex-row sm:gap-4">
+<button class="flex h-12 w-full min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-primary px-6 text-base font-bold leading-normal tracking-[0.015em] text-white transition-colors hover:bg-blue-700 sm:w-auto sm:flex-1">
+<span class="truncate">Return to Careers</span>
+</button>
+<button class="flex h-12 w-full min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg border border-slate-200 bg-transparent px-6 text-base font-bold leading-normal tracking-[0.015em] text-slate-700 transition-colors hover:bg-slate-50 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-white/5 sm:w-auto sm:flex-1">
+<span class="truncate">Browse All Solutions</span>
+</button>
+</div>
+</div>
+<!-- Optional: Footer/Copyright text normally found on page bottom -->
+<div class="mt-8 text-center text-sm text-slate-400 dark:text-slate-600">
+            © 2024 EXOSISTECH. All rights reserved.
+        </div>
+</div>
+</body></html>

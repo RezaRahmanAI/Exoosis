@@ -1,0 +1,114 @@
+<div class="relative flex flex-col items-center justify-center min-h-[400px] w-full bg-cover bg-center bg-no-repeat mt-20" style='background-image: linear-gradient(rgba(16, 22, 34, 0.8), rgba(19, 91, 236, 0.7)), url("https://lh3.googleusercontent.com/aida-public/AB6AXuD9P_LjEB8TDWvGV9g6BzDqAKHHPI2UCjQBKNAVmYVPdOQVNtj95kVcEmPtvbsN01Pd0fQDncBCSbiEZ5RW_uAQ_fXdmGU_Pwd_uzeDL5CEu35ux_CXvu8B-9xOn5LFoGZY4ayFXXWLTx5ML_wQO06rjHsnNd4IUuKqcBYjPi4LgwMOs55rVK9YwgjCopX09EEjngArJPhivghdyLkpAd1ByES_RHitucnTpe-7jT-EWEO8wuDAksf9PoVo_QCe6AAFo7ZYfZmp0q1a");'>
+    <div class="max-w-[960px] px-6 text-center text-white">
+        <h1 class="text-4xl md:text-5xl font-black leading-tight tracking-tight mb-4">About EXOSISTECH</h1>
+        <p class="text-lg md:text-xl font-normal opacity-90 max-w-2xl mx-auto">Empowering Industry Digitalization through scenario-oriented application experiences and cutting-edge hardware solutions.</p>
+    </div>
+</div>
+
+<div class="flex flex-col items-center w-full">
+    <div class="w-full max-w-[1024px] px-6 py-16">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div class="flex flex-col gap-6">
+                <div class="inline-flex items-center gap-2 text-primary font-bold uppercase tracking-wider text-sm">
+                    <span class="w-8 h-[2px] bg-primary"></span> Our Mission
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white leading-tight">Driving Digital Transformation</h2>
+                <p class="text-gray-600 dark:text-gray-300 text-lg leading-relaxed">{{mission.text1}}</p>
+                <p class="text-gray-600 dark:text-gray-300 text-base leading-relaxed">{{mission.text2}}</p>
+                <div class="pt-4">
+                    <div class="p-6 bg-blue-50 dark:bg-blue-900/20 rounded-xl border-l-4 border-primary">
+                        <p class="italic text-gray-700 dark:text-gray-200 font-medium">"{{mission.quote}}"</p>
+                    </div>
+                </div>
+            </div>
+            <div class="relative h-full min-h-[400px] w-full rounded-2xl overflow-hidden shadow-xl group">
+                <div class="absolute inset-0 bg-primary/10 group-hover:bg-transparent transition-all duration-500 z-10"></div>
+                <img alt="Modern server room" class="h-full w-full object-cover transform group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcZ81cRXiCLudcPpC1mKykToYYsqrjORX7BVyLuxLVdnpvEvluhCsmkrVJWHQBQBEfaGtUxiDhxo_NTJW0uMseVvwBb2zobviXqGfjW57ry7oXauQjeJUGLhDrZGz3eLAlzjtXglZiwkbePG3oTMoGYcT6KafGzIIDuHSLSCLG3YCVeGEK8PBCAd6ZnpSGu61IQc1pxn-9-TLP2qQRygeq9AR2pC4gZlC_pRSlUTPLO2dujD83ko844Hed7CAJuwWfFiwWgekeXaJ5"/>
+            </div>
+        </div>
+    </div>
+
+    <!-- Core Values -->
+    <div class="w-full bg-white dark:bg-gray-800/50 py-20 border-y border-gray-100 dark:border-gray-700">
+        <div class="max-w-[1024px] mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Our Core Values</h2>
+                <p class="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">The principles that guide our partnerships and define our culture.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div *ngFor="let value of values" class="bg-[#f8f9fc] dark:bg-gray-800 p-8 rounded-xl hover:shadow-lg transition-shadow border border-gray-100 dark:border-gray-700 group">
+                    <div class="w-14 h-14 bg-blue-100 dark:bg-blue-900/40 rounded-lg flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
+                        <span class="material-symbols-outlined text-3xl">{{value.icon}}</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-900 dark:text-white">{{value.title}}</h3>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">{{value.desc}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leadership Team -->
+    <div class="w-full bg-white dark:bg-gray-900 py-24 border-b border-gray-100 dark:border-gray-800">
+        <div class="max-w-[1024px] mx-auto px-6">
+            <div class="text-center mb-20">
+                <h2 class="text-4xl font-black text-navy-blue dark:text-white mb-4 tracking-tight">Leadership Team</h2>
+                <p class="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto text-lg">Guided by visionary leaders committed to excellence and the digital advancement of the industries we serve.</p>
+            </div>
+            <div class="space-y-24">
+                <div *ngFor="let member of leaders; let even = even" [class.md:flex-row-reverse]="!even" class="flex flex-col md:flex-row gap-12 items-center lg:items-start">
+                    <div class="w-full md:w-2/5 aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl relative group">
+                        <img [alt]="member.name" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" [src]="member.image" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-navy-blue/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    </div>
+                    <div class="w-full md:w-3/5 flex flex-col justify-center">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <h3 class="text-3xl font-black text-navy-blue dark:text-white tracking-tight">{{member.name}}</h3>
+                                <p class="text-primary font-bold uppercase tracking-widest text-sm mt-1">{{member.role}}</p>
+                            </div>
+                            <a class="text-navy-blue hover:text-primary transition-colors dark:text-white" href="#"><svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg></a>
+                        </div>
+                        <div class="bg-gray-50 dark:bg-gray-800/50 p-6 rounded-xl border-l-4 border-navy-blue mb-6">
+                            <p class="text-navy-blue dark:text-blue-100 font-semibold italic text-lg leading-relaxed">{{member.bio}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Other Minds -->
+    <div class="w-full bg-white dark:bg-gray-900 py-20 border-b border-gray-50 dark:border-gray-800">
+        <div class="max-w-[1024px] mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">The Minds Behind the Solutions</h2>
+                <p class="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">Our team brings together decades of expertise to deliver world-class digital solutions.</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div *ngFor="let member of otherMinds" class="flex flex-col items-center text-center">
+                    <div class="w-full aspect-square mb-6 overflow-hidden rounded-xl shadow-md group">
+                        <img [alt]="member.name" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" [src]="member.image" />
+                    </div>
+                    <h3 class="text-lg font-bold text-navy-blue dark:text-blue-400 mb-1">{{member.name}}</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">{{member.role}}</p>
+                    <a class="inline-flex items-center text-gray-400 hover:text-primary transition-colors" href="#"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Clients Section -->
+    <div class="w-full bg-[#f8f9fc] dark:bg-gray-800 py-20 border-y border-gray-100 dark:border-gray-700">
+        <div class="max-w-[1024px] mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Our Respected Clients</h2>
+                <p class="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">We are proud to serve some of the most prestigious institutions in the country.</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 justify-items-center">
+                <div *ngFor="let client of clients" class="w-full bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700 flex items-center justify-center hover:shadow-md transition-shadow h-32 group">
+                    <img [alt]="client.name" class="max-h-full max-w-full opacity-70 group-hover:opacity-100 transition-opacity dark:invert" [src]="client.logo" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#0052FF] to-[#38BDF8];
+  }
+
+  .mesh-bg {
+    background-color: transparent;
+    background-image:
+      radial-gradient(
+        at 88% 12%,
+        hsla(220, 50%, 95%, 1) 0px,
+        transparent 50%
+      ),
+      radial-gradient(
+        at 2% 19%,
+        hsla(200, 53%, 96%, 1) 0px,
+        transparent 50%
+      ),
+      radial-gradient(
+        at 95% 85%,
+        hsla(230, 59%, 95%, 1) 0px,
+        transparent 50%
+      ),
+      radial-gradient(
+        at 6% 93%,
+        hsla(210, 57%, 97%, 1) 0px,
+        transparent 50%
+      );
+  }
+
+  .dark .mesh-bg {
+    background-image:
+      radial-gradient(
+        at 88% 12%,
+        hsla(220, 50%, 8%, 1) 0px,
+        transparent 50%
+      ),
+      radial-gradient(
+        at 2% 19%,
+        hsla(200, 53%, 10%, 1) 0px,
+        transparent 50%
+      ),
+      radial-gradient(
+        at 95% 85%,
+        hsla(230, 59%, 8%, 1) 0px,
+        transparent 50%
+      ),
+      radial-gradient(
+        at 6% 93%,
+        hsla(210, 57%, 10%, 1) 0px,
+        transparent 50%
+      );
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+body {
+    @apply font-sans antialiased text-gray-900 bg-background-light dark:bg-background-dark dark:text-gray-100 selection:bg-accent-purple selection:text-white;
+}
