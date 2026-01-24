@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../core/services/api.service';
 import { Solution, Partner, Testimonial } from '../../core/models/entities';
@@ -10,7 +10,7 @@ import { Solution, Partner, Testimonial } from '../../core/models/entities';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   solutions: Solution[] = [];
   logos: Partner[] = [];
   categories = [
@@ -60,6 +60,8 @@ export class HomeComponent implements OnInit {
 
   testimonials: Testimonial[] = [];
   featuredTestimonial: Testimonial | null = null;
+  private testimonialIndex = 0;
+  private testimonialRotationId: ReturnType<typeof setInterval> | null = null;
 
   insights = [
     {
@@ -98,7 +100,37 @@ export class HomeComponent implements OnInit {
     this.api.get<Partner[]>('/partners').subscribe(data => this.logos = data);
     this.api.get<Testimonial[]>('/testimonials').subscribe(data => {
       this.testimonials = data;
+      this.testimonialIndex = 0;
       this.featuredTestimonial = data[0] ?? null;
+      this.startTestimonialRotation();
     });
+  }
+
+  ngOnDestroy() {
+    this.stopTestimonialRotation();
+  }
+
+  private startTestimonialRotation() {
+    this.stopTestimonialRotation();
+
+    if (this.testimonials.length <= 1) {
+      return;
+    }
+
+    this.testimonialRotationId = window.setInterval(() => {
+      if (!this.testimonials.length) {
+        return;
+      }
+
+      this.testimonialIndex = (this.testimonialIndex + 1) % this.testimonials.length;
+      this.featuredTestimonial = this.testimonials[this.testimonialIndex];
+    }, 6000);
+  }
+
+  private stopTestimonialRotation() {
+    if (this.testimonialRotationId !== null) {
+      clearInterval(this.testimonialRotationId);
+      this.testimonialRotationId = null;
+    }
   }
 }
