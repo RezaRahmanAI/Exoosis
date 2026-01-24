@@ -1,0 +1,47 @@
+<!-- Consumables -->
+<section class="py-24 bg-white dark:bg-background-dark">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col lg:flex-row gap-12">
+      <div class="lg:w-1/4">
+        <div class="sticky top-24">
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4 leading-tight">Original Toners & Cartridges</h2>
+          <p class="text-gray-600 dark:text-gray-400 mb-8">Maximize your printer's lifespan and output quality with 100% genuine consumables.</p>
+          <div class="space-y-4">
+            <div class="p-4 bg-surface-light dark:bg-slate-900 rounded-xl border border-gray-100 dark:border-gray-800 flex items-center gap-4">
+              <span class="material-symbols-outlined text-primary">verified</span>
+              <div>
+                <p class="text-xs font-bold text-gray-900 dark:text-white uppercase">Guaranteed Genuine</p>
+                <p class="text-[10px] text-gray-500">Official Partner Sealed</p>
+              </div>
+            </div>
+            <div class="p-4 bg-surface-light dark:bg-slate-900 rounded-xl border border-gray-100 dark:border-gray-800 flex items-center gap-4">
+              <span class="material-symbols-outlined text-primary">local_shipping</span>
+              <div>
+                <p class="text-xs font-bold text-gray-900 dark:text-white uppercase">Next Day Delivery</p>
+                <p class="text-[10px] text-gray-500">For all in-stock items</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="lg:w-3/4">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div *ngFor="let item of consumables" class="bg-gray-50 dark:bg-slate-900 p-6 rounded-2xl border border-gray-100 dark:border-gray-800 flex flex-col items-center text-center group hover:bg-white dark:hover:bg-slate-800 transition-colors">
+            <img [alt]="item.name" class="h-12 w-auto object-contain mb-4 grayscale group-hover:grayscale-0 transition-all" [src]="item.image" />
+            <p class="text-sm font-bold text-gray-900 dark:text-white">{{item.name}}</p>
+          </div>
+        </div>
+        <!-- Authenticity CTA -->
+        <div class="mt-8 p-1 rounded-2xl bg-gradient-to-r from-primary to-blue-400">
+          <div class="bg-white dark:bg-slate-900 rounded-[14px] p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div>
+              <h4 class="text-lg font-bold text-gray-900 dark:text-white">Check Authenticity</h4>
+              <p class="text-sm text-gray-600 dark:text-gray-400">Scan the QR code on your product to verify its origin instantly.</p>
+            </div>
+            <button class="bg-primary text-white px-8 py-3 rounded-full font-bold shadow-lg shadow-primary/20 hover:scale-105 transition-transform">Verify Product</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
