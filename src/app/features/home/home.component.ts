@@ -23,7 +23,7 @@ import { BulkProcurementSectionComponent } from './sections/bulk-procurement-sec
     PartsAccessoriesSectionComponent,
     PeripheralsSectionComponent,
     OfficeSolutionsSectionComponent,
-    ConsumablesSectionComponent,
+    // ConsumablesSectionComponent,
     TestimonialSectionComponent,
     ExpertsSectionComponent,
     InsightsSectionComponent,
