@@ -1,0 +1,19 @@
+<!-- Office Solutions -->
+<section class="py-24 bg-surface-light dark:bg-surface-dark">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <p class="text-xs font-bold tracking-widest text-primary uppercase mb-2">Office Solutions</p>
+      <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white">Printers, Scanners & Projectors</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div *ngFor="let sol of officeSolutions" class="bg-white dark:bg-slate-900 p-8 rounded-2xl border border-gray-100 dark:border-gray-800 hover:-translate-y-2 transition-all group">
+        <div class="w-16 h-16 bg-blue-50 dark:bg-blue-900/20 rounded-2xl flex items-center justify-center mb-6 text-primary">
+          <span class="material-symbols-outlined text-3xl">{{sol.icon}}</span>
+        </div>
+        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">{{sol.title}}</h3>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">{{sol.desc}}</p>
+        <a class="text-primary text-xs font-bold flex items-center gap-1 group-hover:gap-2 transition-all" href="#">EXPLORE <span class="material-icons text-sm">arrow_forward</span></a>
+      </div>
+    </div>
+  </div>
+</section>

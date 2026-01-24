@@ -1,16 +1,38 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../core/services/api.service';
 import { Solution, Partner, Testimonial } from '../../core/models/entities';
+import { HeroSectionComponent } from './sections/hero-section.component';
+import { PartnersSectionComponent } from './sections/partners-section.component';
+import { SolutionsSectionComponent } from './sections/solutions-section.component';
+import { PartsAccessoriesSectionComponent } from './sections/parts-accessories-section.component';
+import { PeripheralsSectionComponent } from './sections/peripherals-section.component';
+import { OfficeSolutionsSectionComponent } from './sections/office-solutions-section.component';
+import { ConsumablesSectionComponent } from './sections/consumables-section.component';
+import { TestimonialSectionComponent } from './sections/testimonial-section.component';
+import { ExpertsSectionComponent } from './sections/experts-section.component';
+import { InsightsSectionComponent } from './sections/insights-section.component';
+import { BulkProcurementSectionComponent } from './sections/bulk-procurement-section.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    HeroSectionComponent,
+    PartnersSectionComponent,
+    SolutionsSectionComponent,
+    PartsAccessoriesSectionComponent,
+    PeripheralsSectionComponent,
+    OfficeSolutionsSectionComponent,
+    ConsumablesSectionComponent,
+    TestimonialSectionComponent,
+    ExpertsSectionComponent,
+    InsightsSectionComponent,
+    BulkProcurementSectionComponent
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit {
   solutions: Solution[] = [];
   logos: Partner[] = [];
   categories = [
@@ -59,12 +81,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   ];
 
   testimonials: Testimonial[] = [];
-  featuredTestimonial: Testimonial | null = null;
-  testimonialIndex = 0;
-  private testimonialRotationId: ReturnType<typeof setInterval> | null = null;
-  private testimonialAnimationStartId: ReturnType<typeof setTimeout> | null = null;
-  private testimonialAnimationEndId: ReturnType<typeof setTimeout> | null = null;
-  isTestimonialAnimating = false;
 
   insights = [
     {
@@ -103,73 +119,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.api.get<Partner[]>('/partners').subscribe(data => this.logos = data);
     this.api.get<Testimonial[]>('/testimonials').subscribe(data => {
       this.testimonials = data;
-      this.setFeaturedTestimonial(0, false);
-      this.startTestimonialRotation();
     });
-  }
-
-  ngOnDestroy() {
-    this.stopTestimonialRotation();
-    this.stopTestimonialAnimation();
-  }
-
-  private startTestimonialRotation() {
-    this.stopTestimonialRotation();
-
-    if (this.testimonials.length <= 1) {
-      return;
-    }
-
-    this.testimonialRotationId = window.setInterval(() => {
-      if (!this.testimonials.length) {
-        return;
-      }
-
-      this.setFeaturedTestimonial((this.testimonialIndex + 1) % this.testimonials.length);
-    }, 6000);
-  }
-
-  private stopTestimonialRotation() {
-    if (this.testimonialRotationId !== null) {
-      clearInterval(this.testimonialRotationId);
-      this.testimonialRotationId = null;
-    }
-  }
-
-  setFeaturedTestimonial(index: number, animate = true) {
-    if (!this.testimonials.length) {
-      this.testimonialIndex = 0;
-      this.featuredTestimonial = null;
-      return;
-    }
-
-    this.testimonialIndex = index % this.testimonials.length;
-    this.featuredTestimonial = this.testimonials[this.testimonialIndex];
-
-    if (animate) {
-      this.triggerTestimonialAnimation();
-    }
-  }
-
-  private triggerTestimonialAnimation() {
-    this.stopTestimonialAnimation();
-    this.isTestimonialAnimating = false;
-    this.testimonialAnimationStartId = window.setTimeout(() => {
-      this.isTestimonialAnimating = true;
-    }, 0);
-    this.testimonialAnimationEndId = window.setTimeout(() => {
-      this.isTestimonialAnimating = false;
-    }, 600);
-  }
-
-  private stopTestimonialAnimation() {
-    if (this.testimonialAnimationStartId !== null) {
-      clearTimeout(this.testimonialAnimationStartId);
-      this.testimonialAnimationStartId = null;
-    }
-    if (this.testimonialAnimationEndId !== null) {
-      clearTimeout(this.testimonialAnimationEndId);
-      this.testimonialAnimationEndId = null;
-    }
   }
 }
