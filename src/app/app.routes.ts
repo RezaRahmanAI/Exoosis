@@ -3,6 +3,7 @@ import { HomeComponent } from './features/home/home.component';
 import { AboutComponent } from './features/about/about.component';
 import { SolutionsComponent } from './features/solutions/solutions.component';
 import { CareerComponent } from './features/career/career.component';
+import { PartnersComponent } from './features/partners/partners.component';
 
 import { AdminLayoutComponent } from './features/admin/admin-layout.component';
 
@@ -10,6 +11,7 @@ export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'about', component: AboutComponent },
   { path: 'solutions', component: SolutionsComponent },
+  { path: 'partners', component: PartnersComponent },
   { path: 'career', component: CareerComponent },
   { 
     path: 'career/:id', 
