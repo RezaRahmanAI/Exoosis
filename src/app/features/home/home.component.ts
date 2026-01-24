@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../core/services/api.service';
-import { Solution, Partner } from '../../core/models/entities';
+import { Solution, Partner, Testimonial } from '../../core/models/entities';
 
 @Component({
   selector: 'app-home',
@@ -58,12 +58,8 @@ export class HomeComponent implements OnInit {
     { name: 'Epson EcoTank', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDdJC4YFGHixGWcplc0-4jkqRtnj8FL_uRmMhURuAGVyWpJprMLl6ARC_zLj1sCYzqJh3LrPyO9MMZZfDIhSfMIFaKa2ndZVZuoS1EmtSwECXOlpHwTa647Z84IKgKwD6rj8LEP9t_LEB36EEFT3dOenqxFujGUtFpW205mm2sWsVjdYNSiEoxqFJt3GjgJr2kpATRK--vkK5j-tvt51xRZGOgetsH7Hk6QGB_wxTRSV6qyDyrADO67-JQaq_OewZE__xhuPI5hFmto' }
   ];
 
-  testimonial = {
-    quote: 'We engaged EXOSISTECH to modernize our entire banking network security. Their professionalism, access to top-tier hardware like Cisco and Fortigate, and post-deployment support have been exemplary.',
-    author: 'Rahim Ahmed',
-    role: 'CTO | Jamuna Future Tech Group',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAvOFJbtXss0-oOURmaN1XCNQ5v3AnbTlbAzq45HxpDt2bLlHmFJvFRP08mC7jebApLqIa5LeuXEprsCCfgmTIQQT5mV7m3k8zT-FSSo8Wf7R2b98lk3irtXZdM5xVN2HLaH7Rx68cFE5wenKrf2VtrPoCgJfT-wKs8v2ApTlSjzuPhsGLuw7pP395_VBJkS7CoW5sWG7VQRQ8XGugo5Mdj2Ul1bc0oVahkLkIYG8tnEKOIfYlQq3uI7_ftO1P_FRCWxpq5gJ85M7hP'
-  };
+  testimonials: Testimonial[] = [];
+  featuredTestimonial: Testimonial | null = null;
 
   insights = [
     {
@@ -100,5 +96,9 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.api.get<Solution[]>('/solutions').subscribe(data => this.solutions = data.slice(0, 3));
     this.api.get<Partner[]>('/partners').subscribe(data => this.logos = data);
+    this.api.get<Testimonial[]>('/testimonials').subscribe(data => {
+      this.testimonials = data;
+      this.featuredTestimonial = data[0] ?? null;
+    });
   }
 }

@@ -35,6 +35,10 @@ export const routes: Routes = [
       { 
         path: 'team', 
         loadComponent: () => import('./features/admin/team/team.component').then(m => m.AdminTeamComponent) 
+      },
+      { 
+        path: 'testimonials',
+        loadComponent: () => import('./features/admin/testimonials/testimonials.component').then(m => m.AdminTestimonialsComponent)
       }
     ]
   },

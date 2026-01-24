@@ -1,5 +1,5 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
-import { Solution, Job, TeamMember, Partner } from '../models/entities';
+import { Solution, Job, TeamMember, Partner, Testimonial } from '../models/entities';
 
 export class MockDataService implements InMemoryDbService {
   createDb() {
@@ -115,6 +115,33 @@ export class MockDataService implements InMemoryDbService {
       { id: 2, name: 'NCC Bank', logo: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBKHxOUKPcz7zkxPVwKYpv6au1nTVeUc97cUsafJnl59rd8AL0Lj8rLKseP1NsxOWwPLN0s9xcataahJDBCuJmzwPQP7XGy4127_kXsg27mF5UwsWcHQls6L-qI2TfFTaMq1kB4CDpP2ZNLEIwZ-hXTvBnwwPizfKKbXs7B-nupizYqEsX1AWqkHxd6ReYFKd9rBidiyMtB_Q60qHq-SmakP1n8ZCRSGpDa2AOuvn4xvrOzVDXE7pfxpZ6OhC-mBa0ni161zO25jAWC' }
     ];
 
-    return { solutions, jobs, team, partners };
+    const testimonials: Testimonial[] = [
+      {
+        id: 1,
+        quote: 'We engaged EXOSISTECH to modernize our entire banking network security. Their professionalism, access to top-tier hardware, and post-deployment support have been exemplary.',
+        author: 'Rahim Ahmed',
+        role: 'Chief Technology Officer',
+        company: 'Jamuna Future Tech Group',
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAvOFJbtXss0-oOURmaN1XCNQ5v3AnbTlbAzq45HxpDt2bLlHmFJvFRP08mC7jebApLqIa5LeuXEprsCCfgmTIQQT5mV7m3k8zT-FSSo8Wf7R2b98lk3irtXZdM5xVN2HLaH7Rx68cFE5wenKrf2VtrPoCgJfT-wKs8v2ApTlSjzuPhsGLuw7pP395_VBJkS7CoW5sWG7VQRQ8XGugo5Mdj2Ul1bc0oVahkLkIYG8tnEKOIfYlQq3uI7_ftO1P_FRCWxpq5gJ85M7hP'
+      },
+      {
+        id: 2,
+        quote: 'EXOSISTECH delivered a seamless data center refresh with zero downtime. Their team handled every detail from planning to implementation.',
+        author: 'Shirin Akter',
+        role: 'Head of Infrastructure',
+        company: 'Metro Logistics Ltd.',
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCgcXQhWdaWqnwjj43imXNB9RJfmebt_4dvUXQm7ccTnGvhmaruRI0iY592w9XpFcPCn4y-T_hFKWgewlAqtbKiuPieoZ5icwpjvCuZY1ms3GqgKigFcBSmSFgWcEI3cs910QQaPshdKMXbMPsimH3n4b7DAGhwgGujpkyQdyoFUIO0R7YWypyZdqJpT5gHi_l-vxopOz1MGFDMg7dAa36v0EVHYtkbmhnrPL4AorQnBXri99mtkt-n419VGsbiYuN7KEpSvEdCSE2X'
+      },
+      {
+        id: 3,
+        quote: 'From procurement to deployment, EXOSISTECH acted as a trusted advisor. Our branch offices now operate with faster, more secure connectivity.',
+        author: 'Imtiaz Chowdhury',
+        role: 'Director of Operations',
+        company: 'Eastern Microfinance',
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB-Sb8CDfYjsek2B8iJJ2q74qbXHlLITETJ4WEU7KfEpso-c-U3yp0nYoyC2pR7ZPuAH5xMF34YRgr753-aWUYoNi5ooowc4JyFpWH4ewElOw17KwPO5bo0dsrPiwRZR4z64_X_lYk5QiiroKuJPQxMLOWyLwlFDu4maJhVmUY8XvOdH9xCAjjDj1kgTShE-_SP5qr1UFgfottVHE4REV-w170stuTSylD0KXJlEyvRkWpf5OHMFg0Xh1bEdJUq_Uo3U9T-RF3EYDcx'
+      }
+    ];
+
+    return { solutions, jobs, team, partners, testimonials };
   }
 }

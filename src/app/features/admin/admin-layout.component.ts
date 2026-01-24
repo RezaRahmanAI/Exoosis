@@ -30,6 +30,10 @@ import { RouterLink, RouterOutlet } from '@angular/router';
             <span class="material-symbols-outlined">groups</span>
             <span>Team</span>
           </a>
+          <a routerLink="/admin/testimonials" routerLinkActive="bg-primary/20 border-l-4 border-primary" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors">
+            <span class="material-symbols-outlined">reviews</span>
+            <span>Testimonials</span>
+          </a>
           <div class="pt-8 mt-8 border-t border-white/10">
             <a routerLink="/" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors opacity-70">
               <span class="material-symbols-outlined">home</span>
