@@ -213,7 +213,10 @@
           Trusted by major industries across Bangladesh, we deliver solutions that power the nation's digital infrastructure.
         </h2>
       </div>
-      <div class="bg-surface-light dark:bg-slate-900 rounded-3xl p-8 lg:p-12 shadow-sm flex flex-col lg:flex-row gap-12 items-center">
+      <div
+        class="bg-surface-light dark:bg-slate-900 rounded-3xl p-8 lg:p-12 shadow-sm flex flex-col lg:flex-row gap-12 items-center"
+        [class.testimonial-animate]="isTestimonialAnimating"
+      >
         <ng-container *ngIf="featuredTestimonial as testimonial; else testimonialEmpty">
           <div class="lg:w-1/2">
             <div class="text-primary mb-6 text-6xl font-serif">"</div>
@@ -235,6 +238,19 @@
             Testimonials will appear here once added from the dashboard.
           </div>
         </ng-template>
+      </div>
+      <div *ngIf="testimonials.length > 1" class="mt-8 flex items-center justify-center gap-3">
+        <button
+          *ngFor="let testimonial of testimonials; let index = index"
+          type="button"
+          class="h-2.5 w-2.5 rounded-full transition-all duration-300"
+          [class.bg-primary]="index === testimonialIndex"
+          [class.bg-gray-300]="index !== testimonialIndex"
+          [class.dark:bg-gray-600]="index !== testimonialIndex"
+          [class.scale-125]="index === testimonialIndex"
+          (click)="setFeaturedTestimonial(index)"
+          [attr.aria-label]="'Show testimonial ' + (index + 1)"
+        ></button>
       </div>
     </div>
 </section>
