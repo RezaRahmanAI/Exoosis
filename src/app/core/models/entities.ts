@@ -38,3 +38,12 @@ export interface Partner {
   name: string;
   logo: string;
 }
+
+export interface Testimonial {
+  id: number;
+  quote: string;
+  author: string;
+  role: string;
+  company?: string;
+  image: string;
+}

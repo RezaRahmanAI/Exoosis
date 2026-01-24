@@ -214,17 +214,27 @@
         </h2>
       </div>
       <div class="bg-surface-light dark:bg-slate-900 rounded-3xl p-8 lg:p-12 shadow-sm flex flex-col lg:flex-row gap-12 items-center">
-        <div class="lg:w-1/2">
-          <div class="text-primary mb-6 text-6xl font-serif">"</div>
-          <blockquote class="text-xl leading-relaxed text-gray-700 dark:text-gray-300 mb-8">{{testimonial.quote}}</blockquote>
-          <div>
-            <p class="font-bold text-gray-900 dark:text-white uppercase text-sm">{{testimonial.author}}</p>
-            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{testimonial.role}}</p>
+        <ng-container *ngIf="featuredTestimonial as testimonial; else testimonialEmpty">
+          <div class="lg:w-1/2">
+            <div class="text-primary mb-6 text-6xl font-serif">"</div>
+            <blockquote class="text-xl leading-relaxed text-gray-700 dark:text-gray-300 mb-8">{{testimonial.quote}}</blockquote>
+            <div>
+              <p class="font-bold text-gray-900 dark:text-white uppercase text-sm">{{testimonial.author}}</p>
+              <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                {{testimonial.role}}
+                <span *ngIf="testimonial.company"> | {{testimonial.company}}</span>
+              </p>
+            </div>
           </div>
-        </div>
-        <div class="lg:w-1/2 relative h-64 lg:h-96 w-full">
-          <img alt="Executive Portrait" class="absolute inset-0 w-full h-full object-cover rounded-xl" [src]="testimonial.image" />
-        </div>
+          <div class="lg:w-1/2 relative h-64 lg:h-96 w-full">
+            <img alt="Executive Portrait" class="absolute inset-0 w-full h-full object-cover rounded-xl" [src]="testimonial.image" />
+          </div>
+        </ng-container>
+        <ng-template #testimonialEmpty>
+          <div class="w-full text-center py-12 text-gray-500 dark:text-gray-400">
+            Testimonials will appear here once added from the dashboard.
+          </div>
+        </ng-template>
       </div>
     </div>
 </section>
