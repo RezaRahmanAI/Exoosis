@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ApiService } from '../../../core/services/api.service';
 import { CartService } from '../../../core/services/cart.service';
 import { ProductDetail } from '../../../core/models/entities';
@@ -19,13 +19,28 @@ export class ProductListComponent implements OnInit {
   selectedCategory: 'All' | ProductDetail['category'] = 'All';
   isLoading = true;
   errorMessage = '';
+  private initialCategory: ProductDetail['category'] | null = null;
 
-  constructor(private api: ApiService, private cartService: CartService) {}
+  constructor(
+    private api: ApiService,
+    private cartService: CartService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
+    this.route.queryParamMap.subscribe(params => {
+      this.initialCategory = params.get('category') as ProductDetail['category'] | null;
+      if (this.initialCategory && this.categories.includes(this.initialCategory)) {
+        this.selectedCategory = this.initialCategory;
+      }
+    });
+
     this.api.get<ProductDetail[]>('/products').subscribe({
       next: data => {
         this.products = data;
+        if (this.initialCategory && this.categories.includes(this.initialCategory)) {
+          this.selectedCategory = this.initialCategory;
+        }
         this.isLoading = false;
       },
       error: () => {
@@ -40,6 +55,14 @@ export class ProductListComponent implements OnInit {
     return ['All', ...unique] as Array<'All' | ProductDetail['category']>;
   }
 
+  get categoryOptions() {
+    return this.categories.filter(category => category !== 'All');
+  }
+
+  get brandOptions() {
+    return Array.from(new Set(this.products.map(item => item.brand)));
+  }
+
   get filteredProducts() {
     return this.products.filter(product => {
       const matchesCategory = this.selectedCategory === 'All' || product.category === this.selectedCategory;
@@ -52,5 +75,9 @@ export class ProductListComponent implements OnInit {
 
   addToCart(product: ProductDetail) {
     this.cartService.addToCart(product).subscribe();
+  }
+
+  toggleCategory(category: ProductDetail['category']) {
+    this.selectedCategory = this.selectedCategory === category ? 'All' : category;
   }
 }

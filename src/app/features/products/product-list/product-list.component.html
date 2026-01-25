@@ -1,50 +1,54 @@
 <main class="bg-white dark:bg-background-dark min-h-screen">
   <section class="page-container pt-10 pb-6">
     <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-      <div>
-        <span class="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
-          <span class="material-symbols-outlined text-sm">inventory_2</span>
-          Product catalog
-        </span>
-        <h1 class="mt-4 text-3xl font-bold text-navy-blue dark:text-white">Explore our technology stack</h1>
-        <p class="mt-2 max-w-2xl text-sm text-slate-500 dark:text-slate-300">
-          Browse software, infrastructure, and security bundles curated for enterprise teams. Add items to your cart and place orders directly from the dashboard.
+      <div class="space-y-3">
+        <nav aria-label="Breadcrumb" class="flex">
+          <ol class="inline-flex items-center space-x-1 text-sm text-slate-500 dark:text-slate-400">
+            <li class="inline-flex items-center">
+              <a class="inline-flex items-center gap-1 hover:text-primary" routerLink="/">
+                <span class="material-symbols-outlined text-lg">home</span>
+                Home
+              </a>
+            </li>
+            <li class="flex items-center">
+              <span class="material-symbols-outlined text-slate-400 text-lg">chevron_right</span>
+              <a class="ml-1 hover:text-primary" routerLink="/categories">Categories</a>
+            </li>
+            <li class="flex items-center">
+              <span class="material-symbols-outlined text-slate-400 text-lg">chevron_right</span>
+              <span class="ml-1 font-semibold text-navy-blue dark:text-white">All Products</span>
+            </li>
+          </ol>
+        </nav>
+        <h1 class="text-3xl font-bold text-navy-blue dark:text-white">EXOSISTECH product catalog</h1>
+        <p class="max-w-2xl text-sm text-slate-500 dark:text-slate-300">
+          Discover curated hardware and software bundles for modern enterprise teams. Filter by category, explore product
+          highlights, and request quotes in one place.
         </p>
       </div>
       <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
-        <div class="relative">
-          <span class="material-symbols-outlined pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
-            search
-          </span>
+        <label class="flex w-full min-w-[240px] items-center rounded-full border border-slate-200 bg-white px-4 py-2.5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+          <span class="material-symbols-outlined text-slate-400 text-lg">search</span>
           <input
-            class="w-full rounded-full border border-slate-200 bg-white py-3 pl-10 pr-5 text-sm text-slate-600 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
+            class="ml-3 w-full border-none bg-transparent text-sm text-slate-600 focus:outline-none focus:ring-0 dark:text-slate-200"
             type="text"
             placeholder="Search products"
             [(ngModel)]="searchTerm"
           />
+        </label>
+        <div class="rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-wide text-slate-600 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200">
+          {{ filteredProducts.length }} products
         </div>
-        <div class="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-600 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200">
-          {{ filteredProducts.length }} Products
+        <div class="relative">
+          <select class="appearance-none rounded-full border border-slate-200 bg-white px-5 py-2 text-xs font-semibold uppercase tracking-wide text-slate-600 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200">
+            <option>Most Relevant</option>
+            <option>Newest Arrivals</option>
+            <option>Price: Low to High</option>
+            <option>Price: High to Low</option>
+          </select>
+          <span class="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">expand_more</span>
         </div>
       </div>
-    </div>
-  </section>
-
-  <section class="page-container pb-6">
-    <div class="flex flex-wrap gap-3">
-      <button
-        *ngFor="let category of categories"
-        class="rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-wide transition"
-        [class.border-primary]="selectedCategory === category"
-        [class.text-primary]="selectedCategory === category"
-        [class.border-slate-200]="selectedCategory !== category"
-        [class.text-slate-500]="selectedCategory !== category"
-        [class.dark:border-slate-700]="selectedCategory !== category"
-        [class.dark:text-slate-300]="selectedCategory !== category"
-        (click)="selectedCategory = category"
-      >
-        {{ category }}
-      </button>
     </div>
   </section>
 
@@ -57,57 +61,137 @@
       {{ errorMessage }}
     </div>
 
-    <div *ngIf="!isLoading && !errorMessage" class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-      <article
-        *ngFor="let product of filteredProducts"
-        class="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-primary/50 hover:shadow-xl dark:border-slate-800 dark:bg-slate-900"
-      >
-        <div class="relative flex aspect-[4/3] items-center justify-center bg-slate-50 p-6 dark:bg-slate-800">
-          <img class="h-full w-full object-contain" [src]="product.image" [alt]="product.name" />
-          <span class="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-navy-blue shadow-sm dark:bg-slate-900 dark:text-white">
-            {{ product.brand }}
-          </span>
-          <span class="absolute right-4 top-4 rounded-full bg-primary/10 px-3 py-1 text-[11px] font-semibold text-primary">
-            {{ product.category }}
-          </span>
-        </div>
-        <div class="flex flex-1 flex-col p-6">
-          <h3 class="text-lg font-bold text-navy-blue transition group-hover:text-primary dark:text-white">
-            {{ product.name }}
+    <div *ngIf="!isLoading && !errorMessage" class="flex flex-col gap-8 lg:flex-row">
+      <aside class="w-full lg:w-64 shrink-0 space-y-8">
+        <div>
+          <h3 class="flex items-center gap-2 text-lg font-bold text-navy-blue dark:text-white">
+            <span class="material-symbols-outlined">filter_list</span>
+            Filters
           </h3>
-          <p class="mt-2 text-sm text-slate-500 dark:text-slate-300">
-            {{ product.summary }}
-          </p>
-          <ul class="mt-4 space-y-2 text-xs text-slate-500 dark:text-slate-300">
-            <li class="flex items-center gap-2" *ngFor="let highlight of product.highlights.slice(0, 3)">
-              <span class="material-symbols-outlined text-[16px] text-primary">check_circle</span>
-              {{ highlight }}
-            </li>
-          </ul>
-          <div class="mt-6 flex items-center justify-between border-t border-slate-100 pt-4 text-sm dark:border-slate-800">
+          <div class="mt-5 space-y-6">
             <div>
-              <p class="text-xs uppercase text-slate-400">Starting at</p>
-              <p class="text-lg font-bold text-navy-blue dark:text-white">
-                ${{ product.price }} <span class="text-xs text-slate-400">{{ product.priceUnit }}</span>
-              </p>
+              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">Categories</h4>
+              <div class="mt-3 space-y-2">
+                <label class="flex items-center gap-3 text-sm font-medium text-slate-600 dark:text-slate-300">
+                  <input
+                    class="form-checkbox h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary"
+                    type="checkbox"
+                    [checked]="selectedCategory === 'All'"
+                    (change)="selectedCategory = 'All'"
+                  />
+                  All Categories
+                </label>
+                <label
+                  class="flex items-center gap-3 text-sm font-medium text-slate-600 transition-colors hover:text-primary dark:text-slate-300"
+                  *ngFor="let category of categoryOptions"
+                >
+                  <input
+                    class="form-checkbox h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary"
+                    type="checkbox"
+                    [checked]="selectedCategory === category"
+                    (change)="toggleCategory(category)"
+                  />
+                  {{ category }}
+                </label>
+              </div>
             </div>
-            <div class="flex gap-2">
-              <a
-                class="rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-600 transition hover:border-primary hover:text-primary dark:border-slate-700 dark:text-slate-200"
-                [routerLink]="['/products', product.id]"
-              >
-                View Details
-              </a>
-              <button
-                class="rounded-full bg-primary px-4 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-blue-600"
-                (click)="addToCart(product)"
-              >
-                Add to Cart
-              </button>
+            <div>
+              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">Brand</h4>
+              <div class="mt-3 space-y-2">
+                <label
+                  class="flex items-center gap-3 text-sm font-medium text-slate-600 transition-colors hover:text-primary dark:text-slate-300"
+                  *ngFor="let brand of brandOptions"
+                >
+                  <input class="form-checkbox h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary" type="checkbox" />
+                  {{ brand }}
+                </label>
+              </div>
+            </div>
+            <div>
+              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">Availability</h4>
+              <label class="mt-3 flex items-center gap-3 text-sm font-medium text-slate-600 dark:text-slate-300">
+                <input class="form-checkbox h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary" type="checkbox" />
+                In stock only
+              </label>
             </div>
           </div>
         </div>
-      </article>
+        <div class="relative overflow-hidden rounded-2xl bg-navy-blue p-6 text-white">
+          <div class="relative z-10 space-y-3">
+            <span class="text-xs font-bold uppercase tracking-wider text-blue-300">Special Offer</span>
+            <h4 class="text-xl font-bold">Upgrade Your Fleet</h4>
+            <p class="text-sm text-slate-200">
+              Get 15% off on bulk orders of enterprise-ready laptop bundles this month.
+            </p>
+            <button class="w-full rounded-lg bg-primary py-2 text-sm font-bold text-white transition hover:bg-blue-600">
+              Learn More
+            </button>
+          </div>
+          <div class="absolute -right-6 -bottom-6 h-24 w-24 rounded-full bg-primary/40 blur-2xl"></div>
+          <div class="absolute -left-6 -top-6 h-24 w-24 rounded-full bg-blue-400/30 blur-2xl"></div>
+        </div>
+      </aside>
+
+      <div class="flex-1">
+        <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          <article
+            *ngFor="let product of filteredProducts"
+            class="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl dark:border-slate-800 dark:bg-slate-900"
+          >
+            <div class="relative flex aspect-[4/3] items-center justify-center bg-slate-50 p-6 dark:bg-slate-800">
+              <button class="absolute right-4 top-4 text-slate-400 transition hover:text-red-500">
+                <span class="material-symbols-outlined">favorite</span>
+              </button>
+              <img class="h-full w-full object-contain transition duration-500 group-hover:scale-105" [src]="product.image" [alt]="product.name" />
+              <span class="absolute left-4 bottom-4 rounded-full border border-slate-100 bg-white/90 px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-navy-blue shadow-sm dark:border-slate-600 dark:bg-slate-900 dark:text-white">
+                {{ product.brand }}
+              </span>
+            </div>
+            <div class="flex flex-1 flex-col p-6">
+              <span class="text-xs font-semibold uppercase tracking-wider text-primary">{{ product.category }}</span>
+              <h3 class="mt-2 text-lg font-bold text-navy-blue transition group-hover:text-primary dark:text-white">
+                {{ product.name }}
+              </h3>
+              <p class="mt-2 text-sm text-slate-500 dark:text-slate-300">
+                {{ product.summary }}
+              </p>
+              <ul class="mt-4 space-y-2 text-xs text-slate-500 dark:text-slate-300">
+                <li class="flex items-center gap-2" *ngFor="let highlight of product.highlights.slice(0, 3)">
+                  <span class="material-symbols-outlined text-[16px] text-primary">check_circle</span>
+                  {{ highlight }}
+                </li>
+              </ul>
+              <div class="mt-auto flex items-center justify-between gap-3 border-t border-slate-100 pt-4 text-sm dark:border-slate-800">
+                <div>
+                  <p class="text-xs uppercase text-slate-400">Starting at</p>
+                  <p class="text-lg font-bold text-navy-blue dark:text-white">
+                    ${{ product.price }} <span class="text-xs text-slate-400">{{ product.priceUnit }}</span>
+                  </p>
+                </div>
+                <a
+                  class="flex-1 rounded-full border border-slate-200 px-4 py-2 text-center text-xs font-semibold text-slate-600 transition hover:border-primary hover:text-primary dark:border-slate-700 dark:text-slate-200"
+                  [routerLink]="['/products', product.id]"
+                >
+                  View Details
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="mt-10 flex items-center justify-center gap-2">
+          <button class="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-slate-500 hover:bg-slate-50 dark:border-slate-700 dark:hover:bg-slate-800">
+            <span class="material-symbols-outlined">chevron_left</span>
+          </button>
+          <button class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-sm font-bold text-white">1</button>
+          <button class="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-sm font-bold text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">2</button>
+          <button class="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-sm font-bold text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">3</button>
+          <span class="flex h-10 w-10 items-center justify-center text-slate-400">...</span>
+          <button class="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-slate-500 hover:bg-slate-50 dark:border-slate-700 dark:hover:bg-slate-800">
+            <span class="material-symbols-outlined">chevron_right</span>
+          </button>
+        </div>
+      </div>
     </div>
   </section>
 </main>
