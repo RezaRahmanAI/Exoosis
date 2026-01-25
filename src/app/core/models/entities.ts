@@ -73,6 +73,22 @@ export interface EnterpriseSoftware {
   image: string;
 }
 
+export interface SolutionSoftware {
+  id: string;
+  name: string;
+  category: 'Industrial' | 'Corporate' | 'Banking';
+  summary: string;
+  description: string;
+  capabilities: string[];
+  industries: string[];
+  integrations: string[];
+  compliance: string[];
+  deployment: string[];
+  support: { label: string; detail: string }[];
+  metrics: { label: string; value: string }[];
+  image: string;
+}
+
 export interface JobApplicationPayload {
   jobId: number;
   fullName: string;
