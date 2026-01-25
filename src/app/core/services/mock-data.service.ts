@@ -140,7 +140,7 @@ export class MockDataService implements InMemoryDbService {
         category: 'Business Operations',
         summary: 'A unified ERP platform that connects finance, supply chain, HR, and compliance workflows through API-driven automation.',
         price: 1200,
-        priceUnit: '/month',
+        priceUnit: '',
         brand: 'Exoosis',
         highlights: [
           'Automated approval workflows with audit trails',
@@ -167,7 +167,7 @@ export class MockDataService implements InMemoryDbService {
         category: 'Infrastructure & Edge',
         summary: 'A secure, low-latency edge computing fabric that keeps mission-critical workloads close to your customers.',
         price: 950,
-        priceUnit: '/month',
+        priceUnit: '',
         brand: 'Exoosis',
         highlights: [
           'Zero-trust device onboarding',
@@ -194,7 +194,7 @@ export class MockDataService implements InMemoryDbService {
         category: 'Security',
         summary: 'Centralized SOC workflow tooling that automates threat intake, triage, and compliance reporting.',
         price: 1450,
-        priceUnit: '/month',
+        priceUnit: '',
         brand: 'SecureShield',
         highlights: [
           'SOAR playbooks with automated response',
@@ -221,7 +221,7 @@ export class MockDataService implements InMemoryDbService {
         category: 'Networking',
         summary: 'High-performance network stack for branch-to-cloud connectivity with zero-touch provisioning.',
         price: 799,
-        priceUnit: '/month',
+        priceUnit: '',
         brand: 'Atlas',
         highlights: [
           'SD-WAN with automated failover',
@@ -248,7 +248,7 @@ export class MockDataService implements InMemoryDbService {
         category: 'Workstations',
         summary: 'Enterprise-grade workstation bundle for creative and engineering teams.',
         price: 2499,
-        priceUnit: '/unit',
+        priceUnit: '',
         brand: 'Nova',
         highlights: [
           'Intel Xeon W processor',
@@ -275,7 +275,7 @@ export class MockDataService implements InMemoryDbService {
         category: 'Printing & Imaging',
         summary: 'Enterprise print management suite that optimizes device uptime and supply automation.',
         price: 420,
-        priceUnit: '/month',
+        priceUnit: '',
         brand: 'UltraPrint',
         highlights: [
           'Fleet health analytics with auto-ticketing',
