@@ -24,6 +24,14 @@ export class NavbarComponent {
     return this.cartService.cartCount$;
   }
 
+  get cartItems$() {
+    return this.cartService.cartItems$;
+  }
+
+  get cartTotal$() {
+    return this.cartService.cartTotal$;
+  }
+
   get user$() {
     return this.authService.user$;
   }
