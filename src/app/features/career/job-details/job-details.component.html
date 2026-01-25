@@ -24,10 +24,10 @@
         </div>
       </div>
       <div class="flex items-center gap-4 shrink-0">
-        <button class="bg-primary hover:bg-blue-600 text-white px-8 py-4 rounded-lg font-bold transition-all shadow-lg flex items-center gap-2">
+        <a href="#application-form" class="bg-primary hover:bg-blue-600 text-white px-8 py-4 rounded-lg font-bold transition-all shadow-lg flex items-center gap-2">
           Apply Now
           <span class="material-symbols-outlined">arrow_right_alt</span>
-        </button>
+        </a>
       </div>
     </div>
   </section>
@@ -58,6 +58,56 @@
               <span class="text-slate-600 text-lg">{{req}}</span>
             </li>
           </ul>
+        </section>
+
+        <section id="application-form" class="scroll-mt-24">
+          <h2 class="text-2xl font-bold text-navy-blue mb-6">Submit your application</h2>
+          <form #applicationForm="ngForm" class="space-y-6" (ngSubmit)="submitApplication()">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label class="text-sm font-semibold text-slate-700">Full name</label>
+                <input name="fullName" [(ngModel)]="application.fullName" required class="mt-2 w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-primary outline-none" placeholder="Jane Doe">
+              </div>
+              <div>
+                <label class="text-sm font-semibold text-slate-700">Email address</label>
+                <input type="email" name="email" [(ngModel)]="application.email" required class="mt-2 w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-primary outline-none" placeholder="jane@company.com">
+              </div>
+              <div>
+                <label class="text-sm font-semibold text-slate-700">Phone</label>
+                <input name="phone" [(ngModel)]="application.phone" required class="mt-2 w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-primary outline-none" placeholder="+880 1234 567890">
+              </div>
+              <div>
+                <label class="text-sm font-semibold text-slate-700">Location</label>
+                <input name="location" [(ngModel)]="application.location" required class="mt-2 w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-primary outline-none" placeholder="Dhaka, Bangladesh">
+              </div>
+              <div>
+                <label class="text-sm font-semibold text-slate-700">LinkedIn URL</label>
+                <input type="url" name="linkedInUrl" [(ngModel)]="application.linkedInUrl" class="mt-2 w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-primary outline-none" placeholder="https://linkedin.com/in/yourprofile">
+              </div>
+              <div>
+                <label class="text-sm font-semibold text-slate-700">Portfolio URL</label>
+                <input type="url" name="portfolioUrl" [(ngModel)]="application.portfolioUrl" class="mt-2 w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-primary outline-none" placeholder="https://portfolio.com">
+              </div>
+            </div>
+
+            <div>
+              <label class="text-sm font-semibold text-slate-700">Resume URL</label>
+              <input type="url" name="resumeUrl" [(ngModel)]="application.resumeUrl" required class="mt-2 w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-primary outline-none" placeholder="https://drive.google.com/...">
+            </div>
+
+            <div>
+              <label class="text-sm font-semibold text-slate-700">Cover letter</label>
+              <textarea name="coverLetter" [(ngModel)]="application.coverLetter" required rows="4" class="mt-2 w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-primary outline-none" placeholder="Share how your experience aligns with this role."></textarea>
+            </div>
+
+            <div class="flex flex-col gap-3">
+              <button type="submit" [disabled]="applicationForm.invalid || isSubmitting" class="bg-primary hover:bg-blue-600 disabled:opacity-60 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-semibold transition-all">
+                {{ isSubmitting ? 'Submitting...' : 'Submit application' }}
+              </button>
+              <p *ngIf="submitSuccess" class="text-green-600 font-semibold">Thanks! Your application has been submitted.</p>
+              <p *ngIf="submitError" class="text-red-600 font-semibold">{{ submitError }}</p>
+            </div>
+          </form>
         </section>
       </div>
 

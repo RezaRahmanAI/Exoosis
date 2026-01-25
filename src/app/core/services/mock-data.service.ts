@@ -1,5 +1,5 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
-import { Solution, Job, TeamMember, Partner, Testimonial } from '../models/entities';
+import { Solution, Job, TeamMember, Partner, Testimonial, ProductDetail, EnterpriseSoftware, JobApplicationPayload } from '../models/entities';
 
 export class MockDataService implements InMemoryDbService {
   createDb() {
@@ -142,6 +142,102 @@ export class MockDataService implements InMemoryDbService {
       }
     ];
 
-    return { solutions, jobs, team, partners, testimonials };
+    const products: ProductDetail[] = [
+      {
+        id: 'exo-erp-suite',
+        name: 'Exoosis ERP Suite',
+        category: 'Business Operations',
+        summary: 'A unified ERP platform that connects finance, supply chain, HR, and compliance workflows through API-driven automation.',
+        highlights: [
+          'Automated approval workflows with audit trails',
+          'Real-time financial close dashboards',
+          'Embedded analytics with role-based views'
+        ],
+        integrations: ['SAP', 'Oracle Netsuite', 'Salesforce', 'Microsoft Dynamics'],
+        specs: [
+          { label: 'Deployment', value: 'Hybrid, Private Cloud, On-Prem' },
+          { label: 'Data Residency', value: 'Configurable per region' },
+          { label: 'SLA', value: '99.95% uptime' },
+          { label: 'Compliance', value: 'ISO 27001, SOC 2 Type II' }
+        ],
+        pricingTiers: [
+          { name: 'Growth', description: 'Core ERP modules and onboarding support.', monthlyCost: '$1,200 / month' },
+          { name: 'Scale', description: 'Advanced automation, API quotas, and analytics.', monthlyCost: '$2,800 / month' },
+          { name: 'Enterprise', description: 'Custom workflows, premium SLA, dedicated CSM.', monthlyCost: 'Custom' }
+        ],
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCr9jZ1Ncg0cRrJH7GfVjbg4Q-6DLW3l1o-mxb6amOeSvZPQDCq7aT66a1D3ey4XgkKx6rT-7G1dW9UOyy5eOCAfE3xvvUS3BEp4rLKBbQLef5UIF1ZMX-Vab4gHhL0X2_z3PUxewTTWQ4mDmXTaFoR7Z8RV2S_Sr9ZbEY87HBqzwh0bP_Mqp1FuoN29d4U7m6LJYHdR6BkiO0qXW49XB5TB3Db8tzzn5lSw8B-evA5gQwP3k_VXdnTQc8oGHEMbxyL8jS7u'
+      },
+      {
+        id: 'exo-edge-platform',
+        name: 'Exoosis Edge Platform',
+        category: 'Infrastructure & Edge',
+        summary: 'A secure, low-latency edge computing fabric that keeps mission-critical workloads close to your customers.',
+        highlights: [
+          'Zero-trust device onboarding',
+          'Predictive workload scaling',
+          'Unified monitoring across edge nodes'
+        ],
+        integrations: ['Kubernetes', 'Azure Arc', 'VMWare Tanzu', 'AWS IoT'],
+        specs: [
+          { label: 'Latency', value: '< 20 ms average' },
+          { label: 'Edge Nodes', value: 'Up to 2,000 per cluster' },
+          { label: 'Observability', value: 'OpenTelemetry + Prometheus' },
+          { label: 'Data Encryption', value: 'AES-256 at rest and in transit' }
+        ],
+        pricingTiers: [
+          { name: 'Launch', description: 'Edge starter bundle with 10 nodes.', monthlyCost: '$950 / month' },
+          { name: 'Accelerate', description: 'Multi-region edge plus SOC monitoring.', monthlyCost: '$2,100 / month' },
+          { name: 'Enterprise', description: 'Custom SLAs and dedicated edge architects.', monthlyCost: 'Custom' }
+        ],
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAENrHBI8vO5kXOH8lO-4xFnTg4NVZfkJok8R48lA-4WTB7J2UWM61CFxgEEhG_0nQGgxE9QOjMJhT7jG_w0Dgq0AHjYvN5kWJmVQmJ1fmf0eJm5cY4FKcY42hVcq41MMD3ez18iRHy2jg2rZ0uOM34iEPO5O_zVrhK0Uel3pw4dKgiRRt7BriN4wv9AXf_s4z6JMRgZ7x4yXKrJhjTeQpFp5tDYoGRdZ-30x0AXKaGD0ExoU'
+      }
+    ];
+
+    const enterpriseSoftware: EnterpriseSoftware[] = [
+      {
+        id: 'enterprise-command-center',
+        name: 'Enterprise Command Center',
+        tagline: 'A unified operations layer for regulated enterprises.',
+        description: 'Centralize critical systems into a secure command center that unifies observability, governance, and automation across hybrid estates.',
+        modules: [
+          {
+            name: 'Unified Observability',
+            summary: 'Consolidate telemetry across cloud, edge, and on-prem workloads.',
+            capabilities: ['Real-time service maps', 'AI-powered anomaly detection', 'Executive KPI dashboards']
+          },
+          {
+            name: 'Workflow Automation',
+            summary: 'Orchestrate approvals, incident response, and change management.',
+            capabilities: ['Low-code playbooks', 'Integration with ITSM tools', 'Automated remediation']
+          },
+          {
+            name: 'Governance & Compliance',
+            summary: 'Ensure every change is auditable and compliant.',
+            capabilities: ['Policy-as-code enforcement', 'Compliance reporting', 'Continuous risk scoring']
+          }
+        ],
+        security: [
+          'Zero trust access with MFA and SSO',
+          'Field-level data encryption',
+          'Dedicated audit logging with exportable reports'
+        ],
+        deploymentOptions: ['Private cloud', 'On-premise', 'Hybrid with sovereign cloud zones'],
+        metrics: [
+          { label: 'Deployment time', value: '6-10 weeks' },
+          { label: 'Mean time to detect', value: 'Under 5 minutes' },
+          { label: 'Automation coverage', value: '70%+ workflows' }
+        ],
+        roadmap: [
+          'Q2: Adaptive risk scoring powered by AI',
+          'Q3: Industry-specific compliance packs',
+          'Q4: Built-in business continuity simulations'
+        ],
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC1fD5YWy3vCH3_wC0pCp4H2pdlc6nHY0I2ru75lLJvOy-1y1RMRW-VbvGeq6fY5_twrL1DLcZzjuaJ8upXEgL0n-gFhU4H73k2X2p1l38PzV4rXUx8TQ7z29xgGJEm6zHd_ZeGUL9QpBdbKsSLrjRbpF4k3-GI8-PPzvMAa0rtVbgNNgUuE0-n40du1UBonqMOpkrfr0-SMTS0_BfkHKjGRGx5jQlUD6b8bt4a2H2gCJQx8KnoyJwLCF1l-aU'
+      }
+    ];
+
+    const jobApplications: JobApplicationPayload[] = [];
+
+    return { solutions, jobs, team, partners, testimonials, products, enterpriseSoftware, jobApplications };
   }
 }
