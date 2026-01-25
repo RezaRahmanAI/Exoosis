@@ -1,10 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-interface ConsumableItem {
-  name: string;
-  image: string;
-}
+import { ConsumableItem } from '../../../core/models/entities';
 
 @Component({
   selector: 'app-home-consumables-section',
