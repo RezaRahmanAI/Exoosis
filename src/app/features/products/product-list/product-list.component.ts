@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { ApiService } from '../../../core/services/api.service';
+import { ProductService } from '../../../core/services/product.service';
 import { CartService } from '../../../core/services/cart.service';
 import { ProductDetail } from '../../../core/models/entities';
 
@@ -22,7 +22,7 @@ export class ProductListComponent implements OnInit {
   private initialCategory: ProductDetail['category'] | null = null;
 
   constructor(
-    private api: ApiService,
+    private productsService: ProductService,
     private cartService: CartService,
     private route: ActivatedRoute
   ) {}
@@ -35,7 +35,7 @@ export class ProductListComponent implements OnInit {
       }
     });
 
-    this.api.get<ProductDetail[]>('/products').subscribe({
+    this.productsService.getProducts().subscribe({
       next: data => {
         this.products = data;
         if (this.initialCategory && this.categories.includes(this.initialCategory)) {

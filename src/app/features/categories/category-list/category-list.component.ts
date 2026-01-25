@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { ApiService } from '../../../core/services/api.service';
+import { forkJoin } from 'rxjs';
+import { CategoryService } from '../../../core/services/category.service';
+import { ProductService } from '../../../core/services/product.service';
 import { ProductDetail } from '../../../core/models/entities';
 
 interface CategoryCard {
@@ -24,48 +26,26 @@ export class CategoryListComponent implements OnInit {
   isLoading = true;
   errorMessage = '';
 
-  private categoryMeta: Record<string, { description: string; icon: string }> = {
-    'Business Operations': {
-      description: 'ERP and workflow automation suites built to streamline finance, HR, and supply chain operations.',
-      icon: 'lan'
-    },
-    'Infrastructure & Edge': {
-      description: 'Edge-ready compute platforms and infrastructure bundles for high-availability workloads.',
-      icon: 'cloud_sync'
-    },
-    Security: {
-      description: 'SOC tooling, compliance automation, and threat response platforms for regulated environments.',
-      icon: 'shield'
-    },
-    Networking: {
-      description: 'Branch-to-cloud connectivity, SD-WAN, and high-performance networking stacks.',
-      icon: 'lan'
-    },
-    'Data & Storage': {
-      description: 'Storage arrays, backup orchestration, and disaster recovery platforms to keep data resilient.',
-      icon: 'storage'
-    }
-  };
-
-  constructor(private api: ApiService) {}
+  constructor(
+    private categoriesService: CategoryService,
+    private productsService: ProductService
+  ) {}
 
   ngOnInit() {
-    this.api.get<ProductDetail[]>('/products').subscribe({
-      next: data => {
-        const categories = Array.from(new Set(data.map(item => item.category)));
+    forkJoin({
+      categories: this.categoriesService.getCategories(),
+      products: this.productsService.getProducts()
+    }).subscribe({
+      next: ({ categories, products }) => {
         this.categoryCards = categories.map(category => {
-          const productsInCategory = data.filter(product => product.category === category);
-          const meta = this.categoryMeta[category] ?? {
-            description: `Explore curated ${category} solutions built for enterprise performance and reliability.`,
-            icon: 'category'
-          };
+          const productsInCategory = products.filter(product => product.category === category.name);
           const brands = Array.from(new Set(productsInCategory.map(product => product.brand))).slice(0, 4);
 
           return {
-            name: category,
+            name: category.name,
             count: productsInCategory.length,
-            description: meta.description,
-            icon: meta.icon,
+            description: category.description ?? '',
+            icon: 'category',
             brands
           };
         });

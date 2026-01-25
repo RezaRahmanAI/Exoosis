@@ -50,6 +50,28 @@ public class ProductsController : ControllerBase
         return Ok(ApiResponse<IReadOnlyList<ProductDto>>.Ok(products));
     }
 
+    [HttpGet("search")]
+    public async Task<ActionResult<ApiResponse<IReadOnlyList<ProductDto>>>> Search([FromQuery] string q, [FromQuery] ProductQueryParameters parameters, CancellationToken cancellationToken)
+    {
+        parameters.Search = q;
+        var products = await _productService.GetAllAsync(parameters, cancellationToken);
+        return Ok(ApiResponse<IReadOnlyList<ProductDto>>.Ok(products));
+    }
+
+    [HttpGet("filter")]
+    public async Task<ActionResult<ApiResponse<IReadOnlyList<ProductDto>>>> Filter([FromQuery] ProductQueryParameters parameters, CancellationToken cancellationToken)
+    {
+        var products = await _productService.GetAllAsync(parameters, cancellationToken);
+        return Ok(ApiResponse<IReadOnlyList<ProductDto>>.Ok(products));
+    }
+
+    [HttpGet("low-stock")]
+    public async Task<ActionResult<ApiResponse<IReadOnlyList<ProductDto>>>> LowStock([FromQuery] int threshold = 10, CancellationToken cancellationToken = default)
+    {
+        var products = await _productService.GetLowStockAsync(threshold, cancellationToken);
+        return Ok(ApiResponse<IReadOnlyList<ProductDto>>.Ok(products));
+    }
+
     [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<ActionResult<ApiResponse<ProductDto>>> Create([FromBody] CreateProductRequest request, CancellationToken cancellationToken)
