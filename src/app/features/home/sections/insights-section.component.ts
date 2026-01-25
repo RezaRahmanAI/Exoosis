@@ -1,15 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-interface Insight {
-  category: string;
-  title: string;
-  desc: string;
-  image: string;
-  author: string;
-  role: string;
-  date: string;
-}
+import { Insight } from '../../../core/models/entities';
 
 @Component({
   selector: 'app-home-insights-section',

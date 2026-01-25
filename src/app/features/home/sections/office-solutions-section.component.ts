@@ -1,11 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-interface OfficeSolution {
-  title: string;
-  icon: string;
-  desc: string;
-}
+import { OfficeSolution } from '../../../core/models/entities';
 
 @Component({
   selector: 'app-home-office-solutions-section',

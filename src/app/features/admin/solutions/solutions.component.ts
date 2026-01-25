@@ -13,7 +13,7 @@ import { Solution } from '../../../core/models/entities';
       <div class="flex justify-between items-center">
         <div>
           <h2 class="text-2xl font-bold text-gray-800">Manage Solutions</h2>
-          <p class="text-gray-500 text-sm">Add, edit or remove products and industry solutions</p>
+          <p class="text-gray-500 text-sm">Add, edit or remove electronics and custom software solutions</p>
         </div>
         <button (click)="openModal()" class="bg-primary text-white px-5 py-2.5 rounded-lg text-sm font-bold shadow-md hover:bg-blue-600 transition-colors flex items-center gap-2">
           <span class="material-symbols-outlined">add</span>
@@ -28,7 +28,7 @@ import { Solution } from '../../../core/models/entities';
             <tr>
               <th class="px-6 py-4">Solution</th>
               <th class="px-6 py-4">Category</th>
-              <th class="px-6 py-4">Brands</th>
+              <th class="px-6 py-4">Focus Areas</th>
               <th class="px-6 py-4 text-right">Actions</th>
             </tr>
           </thead>
@@ -90,10 +90,10 @@ import { Solution } from '../../../core/models/entities';
               <div>
                 <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Category</label>
                 <select [(ngModel)]="currentSol.category" class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all outline-none appearance-none">
-                  <option value="Hardware">Hardware</option>
+                  <option value="Electronics">Electronics</option>
                   <option value="Networking">Networking</option>
                   <option value="Security">Security</option>
-                  <option value="Software">Software</option>
+                  <option value="Custom Software">Custom Software</option>
                 </select>
               </div>
               <div>
@@ -127,7 +127,7 @@ export class AdminSolutionsComponent implements OnInit {
   }
 
   openModal(sol: Solution | null = null) {
-    this.currentSol = sol ? { ...sol } : { brands: [], icon: 'grid_view', category: 'Hardware' };
+    this.currentSol = sol ? { ...sol } : { brands: [], icon: 'grid_view', category: 'Electronics' };
     this.isModalOpen = true;
   }
 
