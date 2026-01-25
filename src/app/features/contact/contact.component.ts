@@ -11,10 +11,9 @@ import { FormsModule } from '@angular/forms';
 export class ContactComponent {
   payload = {
     fullName: '',
-    company: '',
     email: '',
-    phone: '',
-    category: 'Industrial',
+    topic: '',
+    orderId: '',
     message: ''
   };
 
