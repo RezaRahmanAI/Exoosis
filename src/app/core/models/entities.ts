@@ -53,11 +53,43 @@ export interface ProductDetail {
   name: string;
   category: string;
   summary: string;
+  price: number;
+  priceUnit: string;
+  brand: string;
   highlights: string[];
   integrations: string[];
   specs: { label: string; value: string }[];
   pricingTiers: { name: string; description: string; monthlyCost: string }[];
   image: string;
+}
+
+export interface CartItem {
+  id: number;
+  productId: string;
+  name: string;
+  category: string;
+  price: number;
+  priceUnit: string;
+  quantity: number;
+  image: string;
+}
+
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+  role?: string;
+}
+
+export interface OrderPayload {
+  id: number;
+  customerName: string;
+  customerPhone: string;
+  customerAddress: string;
+  placedAt: string;
+  total: number;
+  items: CartItem[];
 }
 
 export interface EnterpriseSoftware {

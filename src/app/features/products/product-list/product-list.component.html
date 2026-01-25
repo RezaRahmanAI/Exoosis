@@ -1,0 +1,113 @@
+<main class="bg-white dark:bg-background-dark min-h-screen">
+  <section class="page-container pt-10 pb-6">
+    <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+      <div>
+        <span class="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+          <span class="material-symbols-outlined text-sm">inventory_2</span>
+          Product catalog
+        </span>
+        <h1 class="mt-4 text-3xl font-bold text-navy-blue dark:text-white">Explore our technology stack</h1>
+        <p class="mt-2 max-w-2xl text-sm text-slate-500 dark:text-slate-300">
+          Browse software, infrastructure, and security bundles curated for enterprise teams. Add items to your cart and place orders directly from the dashboard.
+        </p>
+      </div>
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+        <div class="relative">
+          <span class="material-symbols-outlined pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+            search
+          </span>
+          <input
+            class="w-full rounded-full border border-slate-200 bg-white py-3 pl-10 pr-5 text-sm text-slate-600 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
+            type="text"
+            placeholder="Search products"
+            [(ngModel)]="searchTerm"
+          />
+        </div>
+        <div class="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-600 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200">
+          {{ filteredProducts.length }} Products
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-container pb-6">
+    <div class="flex flex-wrap gap-3">
+      <button
+        *ngFor="let category of categories"
+        class="rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-wide transition"
+        [class.border-primary]="selectedCategory === category"
+        [class.text-primary]="selectedCategory === category"
+        [class.border-slate-200]="selectedCategory !== category"
+        [class.text-slate-500]="selectedCategory !== category"
+        [class.dark:border-slate-700]="selectedCategory !== category"
+        [class.dark:text-slate-300]="selectedCategory !== category"
+        (click)="selectedCategory = category"
+      >
+        {{ category }}
+      </button>
+    </div>
+  </section>
+
+  <section class="page-container pb-16">
+    <div *ngIf="isLoading" class="flex items-center justify-center py-20">
+      <div class="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-primary"></div>
+    </div>
+
+    <div *ngIf="errorMessage" class="rounded-2xl border border-red-200 bg-red-50 p-6 text-sm text-red-600">
+      {{ errorMessage }}
+    </div>
+
+    <div *ngIf="!isLoading && !errorMessage" class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+      <article
+        *ngFor="let product of filteredProducts"
+        class="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-primary/50 hover:shadow-xl dark:border-slate-800 dark:bg-slate-900"
+      >
+        <div class="relative flex aspect-[4/3] items-center justify-center bg-slate-50 p-6 dark:bg-slate-800">
+          <img class="h-full w-full object-contain" [src]="product.image" [alt]="product.name" />
+          <span class="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-navy-blue shadow-sm dark:bg-slate-900 dark:text-white">
+            {{ product.brand }}
+          </span>
+          <span class="absolute right-4 top-4 rounded-full bg-primary/10 px-3 py-1 text-[11px] font-semibold text-primary">
+            {{ product.category }}
+          </span>
+        </div>
+        <div class="flex flex-1 flex-col p-6">
+          <h3 class="text-lg font-bold text-navy-blue transition group-hover:text-primary dark:text-white">
+            {{ product.name }}
+          </h3>
+          <p class="mt-2 text-sm text-slate-500 dark:text-slate-300">
+            {{ product.summary }}
+          </p>
+          <ul class="mt-4 space-y-2 text-xs text-slate-500 dark:text-slate-300">
+            <li class="flex items-center gap-2" *ngFor="let highlight of product.highlights.slice(0, 3)">
+              <span class="material-symbols-outlined text-[16px] text-primary">check_circle</span>
+              {{ highlight }}
+            </li>
+          </ul>
+          <div class="mt-6 flex items-center justify-between border-t border-slate-100 pt-4 text-sm dark:border-slate-800">
+            <div>
+              <p class="text-xs uppercase text-slate-400">Starting at</p>
+              <p class="text-lg font-bold text-navy-blue dark:text-white">
+                ${{ product.price }} <span class="text-xs text-slate-400">{{ product.priceUnit }}</span>
+              </p>
+            </div>
+            <div class="flex gap-2">
+              <a
+                class="rounded-full border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-600 transition hover:border-primary hover:text-primary dark:border-slate-700 dark:text-slate-200"
+                [routerLink]="['/products', product.id]"
+              >
+                View Details
+              </a>
+              <button
+                class="rounded-full bg-primary px-4 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-blue-600"
+                (click)="addToCart(product)"
+              >
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+</main>

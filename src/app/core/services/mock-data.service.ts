@@ -1,5 +1,5 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
-import { Solution, Job, TeamMember, Partner, Testimonial, ProductDetail, EnterpriseSoftware, JobApplicationPayload, SolutionSoftware } from '../models/entities';
+import { Solution, Job, TeamMember, Partner, Testimonial, ProductDetail, EnterpriseSoftware, JobApplicationPayload, SolutionSoftware, CartItem, OrderPayload, User } from '../models/entities';
 
 export class MockDataService implements InMemoryDbService {
   createDb() {
@@ -139,6 +139,9 @@ export class MockDataService implements InMemoryDbService {
         name: 'Exoosis ERP Suite',
         category: 'Business Operations',
         summary: 'A unified ERP platform that connects finance, supply chain, HR, and compliance workflows through API-driven automation.',
+        price: 1200,
+        priceUnit: '/month',
+        brand: 'Exoosis',
         highlights: [
           'Automated approval workflows with audit trails',
           'Real-time financial close dashboards',
@@ -163,6 +166,9 @@ export class MockDataService implements InMemoryDbService {
         name: 'Exoosis Edge Platform',
         category: 'Infrastructure & Edge',
         summary: 'A secure, low-latency edge computing fabric that keeps mission-critical workloads close to your customers.',
+        price: 950,
+        priceUnit: '/month',
+        brand: 'Exoosis',
         highlights: [
           'Zero-trust device onboarding',
           'Predictive workload scaling',
@@ -181,6 +187,114 @@ export class MockDataService implements InMemoryDbService {
           { name: 'Enterprise', description: 'Custom SLAs and dedicated edge architects.', monthlyCost: 'Custom' }
         ],
         image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAENrHBI8vO5kXOH8lO-4xFnTg4NVZfkJok8R48lA-4WTB7J2UWM61CFxgEEhG_0nQGgxE9QOjMJhT7jG_w0Dgq0AHjYvN5kWJmVQmJ1fmf0eJm5cY4FKcY42hVcq41MMD3ez18iRHy2jg2rZ0uOM34iEPO5O_zVrhK0Uel3pw4dKgiRRt7BriN4wv9AXf_s4z6JMRgZ7x4yXKrJhjTeQpFp5tDYoGRdZ-30x0AXKaGD0ExoU'
+      },
+      {
+        id: 'secure-shield-suite',
+        name: 'SecureShield SOC Suite',
+        category: 'Security',
+        summary: 'Centralized SOC workflow tooling that automates threat intake, triage, and compliance reporting.',
+        price: 1450,
+        priceUnit: '/month',
+        brand: 'SecureShield',
+        highlights: [
+          'SOAR playbooks with automated response',
+          '24/7 alert correlation and enrichment',
+          'Regulatory-ready audit dashboards'
+        ],
+        integrations: ['Splunk', 'Palo Alto Cortex', 'Microsoft Sentinel'],
+        specs: [
+          { label: 'Response SLA', value: '15 minutes avg.' },
+          { label: 'Compliance', value: 'ISO 27001, PCI DSS' },
+          { label: 'Managed Analysts', value: 'Included' },
+          { label: 'Retention', value: '365 days logs' }
+        ],
+        pricingTiers: [
+          { name: 'Core', description: 'Essential SOC tooling with standard response.', monthlyCost: '$1,450 / month' },
+          { name: 'Advanced', description: 'Threat hunting + custom playbooks.', monthlyCost: '$2,600 / month' },
+          { name: 'Enterprise', description: 'Dedicated analysts and SOC pods.', monthlyCost: 'Custom' }
+        ],
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDjwsIA0cEQU4-BnWhf7KCg0B92gAneQjMhOvvFplkDN85Sx5n_vZNUUrA4u-PyE6iO88T04KpbJf44_DeEtn08ru3O_QnyDbp59wg-YfeTtkpODsKzS2W361f6zWHNXF2L0JkrIEoLBdBBgXAW-fAr1VRnzJVb1YDAJKFFWD7K6jRROZs93qcq1KFZMglwTUCZx8Tz6qDDhWMCr48TwUaqidSdwEBaGK8tqM7s62AyE2-EMCjyb4Zc6BOQySv86JjRCwKOfv11oQVk'
+      },
+      {
+        id: 'atlas-network-core',
+        name: 'Atlas Network Core',
+        category: 'Networking',
+        summary: 'High-performance network stack for branch-to-cloud connectivity with zero-touch provisioning.',
+        price: 799,
+        priceUnit: '/month',
+        brand: 'Atlas',
+        highlights: [
+          'SD-WAN with automated failover',
+          'Application-aware traffic steering',
+          'Integrated firewall and IDS'
+        ],
+        integrations: ['Cisco Meraki', 'Fortinet', 'VMware VeloCloud'],
+        specs: [
+          { label: 'Branch support', value: 'Up to 500 branches' },
+          { label: 'Traffic encryption', value: 'AES-256 VPN' },
+          { label: 'SLA', value: '99.9% uptime' },
+          { label: 'Monitoring', value: 'Real-time NOC dashboard' }
+        ],
+        pricingTiers: [
+          { name: 'Branch', description: 'Up to 50 branch nodes.', monthlyCost: '$799 / month' },
+          { name: 'Regional', description: 'Up to 200 branch nodes.', monthlyCost: '$1,450 / month' },
+          { name: 'Enterprise', description: 'Global rollout with NOC.', monthlyCost: 'Custom' }
+        ],
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBZpZskbGC7FKHPiy6ULa47zVQlA9SCMHOy8GaTc3tyk21Lx4eBFwA2iMFw6d-xiK-xswjckHEqiTu8yKLtVUGUTOkINKT8sokr_GSx0LHEntUBcVR3lrUVQFJ1taoAmvaKo4syFy3wuUKBLqHnNkBtM0UeEy4kWVJpJUoqyjT4qvZ2TVrDfALfXcd1cMyDxqWv9a-wWhpNB2r1Xta7e2FfI16Xy8IM7QNzi9io9fjtIF1xRkmLmRuQaKyz3i2WFxB1kjTZF3cie70q'
+      },
+      {
+        id: 'nova-workstation-pro',
+        name: 'Nova Workstation Pro',
+        category: 'Workstations',
+        summary: 'Enterprise-grade workstation bundle for creative and engineering teams.',
+        price: 2499,
+        priceUnit: '/unit',
+        brand: 'Nova',
+        highlights: [
+          'Intel Xeon W processor',
+          'NVIDIA RTX professional graphics',
+          'ISV-certified performance profiles'
+        ],
+        integrations: ['Autodesk', 'Adobe Creative Cloud', 'SolidWorks'],
+        specs: [
+          { label: 'CPU', value: 'Xeon W-2295' },
+          { label: 'GPU', value: 'RTX A4000 16GB' },
+          { label: 'Memory', value: '64GB DDR4 ECC' },
+          { label: 'Storage', value: '2TB NVMe SSD' }
+        ],
+        pricingTiers: [
+          { name: 'Studio', description: 'Single workstation bundle.', monthlyCost: '$2,499 / unit' },
+          { name: 'Team', description: '5+ workstation kit.', monthlyCost: '$2,299 / unit' },
+          { name: 'Enterprise', description: 'Custom imaging + SLA.', monthlyCost: 'Custom' }
+        ],
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA02rKrOGx6VcTpgDMIiYqP8bN_Y-xdnVXaOKhPuSpq_hK9IcwEr8JxyNJXoqIrICD9aHg1WZC6TBHpWH0lLalWlZ5YpiG2GTO50M7oENyRKft8wtuWFg3CELD7uUT2aO4_F_AnIUZ0bpy-QFtC2hDcZEGs-ijovcmIMcHIq8UgE4T2HaPzT2GcgIRip9_muU1t32X9ta3Hm-nwgG9mSDpn85Kfj6PJy1pDr_rl3_BVMUc3pR7uSuy0i2t0WkNKC-YLG4AoTXIYKpI8'
+      },
+      {
+        id: 'ultra-print-hub',
+        name: 'UltraPrint Hub',
+        category: 'Printing & Imaging',
+        summary: 'Enterprise print management suite that optimizes device uptime and supply automation.',
+        price: 420,
+        priceUnit: '/month',
+        brand: 'UltraPrint',
+        highlights: [
+          'Fleet health analytics with auto-ticketing',
+          'Secure print release and user controls',
+          'Supply forecasting and vendor SLA tracking'
+        ],
+        integrations: ['Epson', 'HP', 'Canon'],
+        specs: [
+          { label: 'Device coverage', value: 'Up to 1,200 devices' },
+          { label: 'Support', value: '24/5 onsite response' },
+          { label: 'Security', value: 'Zero-trust print queues' },
+          { label: 'Reporting', value: 'Power BI export' }
+        ],
+        pricingTiers: [
+          { name: 'Core', description: 'Up to 250 devices.', monthlyCost: '$420 / month' },
+          { name: 'Scale', description: 'Up to 800 devices.', monthlyCost: '$790 / month' },
+          { name: 'Enterprise', description: 'Custom fleet monitoring.', monthlyCost: 'Custom' }
+        ],
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBugxH99sYmEflAc-Cpmi3whfe60Y5k_gNmy2tgNb2OFVEdND5plG4g7hnckJ7ie_jW4FkwXo8Hajz7JNy-6YLYCHzqq_mBUXwV49LFah-P1bJtROhdgvCuoU3zAI7qNXztsMAeLj4hK4JpnWeegkXBLtWLNgXjg904--Ifb0guEoIfdSeUp_DaTC9kSnItpA8RTmYdsDC8HQ-2cc2blvqsCZ2BZoOHrNRafJZ8gdTlcPGtePx5ZHOHVzp2tBMa1SYU7BZQwE8xo62_'
       }
     ];
 
@@ -394,6 +508,15 @@ export class MockDataService implements InMemoryDbService {
 
     const jobApplications: JobApplicationPayload[] = [];
 
-    return { solutions, jobs, team, partners, testimonials, products, enterpriseSoftware, solutionSoftware, jobApplications };
+    const cart: CartItem[] = [];
+
+    const users: User[] = [
+      { id: 1, name: 'Arafat Rahman', email: 'arafat@exoosis.com', password: 'exoosis2025', role: 'Client' },
+      { id: 2, name: 'Nusrat Jahan', email: 'nusrat@exoosis.com', password: 'secure123', role: 'Partner' }
+    ];
+
+    const orders: OrderPayload[] = [];
+
+    return { solutions, jobs, team, partners, testimonials, products, enterpriseSoftware, solutionSoftware, jobApplications, cart, users, orders };
   }
 }

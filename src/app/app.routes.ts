@@ -5,9 +5,11 @@ import { SolutionsComponent } from './features/solutions/solutions.component';
 import { CareerComponent } from './features/career/career.component';
 import { PartnersComponent } from './features/partners/partners.component';
 import { ProductDetailsComponent } from './features/products/product-details/product-details.component';
+import { ProductListComponent } from './features/products/product-list/product-list.component';
 import { EnterpriseSoftwareComponent } from './features/enterprise-software/enterprise-software.component';
 import { SoftwareDetailsComponent } from './features/solutions/software-details/software-details.component';
 import { ContactComponent } from './features/contact/contact.component';
+import { CartComponent } from './features/cart/cart.component';
 
 import { AdminLayoutComponent } from './features/admin/admin-layout.component';
 
@@ -17,7 +19,9 @@ export const routes: Routes = [
   { path: 'solutions', component: SolutionsComponent },
   { path: 'solutions/software/:id', component: SoftwareDetailsComponent },
   { path: 'contact', component: ContactComponent },
+  { path: 'products', component: ProductListComponent },
   { path: 'products/:id', component: ProductDetailsComponent },
+  { path: 'cart', component: CartComponent },
   { path: 'enterprise-software', component: EnterpriseSoftwareComponent },
   { path: 'partners', component: PartnersComponent },
   { path: 'career', component: CareerComponent },

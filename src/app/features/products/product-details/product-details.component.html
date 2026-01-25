@@ -1,396 +1,125 @@
 <main class="bg-white dark:bg-background-dark min-h-screen">
-  <div class="page-container py-8">
-  <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
-    <nav aria-label="Breadcrumb" class="flex">
-      <ol class="inline-flex items-center space-x-1 md:space-x-3">
-        <li class="inline-flex items-center">
-          <a class="inline-flex items-center text-sm font-medium text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-white" href="#">
-            <span class="material-symbols-outlined text-lg mr-2">home</span>
-            Home
-          </a>
-        </li>
-        <li>
-          <div class="flex items-center">
-            <span class="material-symbols-outlined text-slate-400 text-lg">chevron_right</span>
-            <a class="ml-1 text-sm font-medium text-slate-500 hover:text-primary md:ml-2 dark:text-slate-400 dark:hover:text-white" href="#">Catalog</a>
-          </div>
-        </li>
-        <li aria-current="page">
-          <div class="flex items-center">
-            <span class="material-symbols-outlined text-slate-400 text-lg">chevron_right</span>
-            <span class="ml-1 text-sm font-bold text-navy-blue md:ml-2 dark:text-white">All Products</span>
-          </div>
-        </li>
-      </ol>
-    </nav>
-    <div class="flex items-center gap-3">
-      <span class="text-sm font-medium text-slate-500 dark:text-slate-400">Sort by:</span>
-      <div class="relative">
-        <select class="appearance-none bg-[#f6f6f8] dark:bg-slate-800 border-none text-navy-blue dark:text-white text-sm font-bold rounded-lg pl-4 pr-10 py-2.5 focus:ring-2 focus:ring-primary cursor-pointer">
-          <option>Most Relevant</option>
-          <option>Newest Arrivals</option>
-          <option>Price: Low to High</option>
-          <option>Price: High to Low</option>
-        </select>
-        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-500">
-          <span class="material-symbols-outlined text-lg">expand_more</span>
-        </div>
-      </div>
+  <section class="page-container pt-10 pb-16">
+    <div *ngIf="isLoading" class="flex items-center justify-center py-20">
+      <div class="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-primary"></div>
     </div>
-  </div>
 
-  <div class="flex flex-col lg:flex-row gap-8">
-    <aside class="w-full lg:w-64 shrink-0 space-y-8">
-      <div>
-        <h3 class="text-navy-blue dark:text-white font-bold text-lg mb-4 flex items-center gap-2">
-          <span class="material-symbols-outlined">filter_list</span> Filters
-        </h3>
+    <div *ngIf="errorMessage" class="rounded-2xl border border-red-200 bg-red-50 p-6 text-sm text-red-600">
+      {{ errorMessage }}
+    </div>
+
+    <div *ngIf="!isLoading && product" class="space-y-10">
+      <nav aria-label="Breadcrumb" class="flex text-sm text-slate-500 dark:text-slate-300">
+        <a routerLink="/" class="flex items-center gap-2 hover:text-primary">
+          <span class="material-symbols-outlined text-base">home</span>
+          Home
+        </a>
+        <span class="mx-2">/</span>
+        <a routerLink="/products" class="hover:text-primary">Products</a>
+        <span class="mx-2">/</span>
+        <span class="font-semibold text-navy-blue dark:text-white">{{ product.name }}</span>
+      </nav>
+
+      <div class="grid gap-10 lg:grid-cols-[1.1fr,0.9fr]">
+        <div class="rounded-3xl border border-slate-200 bg-slate-50 p-8 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+          <img class="h-full w-full object-contain" [src]="product.image" [alt]="product.name" />
+        </div>
+
         <div class="space-y-6">
           <div>
-            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Categories</h4>
-            <div class="space-y-2">
-              <label class="flex items-center gap-3 cursor-pointer group">
-                <input class="form-checkbox text-primary rounded border-slate-300 focus:ring-primary h-4 w-4" type="checkbox" />
-                <span class="text-sm text-slate-600 dark:text-slate-300 font-medium group-hover:text-primary transition-colors">Laptops &amp; Workstations</span>
-              </label>
-              <label class="flex items-center gap-3 cursor-pointer group">
-                <input checked class="form-checkbox text-primary rounded border-slate-300 focus:ring-primary h-4 w-4" type="checkbox" />
-                <span class="text-sm text-slate-600 dark:text-slate-300 font-medium group-hover:text-primary transition-colors">Servers &amp; Storage</span>
-              </label>
-              <label class="flex items-center gap-3 cursor-pointer group">
-                <input class="form-checkbox text-primary rounded border-slate-300 focus:ring-primary h-4 w-4" type="checkbox" />
-                <span class="text-sm text-slate-600 dark:text-slate-300 font-medium group-hover:text-primary transition-colors">Enterprise Software</span>
-              </label>
-              <label class="flex items-center gap-3 cursor-pointer group">
-                <input class="form-checkbox text-primary rounded border-slate-300 focus:ring-primary h-4 w-4" type="checkbox" />
-                <span class="text-sm text-slate-600 dark:text-slate-300 font-medium group-hover:text-primary transition-colors">Security Solutions</span>
-              </label>
-              <label class="flex items-center gap-3 cursor-pointer group">
-                <input class="form-checkbox text-primary rounded border-slate-300 focus:ring-primary h-4 w-4" type="checkbox" />
-                <span class="text-sm text-slate-600 dark:text-slate-300 font-medium group-hover:text-primary transition-colors">Networking</span>
-              </label>
-            </div>
+            <span class="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+              {{ product.category }}
+            </span>
+            <h1 class="mt-3 text-3xl font-bold text-navy-blue dark:text-white">{{ product.name }}</h1>
+            <p class="mt-2 text-sm text-slate-500 dark:text-slate-300">{{ product.summary }}</p>
           </div>
-          <div>
-            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Brand</h4>
-            <div class="space-y-2">
-              <label class="flex items-center gap-3 cursor-pointer group">
-                <input class="form-checkbox text-primary rounded border-slate-300 focus:ring-primary h-4 w-4" type="checkbox" />
-                <span class="text-sm text-slate-600 dark:text-slate-300 font-medium group-hover:text-primary transition-colors">HP</span>
-              </label>
-              <label class="flex items-center gap-3 cursor-pointer group">
-                <input class="form-checkbox text-primary rounded border-slate-300 focus:ring-primary h-4 w-4" type="checkbox" />
-                <span class="text-sm text-slate-600 dark:text-slate-300 font-medium group-hover:text-primary transition-colors">Dell Technologies</span>
-              </label>
-              <label class="flex items-center gap-3 cursor-pointer group">
-                <input class="form-checkbox text-primary rounded border-slate-300 focus:ring-primary h-4 w-4" type="checkbox" />
-                <span class="text-sm text-slate-600 dark:text-slate-300 font-medium group-hover:text-primary transition-colors">VMware</span>
-              </label>
-              <label class="flex items-center gap-3 cursor-pointer group">
-                <input class="form-checkbox text-primary rounded border-slate-300 focus:ring-primary h-4 w-4" type="checkbox" />
-                <span class="text-sm text-slate-600 dark:text-slate-300 font-medium group-hover:text-primary transition-colors">Cisco</span>
-              </label>
-            </div>
-          </div>
-          <div>
-            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Availability</h4>
-            <label class="flex items-center relative cursor-pointer mb-2">
-              <input class="sr-only peer" type="checkbox" value="" />
-              <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
-              <span class="ml-3 text-sm font-medium text-slate-600 dark:text-slate-300">In Stock Only</span>
-            </label>
-          </div>
-        </div>
-      </div>
-      <div class="bg-navy-blue rounded-xl p-6 text-white relative overflow-hidden mt-8 hidden lg:block">
-        <div class="relative z-10">
-          <span class="text-xs font-bold text-blue-300 uppercase tracking-wider mb-2 block">Special Offer</span>
-          <h4 class="text-xl font-bold mb-3">Upgrade Your Fleet</h4>
-          <p class="text-sm text-slate-300 mb-4">Get 15% off on bulk orders of HP EliteBooks this month.</p>
-          <button class="w-full bg-primary hover:bg-blue-600 text-white text-sm font-bold py-2 rounded transition-colors">Learn More</button>
-        </div>
-        <div class="absolute -right-6 -bottom-6 w-24 h-24 bg-primary rounded-full opacity-20 blur-xl"></div>
-        <div class="absolute -left-6 -top-6 w-24 h-24 bg-blue-400 rounded-full opacity-10 blur-xl"></div>
-      </div>
-    </aside>
 
-    <div class="flex-1">
-      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-        <div class="group flex flex-col bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:shadow-xl hover:border-primary/30 transition-all duration-300">
-          <div class="relative w-full aspect-[4/3] bg-[#f8fafc] dark:bg-slate-800 p-6 flex items-center justify-center overflow-hidden">
-            <div class="absolute top-3 right-3 z-10">
-              <button class="text-slate-400 hover:text-red-500 transition-colors">
-                <span class="material-symbols-outlined">favorite</span>
-              </button>
+          <div class="flex items-center gap-4">
+            <div class="rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+              <p class="text-xs uppercase text-slate-400">Starting at</p>
+              <p class="text-2xl font-bold text-navy-blue dark:text-white">
+                ${{ product.price }} <span class="text-xs text-slate-400">{{ product.priceUnit }}</span>
+              </p>
             </div>
-            <div class="w-full h-full bg-center bg-no-repeat bg-contain mix-blend-multiply dark:mix-blend-normal transition-transform duration-500 group-hover:scale-105" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA02rKrOGx6VcTpgDMIiYqP8bN_Y-xdnVXaOKhPuSpq_hK9IcwEr8JxyNJXoqIrICD9aHg1WZC6TBHpWH0lLalWlZ5YpiG2GTO50M7oENyRKft8wtuWFg3CELD7uUT2aO4_F_AnIUZ0bpy-QFtC2hDcZEGs-ijovcmIMcHIq8UgE4T2HaPzT2GcgIRip9_muU1t32X9ta3Hm-nwgG9mSDpn85Kfj6PJy1pDr_rl3_BVMUc3pR7uSuy0i2t0WkNKC-YLG4AoTXIYKpI8");'></div>
-            <div class="absolute bottom-3 left-3">
-              <span class="bg-white dark:bg-slate-700 text-navy-blue dark:text-white text-[10px] font-bold px-2 py-1 rounded border border-slate-100 dark:border-slate-600 shadow-sm uppercase tracking-wide">HP</span>
+            <div class="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-300">
+              Brand: <span class="text-navy-blue dark:text-white">{{ product.brand }}</span>
             </div>
           </div>
-          <div class="p-5 flex flex-col flex-1">
-            <div class="mb-2">
-              <span class="text-xs font-semibold text-primary uppercase tracking-wider">Laptops</span>
-            </div>
-            <h3 class="text-lg font-bold text-navy-blue dark:text-white mb-2 line-clamp-2 leading-tight group-hover:text-primary transition-colors">HP EliteBook 840 G9 Notebook PC</h3>
-            <div class="space-y-2 mb-4 flex-1">
-              <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-                <span class="material-symbols-outlined text-[16px]">memory</span>
-                <span>Intel Core i7 12th Gen</span>
-              </div>
-              <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-                <span class="material-symbols-outlined text-[16px]">sd_card</span>
-                <span>16GB DDR5 RAM</span>
-              </div>
-              <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-                <span class="material-symbols-outlined text-[16px]">hard_drive</span>
-                <span>512GB SSD</span>
-              </div>
-            </div>
-            <div class="mt-auto pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-3">
-              <div class="flex flex-col">
-                <span class="text-xs text-slate-400 font-medium">Starting at</span>
-                <span class="text-lg font-bold text-navy-blue dark:text-white">$1,499</span>
-              </div>
-              <button class="flex-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-primary hover:text-primary text-navy-blue dark:text-white text-sm font-bold py-2 px-3 rounded-lg transition-all text-center">
-                View Details
-              </button>
-            </div>
-          </div>
-        </div>
 
-        <div class="group flex flex-col bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:shadow-xl hover:border-primary/30 transition-all duration-300">
-          <div class="relative w-full aspect-[4/3] bg-[#f8fafc] dark:bg-slate-800 p-6 flex items-center justify-center overflow-hidden">
-            <div class="absolute top-3 right-3 z-10">
-              <button class="text-slate-400 hover:text-red-500 transition-colors">
-                <span class="material-symbols-outlined">favorite</span>
-              </button>
-            </div>
-            <div class="w-full h-full bg-center bg-no-repeat bg-contain mix-blend-multiply dark:mix-blend-normal transition-transform duration-500 group-hover:scale-105" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAT7E1iJb2YdRoZYp4SOEQw46kQKBaDmxxvarwQTNC3XTn52siS2oes6Ze-ZG6owjHsPKCbliU2pMb94OUiofYijlX2Ash4hek8d2D6vh4qr_P8SHUdXoZiHNxs6gG9GroGLEbNLYCCoCwNkZkxM8E0HfoWchc8dqSaBKvOqDt4P4Eh86jDQjklBldtj_h0pU68kCBnn-2d3E_NVJRPmT4fdTAQ6sdo8kRtcq85jPCq9AL7b7ZWEsaphVtmfFUBuP6WUqirLTPrKsFj");'></div>
-            <div class="absolute bottom-3 left-3">
-              <span class="bg-white dark:bg-slate-700 text-navy-blue dark:text-white text-[10px] font-bold px-2 py-1 rounded border border-slate-100 dark:border-slate-600 shadow-sm uppercase tracking-wide">DELL</span>
-            </div>
+          <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <h3 class="text-sm font-bold text-navy-blue dark:text-white">Highlights</h3>
+            <ul class="mt-4 space-y-2 text-sm text-slate-500 dark:text-slate-300">
+              <li class="flex items-center gap-2" *ngFor="let highlight of product.highlights">
+                <span class="material-symbols-outlined text-base text-primary">check_circle</span>
+                {{ highlight }}
+              </li>
+            </ul>
           </div>
-          <div class="p-5 flex flex-col flex-1">
-            <div class="mb-2">
-              <span class="text-xs font-semibold text-primary uppercase tracking-wider">Servers</span>
-            </div>
-            <h3 class="text-lg font-bold text-navy-blue dark:text-white mb-2 line-clamp-2 leading-tight group-hover:text-primary transition-colors">Dell PowerEdge R750 Rack Server</h3>
-            <div class="space-y-2 mb-4 flex-1">
-              <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-                <span class="material-symbols-outlined text-[16px]">dns</span>
-                <span>2U Rack Server</span>
-              </div>
-              <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-                <span class="material-symbols-outlined text-[16px]">memory</span>
-                <span>Dual Xeon Scalable</span>
-              </div>
-              <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-                <span class="material-symbols-outlined text-[16px]">database</span>
-                <span>Up to 24 NVMe Drives</span>
-              </div>
-            </div>
-            <div class="mt-auto pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-3">
-              <div class="flex flex-col">
-                <span class="text-xs text-slate-400 font-medium">Price</span>
-                <span class="text-lg font-bold text-navy-blue dark:text-white">Call for Quote</span>
-              </div>
-              <button class="flex-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-primary hover:text-primary text-navy-blue dark:text-white text-sm font-bold py-2 px-3 rounded-lg transition-all text-center">
-                View Details
-              </button>
-            </div>
-          </div>
-        </div>
 
-        <div class="group flex flex-col bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:shadow-xl hover:border-primary/30 transition-all duration-300">
-          <div class="relative w-full aspect-[4/3] bg-[#f8fafc] dark:bg-slate-800 p-8 flex items-center justify-center overflow-hidden">
-            <div class="absolute top-3 right-3 z-10">
-              <button class="text-slate-400 hover:text-red-500 transition-colors">
-                <span class="material-symbols-outlined">favorite</span>
+          <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <h3 class="text-sm font-bold text-navy-blue dark:text-white">Quantity</h3>
+            <div class="mt-4 flex items-center gap-3">
+              <button
+                class="h-10 w-10 rounded-lg border border-slate-200 text-slate-500 transition hover:border-primary hover:text-primary dark:border-slate-700 dark:text-slate-300"
+                (click)="updateQuantity(-1)"
+              >
+                <span class="material-symbols-outlined text-base">remove</span>
               </button>
-            </div>
-            <div class="w-full h-full bg-center bg-no-repeat bg-contain mix-blend-multiply dark:mix-blend-normal transition-transform duration-500 group-hover:scale-105 opacity-90" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCZ6_YZWHpEVxUe_jy34KZUPgflBKvLRqB49mtz0HLIMfUm6SJkMIsCKm6pO7vi065lbEOfMDKJTZNk5AiCTWTomfT--hPky3HKWrYsgX5i21jxLxvCgNgBZKRl_fPwV90ZOVhYETEGYCBN4Z7wuN3f5jaiAkQvtvR2lcHeNOT_t3QCFh5V5S6k9kk47t4pSIeEJbECywfoUOKsF4zaWLVVRB8Osyfk_E1cHZFDU-10LqMsrSDmb9Qg5KbH2JTHmmzNo1Z6pscZ_P1L");'></div>
-            <div class="absolute bottom-3 left-3">
-              <span class="bg-white dark:bg-slate-700 text-navy-blue dark:text-white text-[10px] font-bold px-2 py-1 rounded border border-slate-100 dark:border-slate-600 shadow-sm uppercase tracking-wide">VMware</span>
-            </div>
-            <div class="absolute top-3 left-3">
-              <span class="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider">Digital</span>
-            </div>
-          </div>
-          <div class="p-5 flex flex-col flex-1">
-            <div class="mb-2">
-              <span class="text-xs font-semibold text-primary uppercase tracking-wider">Software</span>
-            </div>
-            <h3 class="text-lg font-bold text-navy-blue dark:text-white mb-2 line-clamp-2 leading-tight group-hover:text-primary transition-colors">VMware vSphere 7 Standard License</h3>
-            <div class="space-y-2 mb-4 flex-1">
-              <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-                <span class="material-symbols-outlined text-[16px]">verified_user</span>
-                <span>Per Processor Licensing</span>
-              </div>
-              <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-                <span class="material-symbols-outlined text-[16px]">cloud_sync</span>
-                <span>vCenter Server Required</span>
-              </div>
-              <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-                <span class="material-symbols-outlined text-[16px]">update</span>
-                <span>1 Year SnS Included</span>
-              </div>
-            </div>
-            <div class="mt-auto pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-3">
-              <div class="flex flex-col">
-                <span class="text-xs text-slate-400 font-medium">Starting at</span>
-                <span class="text-lg font-bold text-navy-blue dark:text-white">$1,260</span>
-              </div>
-              <button class="flex-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-primary hover:text-primary text-navy-blue dark:text-white text-sm font-bold py-2 px-3 rounded-lg transition-all text-center">
-                View Details
+              <span class="min-w-[40px] text-center text-base font-semibold text-navy-blue dark:text-white">{{ quantity }}</span>
+              <button
+                class="h-10 w-10 rounded-lg border border-slate-200 text-slate-500 transition hover:border-primary hover:text-primary dark:border-slate-700 dark:text-slate-300"
+                (click)="updateQuantity(1)"
+              >
+                <span class="material-symbols-outlined text-base">add</span>
               </button>
-            </div>
-          </div>
-        </div>
-
-        <div class="group flex flex-col bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:shadow-xl hover:border-primary/30 transition-all duration-300">
-          <div class="relative w-full aspect-[4/3] bg-[#f8fafc] dark:bg-slate-800 p-6 flex items-center justify-center overflow-hidden">
-            <div class="absolute top-3 right-3 z-10">
-              <button class="text-slate-400 hover:text-red-500 transition-colors">
-                <span class="material-symbols-outlined">favorite</span>
-              </button>
-            </div>
-            <div class="w-full h-full bg-center bg-no-repeat bg-contain mix-blend-multiply dark:mix-blend-normal transition-transform duration-500 group-hover:scale-105" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC35Oxkvem472T-DjhwA7iza80Mdie7grJYHWGHJRMRLP2LqSuYQRN4ceUGNHGkUaOm0shvLDGgs6OqUo4XXMUYMg_RwiaegF9FYqQZxUsL40O3B3GuNI0BAVo3Q_F-fcwAmOq_h_fFisvvmkOXQ_h58FFtf7cjRwp3yc5gyfBlRoliHRZR_APbAREXcf2ViruTx3MsPVY28CdvfgPlLvfXNu1EtHaMOoBmraXtc8DwCRCmzux4HBBH002DI4aW1h7qJquBaDrHPUkm");'></div>
-            <div class="absolute bottom-3 left-3">
-              <span class="bg-white dark:bg-slate-700 text-navy-blue dark:text-white text-[10px] font-bold px-2 py-1 rounded border border-slate-100 dark:border-slate-600 shadow-sm uppercase tracking-wide">HPE</span>
-            </div>
-          </div>
-          <div class="p-5 flex flex-col flex-1">
-            <div class="mb-2">
-              <span class="text-xs font-semibold text-primary uppercase tracking-wider">Servers</span>
-            </div>
-            <h3 class="text-lg font-bold text-navy-blue dark:text-white mb-2 line-clamp-2 leading-tight group-hover:text-primary transition-colors">HPE ProLiant DL380 Gen10 Server</h3>
-            <div class="space-y-2 mb-4 flex-1">
-              <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-                <span class="material-symbols-outlined text-[16px]">shield</span>
-                <span>Silicon Root of Trust</span>
-              </div>
-              <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-                <span class="material-symbols-outlined text-[16px]">rocket_launch</span>
-                <span>High Performance Computing</span>
-              </div>
-              <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-                <span class="material-symbols-outlined text-[16px]">settings_remote</span>
-                <span>iLO 5 Management</span>
-              </div>
-            </div>
-            <div class="mt-auto pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-3">
-              <div class="flex flex-col">
-                <span class="text-xs text-slate-400 font-medium">Price</span>
-                <span class="text-lg font-bold text-navy-blue dark:text-white">Call for Quote</span>
-              </div>
-              <button class="flex-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-primary hover:text-primary text-navy-blue dark:text-white text-sm font-bold py-2 px-3 rounded-lg transition-all text-center">
-                View Details
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div class="group flex flex-col bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:shadow-xl hover:border-primary/30 transition-all duration-300">
-          <div class="relative w-full aspect-[4/3] bg-[#f8fafc] dark:bg-slate-800 p-6 flex items-center justify-center overflow-hidden">
-            <div class="absolute top-3 right-3 z-10">
-              <button class="text-slate-400 hover:text-red-500 transition-colors">
-                <span class="material-symbols-outlined">favorite</span>
-              </button>
-            </div>
-            <div class="w-full h-full bg-center bg-no-repeat bg-contain mix-blend-multiply dark:mix-blend-normal transition-transform duration-500 group-hover:scale-105" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBugxH99sYmEflAc-Cpmi3whfe60Y5k_gNmy2tgNb2OFVEdND5plG4g7hnckJ7ie_jW4FkwXo8Hajz7JNy-6YLYCHzqq_mBUXwV49LFah-P1bJtROhdgvCuoU3zAI7qNXztsMAeLj4hK4JpnWeegkXBLtWLNgXjg904--Ifb0guEoIfdSeUp_DaTC9kSnItpA8RTmYdsDC8HQ-2cc2blvqsCZ2BZoOHrNRafJZ8gdTlcPGtePx5ZHOHVzp2tBMa1SYU7BZQwE8xo62_");'></div>
-            <div class="absolute bottom-3 left-3">
-              <span class="bg-white dark:bg-slate-700 text-navy-blue dark:text-white text-[10px] font-bold px-2 py-1 rounded border border-slate-100 dark:border-slate-600 shadow-sm uppercase tracking-wide">EPSON</span>
-            </div>
-          </div>
-          <div class="p-5 flex flex-col flex-1">
-            <div class="mb-2">
-              <span class="text-xs font-semibold text-primary uppercase tracking-wider">Printers</span>
-            </div>
-            <h3 class="text-lg font-bold text-navy-blue dark:text-white mb-2 line-clamp-2 leading-tight group-hover:text-primary transition-colors">Epson EcoTank Photo ET-8550</h3>
-            <div class="space-y-2 mb-4 flex-1">
-              <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-                <span class="material-symbols-outlined text-[16px]">palette</span>
-                <span>6-Color Claria Ink</span>
-              </div>
-              <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-                <span class="material-symbols-outlined text-[16px]">print</span>
-                <span>Wide-format Printing</span>
-              </div>
-              <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-                <span class="material-symbols-outlined text-[16px]">wifi</span>
-                <span>Wireless &amp; Ethernet</span>
-              </div>
-            </div>
-            <div class="mt-auto pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-3">
-              <div class="flex flex-col">
-                <span class="text-xs text-slate-400 font-medium">Starting at</span>
-                <span class="text-lg font-bold text-navy-blue dark:text-white">$699</span>
-              </div>
-              <button class="flex-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-primary hover:text-primary text-navy-blue dark:text-white text-sm font-bold py-2 px-3 rounded-lg transition-all text-center">
-                View Details
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div class="group flex flex-col bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:shadow-xl hover:border-primary/30 transition-all duration-300">
-          <div class="relative w-full aspect-[4/3] bg-[#f8fafc] dark:bg-slate-800 p-6 flex items-center justify-center overflow-hidden">
-            <div class="absolute top-3 right-3 z-10">
-              <button class="text-slate-400 hover:text-red-500 transition-colors">
-                <span class="material-symbols-outlined">favorite</span>
-              </button>
-            </div>
-            <div class="w-full h-full bg-center bg-no-repeat bg-contain mix-blend-multiply dark:mix-blend-normal transition-transform duration-500 group-hover:scale-105" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBZpZskbGC7FKHPiy6ULa47zVQlA9SCMHOy8GaTc3tyk21Lx4eBFwA2iMFw6d-xiK-xswjckHEqiTu8yKLtVUGUTOkINKT8sokr_GSx0LHEntUBcVR3lrUVQFJ1taoAmvaKo4syFy3wuUKBLqHnNkBtM0UeEy4kWVJpJUoqyjT4qvZ2TVrDfALfXcd1cMyDxqWv9a-wWhpNB2r1Xta7e2FfI16Xy8IM7QNzi9io9fjtIF1xRkmLmRuQaKyz3i2WFxB1kjTZF3cie70q");'></div>
-            <div class="absolute bottom-3 left-3">
-              <span class="bg-white dark:bg-slate-700 text-navy-blue dark:text-white text-[10px] font-bold px-2 py-1 rounded border border-slate-100 dark:border-slate-600 shadow-sm uppercase tracking-wide">CISCO</span>
-            </div>
-          </div>
-          <div class="p-5 flex flex-col flex-1">
-            <div class="mb-2">
-              <span class="text-xs font-semibold text-primary uppercase tracking-wider">Networking</span>
-            </div>
-            <h3 class="text-lg font-bold text-navy-blue dark:text-white mb-2 line-clamp-2 leading-tight group-hover:text-primary transition-colors">Cisco Catalyst 9200 Series Switch</h3>
-            <div class="space-y-2 mb-4 flex-1">
-              <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-                <span class="material-symbols-outlined text-[16px]">lan</span>
-                <span>48 Ports PoE+</span>
-              </div>
-              <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-                <span class="material-symbols-outlined text-[16px]">security</span>
-                <span>Enterprise Security</span>
-              </div>
-              <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-                <span class="material-symbols-outlined text-[16px]">speed</span>
-                <span>Layer 3 Capabilities</span>
-              </div>
-            </div>
-            <div class="mt-auto pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-3">
-              <div class="flex flex-col">
-                <span class="text-xs text-slate-400 font-medium">Price</span>
-                <span class="text-lg font-bold text-navy-blue dark:text-white">Call for Quote</span>
-              </div>
-              <button class="flex-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-primary hover:text-primary text-navy-blue dark:text-white text-sm font-bold py-2 px-3 rounded-lg transition-all text-center">
-                View Details
+              <button
+                class="ml-auto rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-600"
+                (click)="addToCart()"
+              >
+                Add to cart
               </button>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="mt-12 flex items-center justify-center gap-2">
-        <button class="w-10 h-10 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-50">
-          <span class="material-symbols-outlined">chevron_left</span>
-        </button>
-        <button class="w-10 h-10 flex items-center justify-center rounded-lg bg-primary text-white font-bold text-sm">1</button>
-        <button class="w-10 h-10 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-bold text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">2</button>
-        <button class="w-10 h-10 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-bold text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">3</button>
-        <span class="w-10 h-10 flex items-center justify-center text-slate-400">...</span>
-        <button class="w-10 h-10 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800">
-          <span class="material-symbols-outlined">chevron_right</span>
-        </button>
+      <div class="grid gap-8 lg:grid-cols-3">
+        <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+          <h3 class="text-lg font-bold text-navy-blue dark:text-white">Technical specs</h3>
+          <dl class="mt-4 space-y-3 text-sm text-slate-500 dark:text-slate-300">
+            <div *ngFor="let spec of product.specs" class="flex items-center justify-between gap-4">
+              <dt class="font-medium text-slate-500 dark:text-slate-300">{{ spec.label }}</dt>
+              <dd class="font-semibold text-navy-blue dark:text-white">{{ spec.value }}</dd>
+            </div>
+          </dl>
+        </div>
+        <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+          <h3 class="text-lg font-bold text-navy-blue dark:text-white">Integrations</h3>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span
+              *ngFor="let integration of product.integrations"
+              class="rounded-full border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-500 dark:border-slate-700 dark:text-slate-300"
+            >
+              {{ integration }}
+            </span>
+          </div>
+        </div>
+        <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+          <h3 class="text-lg font-bold text-navy-blue dark:text-white">Pricing tiers</h3>
+          <div class="mt-4 space-y-4">
+            <div
+              *ngFor="let tier of product.pricingTiers"
+              class="rounded-xl border border-slate-100 bg-slate-50 p-4 text-sm text-slate-500 dark:border-slate-800 dark:bg-slate-800/40 dark:text-slate-300"
+            >
+              <div class="flex items-center justify-between">
+                <span class="font-semibold text-navy-blue dark:text-white">{{ tier.name }}</span>
+                <span class="text-xs font-semibold text-primary">{{ tier.monthlyCost }}</span>
+              </div>
+              <p class="mt-2 text-xs text-slate-500 dark:text-slate-300">{{ tier.description }}</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  </div>
+  </section>
 </main>
