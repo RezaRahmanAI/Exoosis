@@ -1,39 +1,41 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../core/services/api.service';
-import { Solution } from '../../core/models/entities';
+import { SolutionSoftware } from '../../core/models/entities';
 
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-solutions',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './solutions.component.html',
   styleUrl: './solutions.component.css'
 })
 export class SolutionsComponent implements OnInit {
-  solutions: Solution[] = [];
+  softwareCatalog: SolutionSoftware[] = [];
   searchTerm = '';
-
-  categories = [
-    { title: 'IT Hardware', icon: 'computer', open: true, items: ['HP Enterprise', 'Dell Technologies', 'Asus Business', 'Lenovo'] },
-    { title: 'Networking', icon: 'router', open: false, items: ['Cisco', 'Ruijie Networks', 'Ruckus', 'Aruba'] },
-    { title: 'Security', icon: 'security', open: false, items: ['Hikvision', 'Dahua Technology', 'ZKTeco'] },
-    { title: 'Software', icon: 'dns', open: false, items: ['VMWare', 'Oracle', 'Veeam'] }
-  ];
+  selectedCategory: 'All' | SolutionSoftware['category'] = 'All';
 
   constructor(private api: ApiService) {}
 
   ngOnInit() {
-    this.api.get<Solution[]>('/solutions').subscribe(data => this.solutions = data);
+    this.api.get<SolutionSoftware[]>('/solutionSoftware').subscribe(data => this.softwareCatalog = data);
   }
 
-  get filteredSolutions() {
-    if (!this.searchTerm) return this.solutions;
-    return this.solutions.filter(s => 
-      s.title.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-      s.desc.toLowerCase().includes(this.searchTerm.toLowerCase())
-    );
+  get categories() {
+    const unique = Array.from(new Set(this.softwareCatalog.map(item => item.category)));
+    return ['All', ...unique] as Array<'All' | SolutionSoftware['category']>;
+  }
+
+  get filteredSoftware() {
+    return this.softwareCatalog.filter(item => {
+      const matchesCategory = this.selectedCategory === 'All' || item.category === this.selectedCategory;
+      const matchesSearch = !this.searchTerm
+        || item.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+        || item.summary.toLowerCase().includes(this.searchTerm.toLowerCase());
+      return matchesCategory && matchesSearch;
+    });
   }
 }
