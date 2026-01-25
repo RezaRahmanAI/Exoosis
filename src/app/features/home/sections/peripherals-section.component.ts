@@ -1,6 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PeripheralCategory } from '../../../core/models/entities';
+
+interface PeripheralCategory {
+  icon: string;
+  name: string;
+  desc: string;
+}
 
 @Component({
   selector: 'app-home-peripherals-section',

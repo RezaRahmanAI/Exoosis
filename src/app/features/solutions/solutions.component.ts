@@ -15,7 +15,13 @@ import { FormsModule } from '@angular/forms';
 export class SolutionsComponent implements OnInit {
   solutions: Solution[] = [];
   searchTerm = '';
-  activeCategory = 'All';
+
+  categories = [
+    { title: 'IT Hardware', icon: 'computer', open: true, items: ['HP Enterprise', 'Dell Technologies', 'Asus Business', 'Lenovo'] },
+    { title: 'Networking', icon: 'router', open: false, items: ['Cisco', 'Ruijie Networks', 'Ruckus', 'Aruba'] },
+    { title: 'Security', icon: 'security', open: false, items: ['Hikvision', 'Dahua Technology', 'ZKTeco'] },
+    { title: 'Software', icon: 'dns', open: false, items: ['VMWare', 'Oracle', 'Veeam'] }
+  ];
 
   constructor(private api: ApiService) {}
 
@@ -23,17 +29,11 @@ export class SolutionsComponent implements OnInit {
     this.api.get<Solution[]>('/solutions').subscribe(data => this.solutions = data);
   }
 
-  get categories() {
-    return ['All', ...new Set(this.solutions.map(solution => solution.category))];
-  }
-
   get filteredSolutions() {
-    return this.solutions.filter(solution => {
-      const matchesCategory = this.activeCategory === 'All' || solution.category === this.activeCategory;
-      const matchesSearch = !this.searchTerm ||
-        solution.title.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        solution.desc.toLowerCase().includes(this.searchTerm.toLowerCase());
-      return matchesCategory && matchesSearch;
-    });
+    if (!this.searchTerm) return this.solutions;
+    return this.solutions.filter(s => 
+      s.title.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+      s.desc.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
   }
 }
