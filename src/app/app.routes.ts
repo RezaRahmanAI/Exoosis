@@ -4,6 +4,8 @@ import { AboutComponent } from './features/about/about.component';
 import { SolutionsComponent } from './features/solutions/solutions.component';
 import { CareerComponent } from './features/career/career.component';
 import { PartnersComponent } from './features/partners/partners.component';
+import { ProductDetailsComponent } from './features/products/product-details/product-details.component';
+import { EnterpriseSoftwareComponent } from './features/enterprise-software/enterprise-software.component';
 
 import { AdminLayoutComponent } from './features/admin/admin-layout.component';
 
@@ -11,6 +13,8 @@ export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'about', component: AboutComponent },
   { path: 'solutions', component: SolutionsComponent },
+  { path: 'products/:id', component: ProductDetailsComponent },
+  { path: 'enterprise-software', component: EnterpriseSoftwareComponent },
   { path: 'partners', component: PartnersComponent },
   { path: 'career', component: CareerComponent },
   { 
