@@ -102,6 +102,19 @@ public class ProductService : IProductService
         return product == null ? null : _mapper.Map<ProductDto>(product);
     }
 
+    public async Task<IReadOnlyList<ProductDto>> GetLowStockAsync(int threshold, CancellationToken cancellationToken = default)
+    {
+        var products = await _unitOfWork.Products.Query()
+            .Include(product => product.Category)
+            .Include(product => product.Brand)
+            .Where(product => product.StockQuantity <= threshold)
+            .OrderBy(product => product.StockQuantity)
+            .ProjectTo<ProductDto>(_mapper.ConfigurationProvider)
+            .ToListAsync(cancellationToken);
+
+        return products;
+    }
+
     public async Task<ProductDto> CreateAsync(CreateProductRequest request, string? userId, CancellationToken cancellationToken = default)
     {
         await EnsureCatalogReferencesAsync(request.CategoryId, request.BrandId, cancellationToken);

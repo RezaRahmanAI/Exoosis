@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { ApiService } from '../../../core/services/api.service';
+import { ProductService } from '../../../core/services/product.service';
 import { CartService } from '../../../core/services/cart.service';
 import { ProductDetail } from '../../../core/models/entities';
 
@@ -20,7 +20,7 @@ export class ProductDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private api: ApiService,
+    private productsService: ProductService,
     private cartService: CartService
   ) {}
 
@@ -32,7 +32,7 @@ export class ProductDetailsComponent implements OnInit {
       return;
     }
 
-    this.api.get<ProductDetail>(`/products/${productId}`).subscribe({
+    this.productsService.getProductById(productId).subscribe({
       next: (data) => {
         this.product = data;
         this.isLoading = false;

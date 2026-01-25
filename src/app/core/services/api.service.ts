@@ -18,12 +18,12 @@ export class ApiService {
   }
 
   put<T>(path: string, body: object = {}): Observable<T> {
-    return this.http.put<T>(`${this.apiUrl}${path}`, JSON.stringify(body))
+    return this.http.put<T>(`${this.apiUrl}${path}`, body)
       .pipe(catchError(this.formatErrors));
   }
 
   post<T>(path: string, body: object = {}): Observable<T> {
-    return this.http.post<T>(`${this.apiUrl}${path}`, JSON.stringify(body))
+    return this.http.post<T>(`${this.apiUrl}${path}`, body)
       .pipe(catchError(this.formatErrors));
   }
 
