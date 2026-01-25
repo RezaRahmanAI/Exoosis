@@ -1,7 +1,14 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { LaptopProduct } from '../../../core/models/entities';
+
+interface LaptopProduct {
+  title: string;
+  desc: string;
+  image: string;
+  tag: string;
+  features: string[];
+}
 
 @Component({
   selector: 'app-home-parts-accessories-section',
