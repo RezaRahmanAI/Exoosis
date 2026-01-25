@@ -1,1 +1,95 @@
-<main class="min-h-screen"></main>
+<main class="min-h-screen bg-slate-50 dark:bg-slate-950">
+  <section class="pt-32 pb-16">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+        <div>
+          <p class="text-sm font-semibold text-primary uppercase tracking-widest">Solutions</p>
+          <h1 class="text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white mt-3">Software Portfolio by Industry</h1>
+          <p class="text-slate-600 dark:text-slate-300 max-w-2xl mt-4">
+            Explore our industrial, corporate, and banking software suites. Filter by industry or search to find the perfect
+            platform for your organization.
+          </p>
+        </div>
+        <div class="w-full lg:w-80">
+          <label class="sr-only" for="solution-search">Search software</label>
+          <input
+            id="solution-search"
+            type="text"
+            [(ngModel)]="searchTerm"
+            placeholder="Search software"
+            class="w-full rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-5 py-3 text-sm text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-primary/30"
+          />
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-3 mt-8">
+        <button
+          *ngFor="let category of categories"
+          type="button"
+          (click)="selectedCategory = category"
+          class="px-4 py-2 rounded-full text-sm font-semibold border transition-all"
+          [class.bg-primary]="selectedCategory === category"
+          [class.text-white]="selectedCategory === category"
+          [class.border-primary]="selectedCategory === category"
+          [class.text-slate-600]="selectedCategory !== category"
+          [class.dark:text-slate-300]="selectedCategory !== category"
+          [class.border-slate-200]="selectedCategory !== category"
+          [class.dark:border-slate-700]="selectedCategory !== category"
+          [class.bg-white]="selectedCategory !== category"
+          [class.dark:bg-slate-900]="selectedCategory !== category"
+        >
+          {{ category }}
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="pb-20">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="grid gap-8 md:grid-cols-2">
+        <article
+          *ngFor="let software of filteredSoftware"
+          class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm hover:shadow-xl transition-all"
+        >
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold uppercase tracking-widest text-primary">{{ software.category }}</span>
+            <span class="text-xs text-slate-500 dark:text-slate-400">{{ software.metrics[0].value }}</span>
+          </div>
+          <h2 class="text-xl font-bold text-slate-900 dark:text-white mt-4">{{ software.name }}</h2>
+          <p class="text-slate-600 dark:text-slate-300 mt-3">{{ software.summary }}</p>
+
+          <ul class="mt-5 space-y-2 text-sm text-slate-600 dark:text-slate-300">
+            <li *ngFor="let capability of software.capabilities.slice(0, 3)" class="flex gap-2">
+              <span class="material-symbols-outlined text-primary text-base">task_alt</span>
+              <span>{{ capability }}</span>
+            </li>
+          </ul>
+
+          <div class="flex flex-wrap gap-3 mt-6">
+            <span
+              *ngFor="let industry of software.industries"
+              class="rounded-full bg-slate-100 dark:bg-slate-800 px-3 py-1 text-xs font-medium text-slate-600 dark:text-slate-300"
+            >
+              {{ industry }}
+            </span>
+          </div>
+
+          <div class="mt-6 flex items-center justify-between">
+            <a
+              class="inline-flex items-center text-primary font-semibold text-sm hover:underline"
+              [routerLink]="['/solutions/software', software.id]"
+            >
+              View Details
+              <span class="material-symbols-outlined text-base ml-1">arrow_forward</span>
+            </a>
+            <span class="text-xs text-slate-400">Updated for 2024</span>
+          </div>
+        </article>
+      </div>
+
+      <div *ngIf="filteredSoftware.length === 0" class="text-center py-16">
+        <p class="text-slate-500 dark:text-slate-400 text-lg">No software matches your search. Try another keyword.</p>
+      </div>
+    </div>
+  </section>
+</main>

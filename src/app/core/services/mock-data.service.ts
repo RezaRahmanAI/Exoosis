@@ -1,44 +1,35 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
-import { Solution, Job, TeamMember, Partner, Testimonial, ProductDetail, EnterpriseSoftware, JobApplicationPayload } from '../models/entities';
+import { Solution, Job, TeamMember, Partner, Testimonial, ProductDetail, EnterpriseSoftware, JobApplicationPayload, SolutionSoftware } from '../models/entities';
 
 export class MockDataService implements InMemoryDbService {
   createDb() {
     const solutions: Solution[] = [
       {
         id: 1,
-        title: 'IT Hardware',
-        desc: 'High-performance workstations, servers, and peripherals tailored for business efficiency. From personal computing to data center racks.',
-        icon: 'computer',
-        category: 'Hardware',
-        brands: ['HP Enterprise', 'Dell', 'Asus', 'Lenovo'],
-        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCcZ81cRXiCLudcPpC1mKykToYYsqrjORX7BVyLuxLVdnpvEvluhCsmkrVJWHQBQBEfaGtUxiDhxo_NTJW0uMseVvwBb2zobviXqGfjW57ry7oXauQjeJUGLhDrZGz3eLAlzjtXglZiwkbePG3oTMoGYcT6KafGzIIDuHSLSCLG3YCVeGEK8PBCAd6ZnpSGu61IQc1pxn-9-TLP2qQRygeq9AR2pC4gZlC_pRSlUTPLO2dujD83ko844Hed7CAJuwWfFiwWgekeXaJ5'
+        title: 'Industrial Solutions',
+        desc: 'Automation, plant monitoring, and asset optimization suites designed for high-volume production environments.',
+        icon: 'precision_manufacturing',
+        category: 'Industrial',
+        brands: ['FactoryFlow', 'PulseGrid', 'SteelSight'],
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC8H7o--VJsglK41fZd4Knx6AqT0R07Iyuzwq0tEq1Qh6yn2SazAG9J0wmAlc6MQzZ5yBEv0Kp0mlEH0u6R4jRQYvpxE0uKXxLhNqYlziVKRwH9WptMEFnHq0sCzNEKUxD4QmNW9GhkfGEXy7Frv5y5rFG8Osr3k8m1g7VZ9zFY7q0RTe8VwRpmxUYLd0dh20zGX-YwiFDZtd-ynpBuE2D0L-D5WFRcE8HmZC-CEuG2MK1e9E1E6XPQcXxFU4T0G0'
       },
       {
         id: 2,
-        title: 'Networking',
-        desc: 'Robust connectivity solutions including switches, routers, and wireless access points designed for seamless enterprise communication.',
-        icon: 'router',
-        category: 'Networking',
-        brands: ['Cisco', 'Ruijie', 'Ruckus'],
-        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCergsETW_h3TE1Ca4Ig1XUgjmE4P9-xRw3N3vsfB025hkDt0HUW6RdXn9MIyjZ23xcyUzk3X-dlHFG04nsZfhuig8ef8A5Y_25cprGmeqZdebOZZBd-d4Q6F_x_Knit3U9c51qrQRCyAMCaRUP1FfEcFJ5gv44fDlZ0CV0UuykIOTgd5vCqwDQIJ4yAK7jYk5u7PYFlqa_oGLt3d1KihFjeHk-92b-Z__oOIGvQUQmFgUtfSL3fZg7L4QdTBp1gxTjtTdArLiNoDAR'
+        title: 'Corporate Solutions',
+        desc: 'Integrated workplace platforms that streamline finance, HR, and operational visibility for growing enterprises.',
+        icon: 'business_center',
+        category: 'Corporate',
+        brands: ['BoardroomIQ', 'FlexFinance', 'OpsPulse'],
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB9ds4I0I4mBDNW-_OMkYi002yCDZOcWB8oEG3B1MmT0R6Vtg3sVfgbq_Ym4EPly47jIoRZhgbdzkzgFtm6bGAbTy4f4qg_fjOGi-uw3X1r1b1nCHhTr0IrzsOwb2QLJ_liTFCDhtQMBmcPdK9W5DG1DKLYBVtb-TDLfHSwPVeXe4AW5cOoyPUkKqCOD2oPc-z0ZliKvNVs9xC3tsdTuWaNgEYh_DraGkozhwgn6LUa_YJgFyOi22HI1UT7EYNoUNKQX4Sh-d3SCp6P'
       },
       {
         id: 3,
-        title: 'Security & Surveillance',
-        desc: 'Comprehensive security infrastructure including CCTV, biometric access control, and smart monitoring systems for facility safety.',
-        icon: 'security',
-        category: 'Security',
-        brands: ['Hikvision', 'Dahua', 'ZKTeco'],
-        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCALu8AoJ9x6w84v4gGjTIqxZn3XaHRJvvb2H62xHgwaFNY67uCYo8-F3vpjvtmAJ3tQI6bCvwwnkPA-PjmRx9Z_SW_q9J2EwOLd7xX_EG8PvCkqH8qVkqeBywW-cvPdoxkBAud1_2E_YoXfYjGy5EjdH99kQVjwUEGaLf8YCercz1rg9mgjjdwnAfMQVm9UWn9624aIUaJk7W5lRi6Id_y9Gy2GOB0aB32VtdDJULCf-TWgnnP_J75YOxujHfhkDO4HHOuJRGMSoUf'
-      },
-      {
-        id: 4,
-        title: 'Enterprise Software',
-        desc: 'Virtualization, database management, and backup solutions to ensure business continuity and optimal software performance.',
-        icon: 'dns',
-        category: 'Software',
-        brands: ['VMWare', 'Oracle', 'Veeam'],
-        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuArw2sQmjraHOEloQVwXPxePym8QPfwAnuJc0WbXq7TVmm_wETqwbkhx-DTWjNMwE8EQhQA9cLbGjAbMpRaGVEEgzCA0l4R318PjMU9rlvtFVsiEt2tq3tWjdmol2i8MRTn-I4GE0hdNvE2OAitKcHnOrWDmtKoji6q6GewK_mFuZ1Pi3wEAaEO1Ft6VeGgTtCwgktY_1EKuE2uaouK5Qp0YHIBWbDKR__ZEV3rHjX9_Baj4Nt1gFPiBgf3rHJ-yZ9uGxzn7qpT0v_3'
+        title: 'Banking Solutions',
+        desc: 'Secure, compliant software ecosystems that modernize banking operations and customer experiences.',
+        icon: 'account_balance',
+        category: 'Banking',
+        brands: ['CorePulse', 'VaultGuard', 'BranchSync'],
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAvOFJbtXss0-oOURmaN1XCNQ5v3AnbTlbAzq45HxpDt2bLlHmFJvFRP08mC7jebApLqIa5LeuXEprsCCfgmTIQQT5mV7m3k8zT-FSSo8Wf7R2b98lk3irtXZdM5xVN2HLaH7Rx68cFE5wenKrf2VtrPoCgJfT-wKs8v2ApTlSjzuPhsGLuw7pP395_VBJkS7CoW5sWG7VQRQ8XGugo5Mdj2Ul1bc0oVahkLkIYG8tnEKOIfYlQq3uI7_ftO1P_FRCWxpq5gJ85M7hP'
       }
     ];
 
@@ -236,8 +227,173 @@ export class MockDataService implements InMemoryDbService {
       }
     ];
 
+    const solutionSoftware: SolutionSoftware[] = [
+      {
+        id: 'indus-ops-suite',
+        name: 'IndusOps Control Suite',
+        category: 'Industrial',
+        summary: 'A real-time manufacturing execution platform that harmonizes production scheduling and plant visibility.',
+        description: 'IndusOps connects shop-floor machines, sensors, and supervisory teams to reduce downtime, optimize throughput, and keep compliance logs ready for audits.',
+        capabilities: [
+          'Adaptive production scheduling with shift-based logic',
+          'Machine health dashboards with predictive alerts',
+          'Digital work orders and quality checklists'
+        ],
+        industries: ['Textiles', 'Pharmaceuticals', 'Heavy Manufacturing'],
+        integrations: ['Siemens PLC', 'SCADA Systems', 'SAP S/4HANA'],
+        compliance: ['ISO 9001', 'GMP', 'Occupational Safety Standards'],
+        deployment: ['On-premise', 'Hybrid cloud gateway'],
+        support: [
+          { label: 'SLA', detail: '24/7 plant-critical response, 99.9% uptime' },
+          { label: 'Training', detail: 'On-site operator training and digital playbooks' },
+          { label: 'Monitoring', detail: 'Dedicated industrial IoT command center' }
+        ],
+        metrics: [
+          { label: 'Downtime reduction', value: 'Up to 32%' },
+          { label: 'OEE improvement', value: '+18% within 90 days' },
+          { label: 'Audit preparation', value: '50% faster' }
+        ],
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCgcXQhWdaWqnwjj43imXNB9RJfmebt_4dvUXQm7ccTnGvhmaruRI0iY592w9XpFcPCn4y-T_hFKWgewlAqtbKiuPieoZ5icwpjvCuZY1ms3GqgKigFcBSmSFgWcEI3cs910QQaPshdKMXbMPsimH3n4b7DAGhwgGujpkyQdyoFUIO0R7YWypyZdqJpT5gHi_l-vxopOz1MGFDMg7dAa36v0EVHYtkbmhnrPL4AorQnBXri99mtkt-n419VGsbiYuN7KEpSvEdCSE2X'
+      },
+      {
+        id: 'plant-asset-hub',
+        name: 'Plant Asset Hub',
+        category: 'Industrial',
+        summary: 'A central asset reliability workspace for tracking utilities, spare parts, and maintenance SLAs.',
+        description: 'Plant Asset Hub provides unified visibility into critical machinery, inventory, and preventive maintenance to keep production lines running efficiently.',
+        capabilities: [
+          'Digital asset registry with lifecycle tracking',
+          'Predictive maintenance workflows',
+          'Spare parts forecasting and procurement alerts'
+        ],
+        industries: ['Energy', 'Cement', 'Food Processing'],
+        integrations: ['IBM Maximo', 'Oracle EAM', 'Power BI'],
+        compliance: ['ISO 55001', 'Energy Safety Codes'],
+        deployment: ['Private cloud', 'On-premise'],
+        support: [
+          { label: 'SLA', detail: 'Business-hours support with on-call escalation' },
+          { label: 'Consulting', detail: 'Reliability engineering workshops' },
+          { label: 'Analytics', detail: 'Monthly asset utilization reviews' }
+        ],
+        metrics: [
+          { label: 'Maintenance cost', value: '-22% year-over-year' },
+          { label: 'Asset utilization', value: '+12% capacity uplift' },
+          { label: 'Spare stockouts', value: 'Near zero' }
+        ],
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCr9jZ1Ncg0cRrJH7GfVjbg4Q-6DLW3l1o-mxb6amOeSvZPQDCq7aT66a1D3ey4XgkKx6rT-7G1dW9UOyy5eOCAfE3xvvUS3BEp4rLKBbQLef5UIF1ZMX-Vab4gHhL0X2_z3PUxewTTWQ4mDmXTaFoR7Z8RV2S_Sr9ZbEY87HBqzwh0bP_Mqp1FuoN29d4U7m6LJYHdR6BkiO0qXW49XB5TB3Db8tzzn5lSw8B-evA5gQwP3k_VXdnTQc8oGHEMbxyL8jS7u'
+      },
+      {
+        id: 'corporate-unify',
+        name: 'Corporate Unify Workspace',
+        category: 'Corporate',
+        summary: 'An integrated operations suite that unites finance, HR, and procurement with real-time analytics.',
+        description: 'Corporate Unify provides a single command center for enterprise stakeholders to manage budgets, approvals, and workforce operations without siloed tools.',
+        capabilities: [
+          'Automated budget approvals with audit trails',
+          'Headcount planning and talent mobility dashboards',
+          'Smart procurement with vendor scorecards'
+        ],
+        industries: ['FMCG', 'Technology Services', 'Retail Chains'],
+        integrations: ['Microsoft 365', 'SAP SuccessFactors', 'ServiceNow'],
+        compliance: ['SOC 2', 'ISO 27001', 'GDPR-ready'],
+        deployment: ['Hybrid cloud', 'Private cloud'],
+        support: [
+          { label: 'SLA', detail: '99.95% uptime with dedicated customer success' },
+          { label: 'Onboarding', detail: 'Process mapping and KPI design' },
+          { label: 'Enablement', detail: 'Role-based learning library' }
+        ],
+        metrics: [
+          { label: 'Approval cycle time', value: '40% faster' },
+          { label: 'Operating cost', value: '-18% in 6 months' },
+          { label: 'User adoption', value: '92% active usage' }
+        ],
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAENrHBI8vO5kXOH8lO-4xFnTg4NVZfkJok8R48lA-4WTB7J2UWM61CFxgEEhG_0nQGgxE9QOjMJhT7jG_w0Dgq0AHjYvN5kWJmVQmJ1fmf0eJm5cY4FKcY42hVcq41MMD3ez18iRHy2jg2rZ0uOM34iEPO5O_zVrhK0Uel3pw4dKgiRRt7BriN4wv9AXf_s4z6JMRgZ7x4yXKrJhjTeQpFp5tDYoGRdZ-30x0AXKaGD0ExoU'
+      },
+      {
+        id: 'corporate-insight',
+        name: 'Corporate Insight CRM',
+        category: 'Corporate',
+        summary: 'A customer and partner intelligence suite that powers revenue operations with unified visibility.',
+        description: 'Corporate Insight blends sales, support, and marketing journeys into a single workspace so leadership teams can track pipeline health and service quality.',
+        capabilities: [
+          'Unified client 360-degree profiles',
+          'Forecasting dashboards for revenue leaders',
+          'Omnichannel service ticket routing'
+        ],
+        industries: ['Consulting', 'Logistics', 'Telecom'],
+        integrations: ['Salesforce', 'HubSpot', 'Zendesk'],
+        compliance: ['ISO 27001', 'PCI DSS Ready'],
+        deployment: ['Cloud-native', 'Private cloud option'],
+        support: [
+          { label: 'SLA', detail: 'Priority response for enterprise customers' },
+          { label: 'Success', detail: 'Quarterly business reviews' },
+          { label: 'Security', detail: 'Dedicated security advisory' }
+        ],
+        metrics: [
+          { label: 'Customer retention', value: '+15% uplift' },
+          { label: 'Case resolution', value: '30% faster' },
+          { label: 'Forecast accuracy', value: '+20% improvement' }
+        ],
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCergsETW_h3TE1Ca4Ig1XUgjmE4P9-xRw3N3vsfB025hkDt0HUW6RdXn9MIyjZ23xcyUzk3X-dlHFG04nsZfhuig8ef8A5Y_25cprGmeqZdebOZZBd-d4Q6F_x_Knit3U9c51qrQRCyAMCaRUP1FfEcFJ5gv44fDlZ0CV0UuykIOTgd5vCqwDQIJ4yAK7jYk5u7PYFlqa_oGLt3d1KihFjeHk-92b-Z__oOIGvQUQmFgUtfSL3fZg7L4QdTBp1gxTjtTdArLiNoDAR'
+      },
+      {
+        id: 'bank-core-modern',
+        name: 'BankCore Modernization',
+        category: 'Banking',
+        summary: 'A compliance-first core banking modernization suite with omnichannel orchestration.',
+        description: 'BankCore Modernization enables banks to migrate legacy systems into a secure, modular platform while delivering improved customer journeys.',
+        capabilities: [
+          'Real-time ledger and transaction monitoring',
+          'Digital onboarding with KYC automation',
+          'Branch-to-digital orchestration'
+        ],
+        industries: ['Retail Banking', 'Microfinance', 'Islamic Banking'],
+        integrations: ['Temenos', 'Oracle FLEXCUBE', 'Mambu'],
+        compliance: ['Bangladesh Bank Guidelines', 'PCI DSS', 'SOC 2'],
+        deployment: ['Hybrid cloud', 'On-premise'],
+        support: [
+          { label: 'SLA', detail: 'Regulatory-grade uptime monitoring' },
+          { label: 'Migration', detail: 'Legacy system migration playbooks' },
+          { label: 'Security', detail: 'Continuous penetration testing' }
+        ],
+        metrics: [
+          { label: 'Time-to-market', value: '60% faster launches' },
+          { label: 'Operational risk', value: '-28% incidents' },
+          { label: 'Digital adoption', value: '+35% growth' }
+        ],
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDjwsIA0cEQU4-BnWhf7KCg0B92gAneQjMhOvvFplkDN85Sx5n_vZNUUrA4u-PyE6iO88T04KpbJf44_DeEtn08ru3O_QnyDbp59wg-YfeTtkpODsKzS2W361f6zWHNXF2L0JkrIEoLBdBBgXAW-fAr1VRnzJVb1YDAJKFFWD7K6jRROZs93qcq1KFZMglwTUCZx8Tz6qDDhWMCr48TwUaqidSdwEBaGK8tqM7s62AyE2-EMCjyb4Zc6BOQySv86JjRCwKOfv11oQVk'
+      },
+      {
+        id: 'vaultguard-suite',
+        name: 'VaultGuard Risk Suite',
+        category: 'Banking',
+        summary: 'A security and risk governance platform built for multi-branch banking operations.',
+        description: 'VaultGuard unifies fraud monitoring, regulatory reporting, and security orchestration for mission-critical banking operations.',
+        capabilities: [
+          'Real-time fraud detection with AI scoring',
+          'Automated regulatory reporting',
+          'Branch security posture management'
+        ],
+        industries: ['Commercial Banking', 'Digital Banks', 'Payment Providers'],
+        integrations: ['SWIFT', 'IBM QRadar', 'Splunk'],
+        compliance: ['AML/KYC', 'PCI DSS', 'ISO 22301'],
+        deployment: ['Private cloud', 'Sovereign cloud zones'],
+        support: [
+          { label: 'SLA', detail: '24/7 security operations center' },
+          { label: 'Risk', detail: 'Quarterly risk assessments' },
+          { label: 'Advisory', detail: 'Regulatory compliance advisory' }
+        ],
+        metrics: [
+          { label: 'Fraud response time', value: 'Under 2 minutes' },
+          { label: 'Audit readiness', value: 'Always-on reporting' },
+          { label: 'Operational loss', value: '-30% reduction' }
+        ],
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBKHxOUKPcz7zkxPVwKYpv6au1nTVeUc97cUsafJnl59rd8AL0Lj8rLKseP1NsxOWwPLN0s9xcataahJDBCuJmzwPQP7XGy4127_kXsg27mF5UwsWcHQls6L-qI2TfFTaMq1kB4CDpP2ZNLEIwZ-hXTvBnwwPizfKKbXs7B-nupizYqEsX1AWqkHxd6ReYFKd9rBidiyMtB_Q60qHq-SmakP1n8ZCRSGpDa2AOuvn4xvrOzVDXE7pfxpZ6OhC-mBa0ni161zO25jAWC'
+      }
+    ];
+
     const jobApplications: JobApplicationPayload[] = [];
 
-    return { solutions, jobs, team, partners, testimonials, products, enterpriseSoftware, jobApplications };
+    return { solutions, jobs, team, partners, testimonials, products, enterpriseSoftware, solutionSoftware, jobApplications };
   }
 }

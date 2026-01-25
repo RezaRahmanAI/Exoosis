@@ -1,0 +1,109 @@
+<main class="min-h-screen bg-slate-50 dark:bg-slate-950">
+  <section class="pt-28 pb-16">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="grid gap-10 lg:grid-cols-2">
+        <div>
+          <p class="text-sm font-semibold text-primary uppercase tracking-widest">Contact</p>
+          <h1 class="text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white mt-3">Let us plan your next software rollout</h1>
+          <p class="text-slate-600 dark:text-slate-300 mt-4">
+            Share your requirements and our solution architects will respond with a tailored proposal for your industry.
+          </p>
+          <div class="mt-8 space-y-4 text-sm text-slate-600 dark:text-slate-300">
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-primary">call</span>
+              <span>+880 1611-000000</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-primary">mail</span>
+              <span>sales@exoosis.com</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-primary">location_on</span>
+              <span>Gulshan Avenue, Dhaka, Bangladesh</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 shadow-lg">
+          <form class="space-y-5" (ngSubmit)="submit()">
+            <div>
+              <label class="text-sm font-semibold text-slate-700 dark:text-slate-200">Full Name</label>
+              <input
+                type="text"
+                [(ngModel)]="payload.fullName"
+                name="fullName"
+                class="mt-2 w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-3 text-sm text-slate-700 dark:text-slate-200"
+                placeholder="Your name"
+                required
+              />
+            </div>
+            <div>
+              <label class="text-sm font-semibold text-slate-700 dark:text-slate-200">Company</label>
+              <input
+                type="text"
+                [(ngModel)]="payload.company"
+                name="company"
+                class="mt-2 w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-3 text-sm text-slate-700 dark:text-slate-200"
+                placeholder="Organization"
+              />
+            </div>
+            <div class="grid gap-4 md:grid-cols-2">
+              <div>
+                <label class="text-sm font-semibold text-slate-700 dark:text-slate-200">Email</label>
+                <input
+                  type="email"
+                  [(ngModel)]="payload.email"
+                  name="email"
+                  class="mt-2 w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-3 text-sm text-slate-700 dark:text-slate-200"
+                  placeholder="you@email.com"
+                  required
+                />
+              </div>
+              <div>
+                <label class="text-sm font-semibold text-slate-700 dark:text-slate-200">Phone</label>
+                <input
+                  type="tel"
+                  [(ngModel)]="payload.phone"
+                  name="phone"
+                  class="mt-2 w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-3 text-sm text-slate-700 dark:text-slate-200"
+                  placeholder="+880"
+                />
+              </div>
+            </div>
+            <div>
+              <label class="text-sm font-semibold text-slate-700 dark:text-slate-200">Solution Category</label>
+              <select
+                [(ngModel)]="payload.category"
+                name="category"
+                class="mt-2 w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-3 text-sm text-slate-700 dark:text-slate-200"
+              >
+                <option>Industrial</option>
+                <option>Corporate</option>
+                <option>Banking</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-sm font-semibold text-slate-700 dark:text-slate-200">Message</label>
+              <textarea
+                rows="4"
+                [(ngModel)]="payload.message"
+                name="message"
+                class="mt-2 w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-3 text-sm text-slate-700 dark:text-slate-200"
+                placeholder="Tell us about your project goals"
+              ></textarea>
+            </div>
+            <button
+              type="submit"
+              class="w-full rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-primary/30 hover:bg-blue-600 transition"
+            >
+              Submit Contact Request
+            </button>
+          </form>
+          <div *ngIf="submitted" class="mt-6 rounded-2xl bg-primary/10 border border-primary/20 p-4 text-sm text-primary">
+            Thanks! Our team will reach out within 24 hours with next steps.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
