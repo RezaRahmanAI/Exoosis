@@ -21,7 +21,18 @@ export class TeamService {
     this.loadingSubject.next(true);
     this.errorSubject.next(null);
 
-    return this.api.get<ApiResponse<TeamMember[]>>('/team').pipe(
+    return this.api.get<ApiResponse<TeamMember[]>>('/team-members').pipe(
+      map(response => response.data ?? []),
+      catchError(error => this.handleError(error)),
+      finalize(() => this.loadingSubject.next(false))
+    );
+  }
+
+  getTeamMembersBySection(section: 'leadership' | 'team'): Observable<TeamMember[]> {
+    this.loadingSubject.next(true);
+    this.errorSubject.next(null);
+
+    return this.api.get<ApiResponse<TeamMember[]>>(`/team-members/by-section/${section}`).pipe(
       map(response => response.data ?? []),
       catchError(error => this.handleError(error)),
       finalize(() => this.loadingSubject.next(false))
@@ -32,7 +43,7 @@ export class TeamService {
     this.loadingSubject.next(true);
     this.errorSubject.next(null);
 
-    return this.api.get<ApiResponse<TeamMember>>(`/team/${id}`).pipe(
+    return this.api.get<ApiResponse<TeamMember>>(`/team-members/${id}`).pipe(
       map(response => response.data),
       catchError(error => this.handleError(error)),
       finalize(() => this.loadingSubject.next(false))
@@ -43,7 +54,7 @@ export class TeamService {
     this.loadingSubject.next(true);
     this.errorSubject.next(null);
 
-    return this.api.post<ApiResponse<TeamMember>>('/team', payload).pipe(
+    return this.api.post<ApiResponse<TeamMember>>('/team-members', payload).pipe(
       map(response => response.data),
       catchError(error => this.handleError(error)),
       finalize(() => this.loadingSubject.next(false))
@@ -54,7 +65,7 @@ export class TeamService {
     this.loadingSubject.next(true);
     this.errorSubject.next(null);
 
-    return this.api.put<ApiResponse<TeamMember>>(`/team/${id}`, payload).pipe(
+    return this.api.put<ApiResponse<TeamMember>>(`/team-members/${id}`, payload).pipe(
       map(response => response.data),
       catchError(error => this.handleError(error)),
       finalize(() => this.loadingSubject.next(false))
@@ -65,7 +76,7 @@ export class TeamService {
     this.loadingSubject.next(true);
     this.errorSubject.next(null);
 
-    return this.api.delete<ApiResponse<string>>(`/team/${id}`).pipe(
+    return this.api.delete<ApiResponse<string>>(`/team-members/${id}`).pipe(
       map(response => response.data),
       catchError(error => this.handleError(error)),
       finalize(() => this.loadingSubject.next(false))

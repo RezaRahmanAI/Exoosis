@@ -8,6 +8,7 @@ namespace Exoosis.Api.Controllers;
 
 [ApiController]
 [Route("api/team")]
+[Route("api/team-members")]
 public class TeamMembersController : ControllerBase
 {
     private readonly ITeamMemberService _teamMemberService;
@@ -21,6 +22,19 @@ public class TeamMembersController : ControllerBase
     public async Task<ActionResult<ApiResponse<IReadOnlyList<TeamMemberDto>>>> GetAll(CancellationToken cancellationToken)
     {
         var team = await _teamMemberService.GetAllAsync(cancellationToken);
+        return Ok(ApiResponse<IReadOnlyList<TeamMemberDto>>.Ok(team));
+    }
+
+    [HttpGet("by-section/{section}")]
+    public async Task<ActionResult<ApiResponse<IReadOnlyList<TeamMemberDto>>>> GetBySection(string section, CancellationToken cancellationToken)
+    {
+        var normalized = section.Trim().ToLowerInvariant();
+        if (normalized is not ("leadership" or "team"))
+        {
+            return BadRequest(ApiResponse<IReadOnlyList<TeamMemberDto>>.Fail("Unknown team section."));
+        }
+
+        var team = await _teamMemberService.GetBySectionAsync(normalized, cancellationToken);
         return Ok(ApiResponse<IReadOnlyList<TeamMemberDto>>.Ok(team));
     }
 
