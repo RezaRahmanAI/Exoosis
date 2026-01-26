@@ -1,5 +1,6 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using Exoosis.Api.Contracts.Auth;
 using Exoosis.Domain.Entities;
@@ -160,7 +161,13 @@ public class AuthController : ControllerBase
         var key = GetConfigOrDefault("Jwt:Key", "development_key");
         var issuer = GetConfigOrDefault("Jwt:Issuer", "Exoosis");
         var audience = GetConfigOrDefault("Jwt:Audience", "Exoosis");
-        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
+        var keyBytes = Encoding.UTF8.GetBytes(key);
+        if (keyBytes.Length < 32)
+        {
+            using var sha256 = SHA256.Create();
+            keyBytes = sha256.ComputeHash(keyBytes);
+        }
+        var securityKey = new SymmetricSecurityKey(keyBytes);
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
         var email = user.Email ?? string.Empty;
