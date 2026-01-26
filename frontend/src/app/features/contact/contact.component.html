@@ -70,7 +70,7 @@
             </div>
           </div>
         </div>
-        <div class="lg:col-span-5 xl:col-span-4 flex flex-col gap-6">
+        <div class="lg:col-span-5 xl:col-span-4 flex flex-col gap-6" *ngIf="settings$ | async as settings">
           <div class="bg-white dark:bg-[#1a2332] rounded-xl shadow-sm border border-[#e7ebf3] dark:border-gray-800 overflow-hidden">
             <div class="p-6 border-b border-[#e7ebf3] dark:border-gray-700 bg-primary/5 dark:bg-primary/10">
               <h3 class="text-[#0d121b] dark:text-white text-lg font-bold">Contact Details</h3>
@@ -83,8 +83,8 @@
                 </div>
                 <div>
                   <p class="text-sm font-bold text-[#0d121b] dark:text-white uppercase tracking-wider mb-1">Sales &amp; Inquiries</p>
-                  <a class="block text-base text-[#4c669a] dark:text-[#94a3b8] hover:text-primary dark:hover:text-primary transition-colors" href="mailto:sales@exosistech.com">sales@exosistech.com</a>
-                  <a class="block text-base text-[#4c669a] dark:text-[#94a3b8] hover:text-primary dark:hover:text-primary transition-colors mt-1" href="tel:+8801700000000">+880 17XX-XXXXXX</a>
+                  <a class="block text-base text-[#4c669a] dark:text-[#94a3b8] hover:text-primary dark:hover:text-primary transition-colors" [href]="'mailto:' + settings.contact.salesEmail">{{ settings.contact.salesEmail }}</a>
+                  <a class="block text-base text-[#4c669a] dark:text-[#94a3b8] hover:text-primary dark:hover:text-primary transition-colors mt-1" [href]="'tel:' + settings.contact.primaryPhone">{{ settings.contact.primaryPhone }}</a>
                 </div>
               </div>
               <div class="flex gap-4 items-start group">
@@ -94,9 +94,9 @@
                 <div>
                   <p class="text-sm font-bold text-[#0d121b] dark:text-white uppercase tracking-wider mb-1">Office Location</p>
                   <address class="not-italic text-base text-[#4c669a] dark:text-[#94a3b8]">
-                    Level 4, Tech Tower,<br/>
-                    Gulshan-1, Dhaka,<br/>
-                    Bangladesh.
+                    {{ settings.contact.address }},<br/>
+                    {{ settings.contact.city }}, {{ settings.contact.state }},<br/>
+                    {{ settings.contact.country }}.
                   </address>
                 </div>
               </div>
@@ -106,8 +106,7 @@
                 </div>
                 <div>
                   <p class="text-sm font-bold text-[#0d121b] dark:text-white uppercase tracking-wider mb-1">Opening Hours</p>
-                  <p class="text-base text-[#4c669a] dark:text-[#94a3b8]">Sun - Thu: 9:00 AM - 6:00 PM</p>
-                  <p class="text-base text-[#4c669a] dark:text-[#94a3b8]">Fri - Sat: Closed</p>
+                  <p class="text-base text-[#4c669a] dark:text-[#94a3b8]">{{ settings.business.workingHours }}</p>
                 </div>
               </div>
             </div>

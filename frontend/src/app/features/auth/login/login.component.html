@@ -1,0 +1,46 @@
+<main class="min-h-screen bg-slate-50 flex items-center justify-center px-4 py-16">
+  <div class="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+    <h1 class="text-2xl font-bold text-slate-900">Welcome back</h1>
+    <p class="mt-2 text-sm text-slate-500">Log in to manage your orders, profile, and settings.</p>
+
+    <form class="mt-6 space-y-4" (ngSubmit)="submit()">
+      <label class="block text-sm font-medium text-slate-700">
+        Email or Username
+        <input
+          class="mt-2 w-full rounded-lg border border-slate-200 px-4 py-2 text-sm focus:border-primary focus:outline-none"
+          type="text"
+          name="identifier"
+          [(ngModel)]="identifier"
+          placeholder="you@example.com or exosistech"
+          required
+        />
+      </label>
+      <label class="block text-sm font-medium text-slate-700">
+        Password
+        <input
+          class="mt-2 w-full rounded-lg border border-slate-200 px-4 py-2 text-sm focus:border-primary focus:outline-none"
+          type="password"
+          name="password"
+          [(ngModel)]="password"
+          required
+        />
+      </label>
+      <div class="flex items-center justify-between text-sm text-slate-500">
+        <label class="flex items-center gap-2">
+          <input type="checkbox" class="rounded border-slate-300" [(ngModel)]="rememberMe" name="rememberMe" />
+          Remember me
+        </label>
+        <a routerLink="/auth/forgot-password" class="text-primary hover:underline">Forgot password?</a>
+      </div>
+      <p *ngIf="errorMessage" class="rounded-lg bg-red-50 px-3 py-2 text-xs text-red-500">{{ errorMessage }}</p>
+      <button class="w-full rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white" type="submit" [disabled]="loading">
+        {{ loading ? 'Signing in...' : 'Login' }}
+      </button>
+    </form>
+
+    <p class="mt-6 text-sm text-slate-500">
+      Don't have an account?
+      <a routerLink="/auth/signup" class="text-primary font-semibold hover:underline">Sign Up</a>
+    </p>
+  </div>
+</main>

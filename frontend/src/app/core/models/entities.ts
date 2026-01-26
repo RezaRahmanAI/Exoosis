@@ -104,6 +104,72 @@ export interface User {
   email: string;
   password: string;
   role?: string;
+  phoneNumber?: string;
+  profilePhotoUrl?: string;
+  address?: Address;
+  dateOfBirth?: string;
+  gender?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  lastLoginAt?: string;
+  emailVerified?: boolean;
+}
+
+export interface Address {
+  street?: string;
+  city?: string;
+  state?: string;
+  postalCode?: string;
+  country?: string;
+}
+
+export interface WebsiteSettings {
+  general: {
+    websiteName: string;
+    tagline: string;
+    logoUrl: string;
+    footerLogoUrl: string;
+    faviconUrl: string;
+    defaultLanguage: string;
+    currency: string;
+    timezone: string;
+  };
+  contact: {
+    address: string;
+    city: string;
+    state: string;
+    postalCode: string;
+    country: string;
+    primaryPhone: string;
+    secondaryPhone: string;
+    supportPhone: string;
+    generalEmail: string;
+    salesEmail: string;
+    supportEmail: string;
+  };
+  social: {
+    facebookUrl: string;
+    twitterUrl: string;
+    linkedinUrl: string;
+    instagramUrl: string;
+    youtubeUrl: string;
+  };
+  business: {
+    description: string;
+    foundedYear: number;
+    registrationNumber: string;
+    taxId: string;
+    workingHours: string;
+    paymentMethods: string[];
+  };
+  seo: {
+    defaultMetaTitle: string;
+    defaultMetaDescription: string;
+    metaKeywords: string;
+    googleAnalyticsId: string;
+    facebookPixelId: string;
+    googleTagManagerId: string;
+  };
 }
 
 export interface OrderPayload {
