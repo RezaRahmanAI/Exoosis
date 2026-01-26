@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, forkJoin, map, of, switchMap, tap } from 'rxjs';
 import { ApiService } from './api.service';
 import { CartItem, OrderPayload, ProductDetail } from '../models/entities';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,7 @@ import { CartItem, OrderPayload, ProductDetail } from '../models/entities';
 export class CartService {
   private cartItemsSubject = new BehaviorSubject<CartItem[]>([]);
   cartItems$ = this.cartItemsSubject.asObservable();
+  private readonly mockStorageKey = 'exoosis_mock_cart_items';
   cartCount$ = this.cartItems$.pipe(
     map(items => items.reduce((total, item) => total + item.quantity, 0))
   );
@@ -21,12 +23,22 @@ export class CartService {
   }
 
   loadCart() {
+    if (environment.useMockData) {
+      const items = this.loadMockCart();
+      this.cartItemsSubject.next(items);
+      return of(items);
+    }
+
     return this.api.get<CartItem[]>('/cart').pipe(
       tap(items => this.cartItemsSubject.next(items))
     );
   }
 
   addToCart(product: ProductDetail, quantity = 1) {
+    if (environment.useMockData) {
+      return this.addToMockCart(product, quantity);
+    }
+
     const existing = this.cartItemsSubject.value.find(item => item.productId === product.id);
     if (existing) {
       const updated = { ...existing, quantity: existing.quantity + quantity };
@@ -51,6 +63,10 @@ export class CartService {
   }
 
   updateQuantity(item: CartItem, quantity: number) {
+    if (environment.useMockData) {
+      return this.updateMockQuantity(item, quantity);
+    }
+
     if (quantity <= 0) {
       return this.removeItem(item.id);
     }
@@ -62,12 +78,20 @@ export class CartService {
   }
 
   removeItem(itemId: number) {
+    if (environment.useMockData) {
+      return this.removeMockItem(itemId);
+    }
+
     return this.api.delete(`/cart/${itemId}`).pipe(
       switchMap(() => this.loadCart())
     );
   }
 
   clearCart() {
+    if (environment.useMockData) {
+      return this.clearMockCart();
+    }
+
     const items = this.cartItemsSubject.value;
     if (!items.length) {
       return of([]);
@@ -79,6 +103,10 @@ export class CartService {
   }
 
   placeOrder(payload: Omit<OrderPayload, 'id' | 'placedAt' | 'items' | 'total'>) {
+    if (environment.useMockData) {
+      return this.placeMockOrder(payload);
+    }
+
     const items = this.cartItemsSubject.value;
     const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
     const order: Omit<OrderPayload, 'id'> = {
@@ -91,5 +119,91 @@ export class CartService {
     return this.api.post<OrderPayload>('/orders', order).pipe(
       switchMap(() => this.clearCart())
     );
+  }
+
+  private loadMockCart(): CartItem[] {
+    const stored = localStorage.getItem(this.mockStorageKey);
+    if (!stored) {
+      return [];
+    }
+
+    try {
+      return JSON.parse(stored) as CartItem[];
+    } catch {
+      return [];
+    }
+  }
+
+  private saveMockCart(items: CartItem[]) {
+    localStorage.setItem(this.mockStorageKey, JSON.stringify(items));
+    this.cartItemsSubject.next(items);
+  }
+
+  private addToMockCart(product: ProductDetail, quantity: number) {
+    const items = this.loadMockCart();
+    const existing = items.find(item => item.productId === product.id);
+
+    if (existing) {
+      const updated = items.map(item =>
+        item.productId === product.id ? { ...item, quantity: item.quantity + quantity } : item
+      );
+      this.saveMockCart(updated);
+      return of(updated);
+    }
+
+    const nextId = items.length ? Math.max(...items.map(item => item.id)) + 1 : 1;
+    const newItem: CartItem = {
+      id: nextId,
+      productId: product.id,
+      name: product.name,
+      category: product.category,
+      price: product.price,
+      priceUnit: product.priceUnit,
+      quantity,
+      image: product.image
+    };
+
+    const updated = [...items, newItem];
+    this.saveMockCart(updated);
+    return of(updated);
+  }
+
+  private updateMockQuantity(item: CartItem, quantity: number) {
+    if (quantity <= 0) {
+      return this.removeMockItem(item.id);
+    }
+
+    const items = this.loadMockCart();
+    const updated = items.map(existing =>
+      existing.id === item.id ? { ...existing, quantity } : existing
+    );
+    this.saveMockCart(updated);
+    return of(updated);
+  }
+
+  private removeMockItem(itemId: number) {
+    const items = this.loadMockCart();
+    const updated = items.filter(item => item.id !== itemId);
+    this.saveMockCart(updated);
+    return of(updated);
+  }
+
+  private clearMockCart() {
+    this.saveMockCart([]);
+    return of([]);
+  }
+
+  private placeMockOrder(payload: Omit<OrderPayload, 'id' | 'placedAt' | 'items' | 'total'>) {
+    const items = this.loadMockCart();
+    const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const order: Omit<OrderPayload, 'id'> = {
+      ...payload,
+      placedAt: new Date().toISOString(),
+      total,
+      items
+    };
+
+    this.clearMockCart();
+    return of(order);
   }
 }
