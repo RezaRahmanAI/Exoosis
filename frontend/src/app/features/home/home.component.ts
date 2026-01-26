@@ -3,6 +3,7 @@ import { BrandService } from '../../core/services/brand.service';
 import { SolutionService } from '../../core/services/solution.service';
 import { ApiService } from '../../core/services/api.service';
 import { Solution, Partner, Testimonial } from '../../core/models/entities';
+import { environment } from '../../../environments/environment';
 import { HeroSectionComponent } from './sections/hero-section.component';
 import { PartnersSectionComponent } from './sections/partners-section.component';
 import { SolutionsSectionComponent } from './sections/solutions-section.component';
@@ -83,6 +84,32 @@ export class HomeComponent implements OnInit {
   ];
 
   testimonials: Testimonial[] = [];
+  private readonly fallbackTestimonials: Testimonial[] = [
+    {
+      id: 1,
+      quote: 'Exoosis delivered a seamless infrastructure refresh with zero downtime and proactive support.',
+      author: 'Aminul Islam',
+      role: 'IT Operations Manager',
+      company: 'Delta Logistics',
+      image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80'
+    },
+    {
+      id: 2,
+      quote: 'Their team helped us modernize our workplace tech stack while keeping costs predictable.',
+      author: 'Nusrat Jahan',
+      role: 'Procurement Lead',
+      company: 'Skyline Holdings',
+      image: 'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=200&q=80'
+    },
+    {
+      id: 3,
+      quote: 'From hardware sourcing to deployment, Exoosis handled every detail with precision.',
+      author: 'Musa Rahman',
+      role: 'Head of Infrastructure',
+      company: 'Nexa Bank',
+      image: 'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=200&q=80'
+    }
+  ];
 
   insights = [
     {
@@ -132,8 +159,12 @@ export class HomeComponent implements OnInit {
       this.logos = data.filter(brand => brand.isActive);
     });
 
-    this.api.get<Testimonial[]>('/testimonials').subscribe(data => {
-      this.testimonials = data;
-    });
+    if (environment.useMockData) {
+      this.testimonials = this.fallbackTestimonials;
+    } else {
+      this.api.get<Testimonial[]>('/testimonials').subscribe(data => {
+        this.testimonials = data;
+      });
+    }
   }
 }
