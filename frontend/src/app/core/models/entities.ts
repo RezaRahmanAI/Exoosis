@@ -99,11 +99,10 @@ export interface CartItem {
 }
 
 export interface User {
-  id: number;
-  name: string;
+  id: string;
+  fullName: string;
   email: string;
-  password: string;
-  role?: string;
+  role: string;
   phoneNumber?: string;
   profilePhotoUrl?: string;
   address?: Address;
@@ -113,6 +112,47 @@ export interface User {
   updatedAt?: string;
   lastLoginAt?: string;
   emailVerified?: boolean;
+}
+
+export interface UserApi {
+  id: string;
+  fullName: string;
+  email: string;
+  role: string;
+  phoneNumber?: string;
+  profilePhotoUrl?: string;
+  addressStreet?: string;
+  addressCity?: string;
+  addressState?: string;
+  addressPostalCode?: string;
+  addressCountry?: string;
+  dateOfBirth?: string;
+  gender?: string;
+  lastLoginAt?: string;
+  emailVerified?: boolean;
+}
+
+export interface AuthResponse {
+  token: string;
+  user: UserApi;
+}
+
+export interface SignupPayload {
+  fullName: string;
+  email: string;
+  password: string;
+  phoneNumber: string;
+  street?: string;
+  city?: string;
+  state?: string;
+  postalCode?: string;
+  country?: string;
+}
+
+export interface LoginPayload {
+  identifier: string;
+  password: string;
+  rememberMe: boolean;
 }
 
 export interface Address {

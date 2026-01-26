@@ -13,14 +13,16 @@ import { WebsiteSettings } from '../../../core/models/entities';
 })
 export class AdminSettingsComponent {
   activeTab: 'general' | 'contact' | 'social' | 'business' | 'seo' | 'admin' = 'general';
-  settings!: WebsiteSettings;
+  settings: WebsiteSettings | null = null;
   paymentMethodsText = '';
   message = '';
 
   constructor(private settingsService: SettingsService) {
-    this.settings = JSON.parse(JSON.stringify(this.settingsService.getSettingsSnapshot()));
-    this.paymentMethodsText = this.settings.business.paymentMethods.join(', ');
+    this.settingsService.getAllSettings().subscribe();
     this.settingsService.settings$.subscribe(data => {
+      if (!data) {
+        return;
+      }
       this.settings = JSON.parse(JSON.stringify(data));
       this.paymentMethodsText = this.settings.business.paymentMethods.join(', ');
     });
@@ -32,12 +34,18 @@ export class AdminSettingsComponent {
   }
 
   save() {
-    this.settingsService.updateSettings(this.settings);
-    this.message = 'Settings updated successfully.';
+    if (!this.settings) {
+      return;
+    }
+    this.settingsService.updateSettings(this.settings).subscribe(() => {
+      this.message = 'Settings updated successfully.';
+    });
   }
 
   updatePaymentMethods(value: string) {
     this.paymentMethodsText = value;
-    this.settings.business.paymentMethods = value.split(',').map(item => item.trim()).filter(Boolean);
+    if (this.settings) {
+      this.settings.business.paymentMethods = value.split(',').map(item => item.trim()).filter(Boolean);
+    }
   }
 }

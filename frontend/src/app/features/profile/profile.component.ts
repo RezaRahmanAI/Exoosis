@@ -56,7 +56,7 @@ export class ProfileComponent {
       this.error = 'Please log in to edit your profile.';
       return;
     }
-    if (!this.user.name || !this.user.email) {
+    if (!this.user.fullName || !this.user.email) {
       this.error = 'Full name and email are required.';
       return;
     }
@@ -65,8 +65,14 @@ export class ProfileComponent {
       address: this.address,
       profilePhotoUrl: this.imagePreview || this.user.profilePhotoUrl
     };
-    this.authService.updateProfile(updatedUser);
-    this.user = { ...updatedUser };
-    this.message = 'Profile updated successfully.';
+    this.authService.updateProfile(updatedUser).subscribe({
+      next: user => {
+        this.user = { ...user };
+        this.message = 'Profile updated successfully.';
+      },
+      error: () => {
+        this.error = 'Unable to update profile.';
+      }
+    });
   }
 }

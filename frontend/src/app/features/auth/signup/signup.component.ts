@@ -59,18 +59,24 @@ export class SignupComponent {
     }
     this.loading = true;
     this.authService.signup({
-      name: this.fullName,
+      fullName: this.fullName,
       email: this.email,
       password: this.password,
       phoneNumber: this.phoneNumber,
-      address: this.address
-    }).subscribe(result => {
-      this.loading = false;
-      if (!result.success) {
-        this.errorMessage = result.message || 'Unable to create account.';
-        return;
+      street: this.address.street,
+      city: this.address.city,
+      state: this.address.state,
+      postalCode: this.address.postalCode,
+      country: this.address.country
+    }).subscribe({
+      next: () => {
+        this.loading = false;
+        this.router.navigate(['/']);
+      },
+      error: (error) => {
+        this.loading = false;
+        this.errorMessage = error?.message || 'Unable to create account.';
       }
-      this.router.navigate(['/']);
     });
   }
 }

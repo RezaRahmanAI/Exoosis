@@ -34,7 +34,7 @@ export class AdminChangePasswordComponent {
       this.error = 'Not authenticated.';
       return;
     }
-    this.authService.changePassword(user.id, this.currentPassword, this.newPassword).subscribe(result => {
+    this.authService.changePassword(this.currentPassword, this.newPassword).subscribe(result => {
       if (!result.success) {
         this.error = result.message || 'Unable to update password.';
         return;
