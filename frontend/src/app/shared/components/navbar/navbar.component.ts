@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { CartService } from '../../../core/services/cart.service';
 import { AuthService } from '../../../core/services/auth.service';
+import { SettingsService } from '../../../core/services/settings.service';
 
 @Component({
   selector: 'app-navbar',
@@ -13,12 +14,14 @@ import { AuthService } from '../../../core/services/auth.service';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-  isLoginOpen = false;
-  loginEmail = '';
-  loginPassword = '';
-  loginError = '';
+  isMenuOpen = false;
 
-  constructor(private cartService: CartService, private authService: AuthService) {}
+  constructor(
+    private cartService: CartService,
+    private authService: AuthService,
+    private settingsService: SettingsService,
+    private router: Router
+  ) {}
 
   get cartCount$() {
     return this.cartService.cartCount$;
@@ -36,31 +39,18 @@ export class NavbarComponent {
     return this.authService.user$;
   }
 
-  toggleLogin() {
-    this.isLoginOpen = !this.isLoginOpen;
-    this.loginError = '';
+  get settings$() {
+    return this.settingsService.settings$;
   }
 
-  login() {
-    if (!this.loginEmail || !this.loginPassword) {
-      this.loginError = 'Please enter your email and password.';
-      return;
-    }
-
-    this.authService.login(this.loginEmail, this.loginPassword).subscribe(user => {
-      if (!user) {
-        this.loginError = 'Invalid credentials. Try demo: arafat@exoosis.com';
-        return;
-      }
-      this.loginEmail = '';
-      this.loginPassword = '';
-      this.isLoginOpen = false;
-    });
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
   }
 
   logout() {
     this.authService.logout().subscribe(() => {
-      this.isLoginOpen = false;
+      this.isMenuOpen = false;
+      this.router.navigate(['/']);
     });
   }
 }

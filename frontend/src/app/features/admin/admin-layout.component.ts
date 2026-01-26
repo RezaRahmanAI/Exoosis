@@ -14,29 +14,37 @@ import { RouterLink, RouterOutlet } from '@angular/router';
           <h2 class="text-xl font-bold tracking-tight">EXOSIS ADMIN</h2>
         </div>
         <nav class="mt-4 px-4 space-y-2">
-          <a routerLink="/admin/dashboard" routerLinkActive="bg-primary/20 border-l-4 border-primary" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors">
+          <a routerLink="/dashboard" routerLinkActive="bg-primary/20 border-l-4 border-primary" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors">
             <span class="material-symbols-outlined">dashboard</span>
             <span>Dashboard</span>
           </a>
-          <a routerLink="/admin/solutions" routerLinkActive="bg-primary/20 border-l-4 border-primary" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors">
+          <a routerLink="/dashboard/solutions" routerLinkActive="bg-primary/20 border-l-4 border-primary" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors">
             <span class="material-symbols-outlined">lightbulb</span>
             <span>Solutions</span>
           </a>
-          <a routerLink="/admin/brands" routerLinkActive="bg-primary/20 border-l-4 border-primary" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors">
+          <a routerLink="/dashboard/brands" routerLinkActive="bg-primary/20 border-l-4 border-primary" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors">
             <span class="material-symbols-outlined">handshake</span>
             <span>Brands</span>
           </a>
-          <a routerLink="/admin/jobs" routerLinkActive="bg-primary/20 border-l-4 border-primary" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors">
+          <a routerLink="/dashboard/jobs" routerLinkActive="bg-primary/20 border-l-4 border-primary" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors">
             <span class="material-symbols-outlined">work</span>
             <span>Jobs</span>
           </a>
-          <a routerLink="/admin/team" routerLinkActive="bg-primary/20 border-l-4 border-primary" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors">
+          <a routerLink="/dashboard/team" routerLinkActive="bg-primary/20 border-l-4 border-primary" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors">
             <span class="material-symbols-outlined">groups</span>
             <span>Team</span>
           </a>
-          <a routerLink="/admin/testimonials" routerLinkActive="bg-primary/20 border-l-4 border-primary" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors">
+          <a routerLink="/dashboard/testimonials" routerLinkActive="bg-primary/20 border-l-4 border-primary" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors">
             <span class="material-symbols-outlined">reviews</span>
             <span>Testimonials</span>
+          </a>
+          <a routerLink="/dashboard/settings" routerLinkActive="bg-primary/20 border-l-4 border-primary" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors">
+            <span class="material-symbols-outlined">settings</span>
+            <span>Website Settings</span>
+          </a>
+          <a routerLink="/dashboard/change-password" routerLinkActive="bg-primary/20 border-l-4 border-primary" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors">
+            <span class="material-symbols-outlined">password</span>
+            <span>Change Password</span>
           </a>
           <div class="pt-8 mt-8 border-t border-white/10">
             <a routerLink="/" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors opacity-70">
