@@ -61,11 +61,21 @@ public class AuthController : ControllerBase
     [HttpPost("login")]
     public async Task<ActionResult<AuthResponse>> Login(LoginRequest request, CancellationToken cancellationToken)
     {
+        if (string.IsNullOrWhiteSpace(request.Identifier) || string.IsNullOrWhiteSpace(request.Password))
+        {
+            return BadRequest("Identifier and password are required.");
+        }
+
         var normalized = request.Identifier.Trim();
         var user = await _dbContext.Users
             .FirstOrDefaultAsync(u => u.Email == normalized || (u.Username != null && u.Username == normalized), cancellationToken);
 
         if (user is null)
+        {
+            return Unauthorized("Invalid credentials.");
+        }
+
+        if (string.IsNullOrWhiteSpace(user.PasswordHash))
         {
             return Unauthorized("Invalid credentials.");
         }
