@@ -157,9 +157,9 @@ public class AuthController : ControllerBase
 
     private string GenerateToken(User user)
     {
-        var key = _configuration["Jwt:Key"] ?? "development_key";
-        var issuer = _configuration["Jwt:Issuer"] ?? "Exoosis";
-        var audience = _configuration["Jwt:Audience"] ?? "Exoosis";
+        var key = GetConfigOrDefault("Jwt:Key", "development_key");
+        var issuer = GetConfigOrDefault("Jwt:Issuer", "Exoosis");
+        var audience = GetConfigOrDefault("Jwt:Audience", "Exoosis");
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
@@ -192,6 +192,12 @@ public class AuthController : ControllerBase
             signingCredentials: credentials);
 
         return new JwtSecurityTokenHandler().WriteToken(token);
+    }
+
+    private string GetConfigOrDefault(string key, string fallback)
+    {
+        var value = _configuration[key];
+        return string.IsNullOrWhiteSpace(value) ? fallback : value;
     }
 
     private static UserSummary ToSummary(User user)
