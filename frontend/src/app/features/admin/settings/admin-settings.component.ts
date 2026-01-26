@@ -23,8 +23,9 @@ export class AdminSettingsComponent {
       if (!data) {
         return;
       }
-      this.settings = JSON.parse(JSON.stringify(data));
-      this.paymentMethodsText = this.settings.business.paymentMethods.join(', ');
+      const settings = JSON.parse(JSON.stringify(data)) as WebsiteSettings;
+      this.settings = settings;
+      this.paymentMethodsText = settings.business.paymentMethods.join(', ');
     });
   }
 
