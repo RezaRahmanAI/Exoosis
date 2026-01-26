@@ -1,5 +1,6 @@
 using System.Text;
 using Exoosis.Api.Middleware;
+using Exoosis.Application.Interfaces;
 using Exoosis.Application.Mapping;
 using Exoosis.Application.Services;
 using Exoosis.Application.Validators;
