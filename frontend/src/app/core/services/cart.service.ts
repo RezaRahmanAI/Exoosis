@@ -117,7 +117,8 @@ export class CartService {
     };
 
     return this.api.post<OrderPayload>('/orders', order).pipe(
-      switchMap(() => this.clearCart())
+      switchMap(() => this.clearCart()),
+      map(() => undefined)
     );
   }
 
@@ -204,6 +205,6 @@ export class CartService {
     };
 
     this.clearMockCart();
-    return of(order);
+    return of(order).pipe(map(() => undefined));
   }
 }
