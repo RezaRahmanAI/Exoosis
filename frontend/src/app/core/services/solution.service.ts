@@ -32,6 +32,17 @@ export class SolutionService {
     );
   }
 
+  getFeaturedSolutions(): Observable<Solution[]> {
+    this.loadingSubject.next(true);
+    this.errorSubject.next(null);
+
+    return this.api.get<ApiResponse<Solution[]>>('/solutions/featured').pipe(
+      map(response => response.data ?? []),
+      catchError(error => this.handleError(error)),
+      finalize(() => this.loadingSubject.next(false))
+    );
+  }
+
   getSolutionById(id: string): Observable<Solution> {
     this.loadingSubject.next(true);
     this.errorSubject.next(null);

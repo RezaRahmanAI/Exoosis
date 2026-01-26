@@ -24,6 +24,13 @@ public class SolutionsController : ControllerBase
         return Ok(ApiResponse<IReadOnlyList<SolutionDto>>.Ok(solutions));
     }
 
+    [HttpGet("featured")]
+    public async Task<ActionResult<ApiResponse<IReadOnlyList<SolutionDto>>>> GetFeatured(CancellationToken cancellationToken)
+    {
+        var solutions = await _solutionService.GetFeaturedAsync(cancellationToken);
+        return Ok(ApiResponse<IReadOnlyList<SolutionDto>>.Ok(solutions));
+    }
+
     [HttpGet("{id:guid}")]
     public async Task<ActionResult<ApiResponse<SolutionDto>>> GetById(Guid id, CancellationToken cancellationToken)
     {

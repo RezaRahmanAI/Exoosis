@@ -30,6 +30,13 @@ public class SolutionService : ISolutionService
         return _mapper.Map<IReadOnlyList<SolutionDto>>(solutions);
     }
 
+    public async Task<IReadOnlyList<SolutionDto>> GetFeaturedAsync(CancellationToken cancellationToken = default)
+    {
+        var solutions = await _unitOfWork.Solutions.ListAsync(cancellationToken: cancellationToken);
+        var featuredSolutions = solutions.Where(solution => solution.IsFeatured).ToList();
+        return _mapper.Map<IReadOnlyList<SolutionDto>>(featuredSolutions);
+    }
+
     public async Task<SolutionDto?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var solution = await _unitOfWork.Solutions.GetByIdAsync(id, cancellationToken);

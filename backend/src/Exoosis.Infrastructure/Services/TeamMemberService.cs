@@ -23,6 +23,16 @@ public class TeamMemberService : ITeamMemberService
         return _mapper.Map<IReadOnlyList<TeamMemberDto>>(teamMembers);
     }
 
+    public async Task<IReadOnlyList<TeamMemberDto>> GetBySectionAsync(string section, CancellationToken cancellationToken = default)
+    {
+        var teamMembers = await _unitOfWork.TeamMembers.ListAsync(cancellationToken: cancellationToken);
+        var normalized = section.Trim().ToLowerInvariant();
+        var isLeadership = normalized == "leadership";
+
+        teamMembers = teamMembers.Where(member => member.IsLeadership == isLeadership).ToList();
+        return _mapper.Map<IReadOnlyList<TeamMemberDto>>(teamMembers);
+    }
+
     public async Task<TeamMemberDto?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var member = await _unitOfWork.TeamMembers.GetByIdAsync(id, cancellationToken);
