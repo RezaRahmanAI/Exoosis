@@ -18,6 +18,8 @@ public class ExoosisDbContext : DbContext
     public DbSet<Product> Products => Set<Product>();
     public DbSet<TeamMember> TeamMembers => Set<TeamMember>();
     public DbSet<Solution> Solutions => Set<Solution>();
+    public DbSet<User> Users => Set<User>();
+    public DbSet<WebsiteSettings> WebsiteSettings => Set<WebsiteSettings>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -57,6 +59,12 @@ public class ExoosisDbContext : DbContext
                 new SolutionMetricComparer()),
             value => value == null ? 0 : value.Aggregate(0, (current, item) => HashCode.Combine(current, item.Label, item.Value)),
             value => value == null ? new List<SolutionMetric>() : value.Select(item => new SolutionMetric { Label = item.Label, Value = item.Value }).ToList());
+
+        var generalConverter = CreateJsonConverter<GeneralSettings>();
+        var contactConverter = CreateJsonConverter<ContactSettings>();
+        var socialConverter = CreateJsonConverter<SocialSettings>();
+        var businessConverter = CreateJsonConverter<BusinessSettings>();
+        var seoConverter = CreateJsonConverter<SeoSettings>();
 
         modelBuilder.Entity<Category>(entity =>
         {
@@ -147,6 +155,50 @@ public class ExoosisDbContext : DbContext
             entity.HasIndex(x => x.Name).IsUnique(false);
             entity.HasQueryFilter(x => !x.IsDeleted);
         });
+
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.HasKey(x => x.Id);
+            entity.Property(x => x.FullName).HasMaxLength(200).IsRequired();
+            entity.Property(x => x.Email).HasMaxLength(200).IsRequired();
+            entity.Property(x => x.Username).HasMaxLength(100);
+            entity.Property(x => x.PasswordHash).HasMaxLength(500).IsRequired();
+            entity.Property(x => x.Role).HasMaxLength(50).IsRequired();
+            entity.Property(x => x.ProfilePhotoUrl).HasMaxLength(500);
+            entity.HasIndex(x => x.Email).IsUnique();
+            entity.HasIndex(x => x.Username).IsUnique(false);
+            entity.HasQueryFilter(x => !x.IsDeleted);
+        });
+
+        modelBuilder.Entity<WebsiteSettings>(entity =>
+        {
+            entity.HasKey(x => x.Id);
+            entity.Property(x => x.General)
+                .HasConversion(generalConverter)
+                .HasMaxLength(4000);
+            entity.Property(x => x.Contact)
+                .HasConversion(contactConverter)
+                .HasMaxLength(4000);
+            entity.Property(x => x.Social)
+                .HasConversion(socialConverter)
+                .HasMaxLength(4000);
+            entity.Property(x => x.Business)
+                .HasConversion(businessConverter)
+                .HasMaxLength(4000);
+            entity.Property(x => x.Seo)
+                .HasConversion(seoConverter)
+                .HasMaxLength(4000);
+            entity.HasQueryFilter(x => !x.IsDeleted);
+        });
+    }
+
+    private static ValueConverter<T, string> CreateJsonConverter<T>() where T : class, new()
+    {
+        return new ValueConverter<T, string>(
+            value => JsonSerializer.Serialize(value ?? new T(), (JsonSerializerOptions?)null),
+            value => string.IsNullOrWhiteSpace(value)
+                ? new T()
+                : JsonSerializer.Deserialize<T>(value, (JsonSerializerOptions?)null) ?? new T());
     }
 
     private sealed class SolutionSupportComparer : IEqualityComparer<SolutionSupport>

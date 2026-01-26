@@ -7,9 +7,11 @@ using Exoosis.Application.Validators;
 using Exoosis.Infrastructure.Persistence;
 using Exoosis.Infrastructure.Repositories;
 using Exoosis.Infrastructure.Services;
+using Exoosis.Domain.Entities;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -91,4 +93,30 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+await SeedDataAsync(app);
+
 app.Run();
+
+static async Task SeedDataAsync(WebApplication app)
+{
+    using var scope = app.Services.CreateScope();
+    var dbContext = scope.ServiceProvider.GetRequiredService<ExoosisDbContext>();
+    await dbContext.Database.EnsureCreatedAsync();
+
+    var adminExists = await dbContext.Users.AnyAsync(user => user.Role == "Admin");
+    if (!adminExists)
+    {
+        var admin = new User
+        {
+            FullName = "Exosistech Admin",
+            Email = "sales@exosistech.com",
+            Username = "exosistech",
+            Role = "Admin",
+            EmailVerified = true
+        };
+        var passwordHasher = new PasswordHasher<User>();
+        admin.PasswordHash = passwordHasher.HashPassword(admin, "Admin@321");
+        dbContext.Users.Add(admin);
+        await dbContext.SaveChangesAsync();
+    }
+}

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { SettingsService } from '../../core/services/settings.service';
 
 @Component({
   selector: 'app-contact',
@@ -9,6 +10,8 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './contact.component.html'
 })
 export class ContactComponent {
+  constructor(private settingsService: SettingsService) {}
+
   payload = {
     fullName: '',
     email: '',
@@ -18,6 +21,10 @@ export class ContactComponent {
   };
 
   submitted = false;
+
+  get settings$() {
+    return this.settingsService.settings$;
+  }
 
   submit() {
     this.submitted = true;

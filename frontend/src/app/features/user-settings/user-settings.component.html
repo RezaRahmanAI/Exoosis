@@ -1,0 +1,41 @@
+<main class="min-h-screen bg-slate-50 px-4 py-16">
+  <div class="mx-auto w-full max-w-3xl">
+    <h1 class="text-3xl font-bold text-slate-900">Settings</h1>
+    <p class="mt-2 text-sm text-slate-500">Control your preferences and communication options.</p>
+
+    <div class="mt-8 rounded-2xl border border-slate-200 bg-white p-6">
+      <form class="space-y-6" (ngSubmit)="save()">
+        <label class="block text-sm font-medium text-slate-700">
+          Default Language
+          <select class="mt-2 w-full rounded-lg border border-slate-200 px-4 py-2 text-sm focus:border-primary focus:outline-none" [(ngModel)]="preferences.language" name="language">
+            <option value="en">English</option>
+            <option value="bn">বাংলা</option>
+          </select>
+        </label>
+
+        <label class="block text-sm font-medium text-slate-700">
+          Currency
+          <select class="mt-2 w-full rounded-lg border border-slate-200 px-4 py-2 text-sm focus:border-primary focus:outline-none" [(ngModel)]="preferences.currency" name="currency">
+            <option value="USD">USD</option>
+            <option value="BDT">BDT</option>
+            <option value="EUR">EUR</option>
+          </select>
+        </label>
+
+        <label class="flex items-center gap-3 text-sm text-slate-600">
+          <input type="checkbox" class="rounded border-slate-300" [(ngModel)]="preferences.marketingEmails" name="marketingEmails" />
+          Receive marketing emails
+        </label>
+
+        <label class="flex items-center gap-3 text-sm text-slate-600">
+          <input type="checkbox" class="rounded border-slate-300" [(ngModel)]="preferences.orderUpdates" name="orderUpdates" />
+          Receive order status updates
+        </label>
+
+        <p *ngIf="message" class="rounded-lg bg-emerald-50 px-3 py-2 text-xs text-emerald-600">{{ message }}</p>
+
+        <button class="rounded-lg bg-primary px-6 py-2 text-sm font-semibold text-white" type="submit">Save settings</button>
+      </form>
+    </div>
+  </div>
+</main>

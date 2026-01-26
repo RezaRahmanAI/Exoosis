@@ -17,11 +17,11 @@ export class AppComponent {
   showLayout = true;
 
   constructor(private router: Router) {
-    this.showLayout = !this.router.url.startsWith('/admin');
+    this.showLayout = !(this.router.url.startsWith('/admin') || this.router.url.startsWith('/dashboard'));
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
-      this.showLayout = !event.urlAfterRedirects.startsWith('/admin');
+      this.showLayout = !(event.urlAfterRedirects.startsWith('/admin') || event.urlAfterRedirects.startsWith('/dashboard'));
     });
   }
 }

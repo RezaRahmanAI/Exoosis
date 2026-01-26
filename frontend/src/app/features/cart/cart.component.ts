@@ -21,7 +21,7 @@ export class CartComponent {
   constructor(private cartService: CartService, private authService: AuthService) {
     this.authService.user$.subscribe(user => {
       if (user) {
-        this.customerName = user.name;
+        this.customerName = user.fullName;
       }
     });
   }
