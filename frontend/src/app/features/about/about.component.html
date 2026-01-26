@@ -58,7 +58,7 @@
             <div class="space-y-24">
                 <div *ngFor="let member of leaders; let even = even" [class.md:flex-row-reverse]="!even" class="flex flex-col md:flex-row gap-12 items-center lg:items-start">
                     <div class="w-full md:w-2/5 aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl relative group">
-                        <img [alt]="member.name" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" [src]="member.image" />
+                        <img [alt]="member.name" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" [src]="member.imageUrl" />
                         <div class="absolute inset-0 bg-gradient-to-t from-navy-blue/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     </div>
                     <div class="w-full md:w-3/5 flex flex-col justify-center">
@@ -88,7 +88,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                 <div *ngFor="let member of otherMinds" class="flex flex-col items-center text-center">
                     <div class="w-full aspect-square mb-6 overflow-hidden rounded-xl shadow-md group">
-                        <img [alt]="member.name" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" [src]="member.image" />
+                        <img [alt]="member.name" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" [src]="member.imageUrl" />
                     </div>
                     <h3 class="text-lg font-bold text-navy-blue dark:text-blue-400 mb-1">{{member.name}}</h3>
                     <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">{{member.role}}</p>

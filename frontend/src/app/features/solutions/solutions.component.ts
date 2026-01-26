@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ApiService } from '../../core/services/api.service';
-import { SolutionSoftware } from '../../core/models/entities';
+import { SolutionService } from '../../core/services/solution.service';
+import { Solution } from '../../core/models/entities';
 
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -14,27 +14,31 @@ import { RouterLink } from '@angular/router';
   styleUrl: './solutions.component.css'
 })
 export class SolutionsComponent implements OnInit {
-  softwareCatalog: SolutionSoftware[] = [];
+  softwareCatalog: Solution[] = [];
   searchTerm = '';
-  selectedCategory: 'All' | SolutionSoftware['category'] = 'All';
+  selectedCategory: 'All' | string = 'All';
 
-  constructor(private api: ApiService) {}
+  constructor(private solutionService: SolutionService) {}
 
   ngOnInit() {
-    this.api.get<SolutionSoftware[]>('/solutionSoftware').subscribe(data => this.softwareCatalog = data);
+    this.solutionService.getSolutions().subscribe(data => {
+      this.softwareCatalog = data.filter(solution => solution.isActive);
+    });
   }
 
   get categories() {
     const unique = Array.from(new Set(this.softwareCatalog.map(item => item.category)));
-    return ['All', ...unique] as Array<'All' | SolutionSoftware['category']>;
+    return ['All', ...unique] as Array<'All' | string>;
   }
 
   get filteredSoftware() {
     return this.softwareCatalog.filter(item => {
       const matchesCategory = this.selectedCategory === 'All' || item.category === this.selectedCategory;
+      const name = item.name ?? '';
+      const summary = item.summary ?? '';
       const matchesSearch = !this.searchTerm
-        || item.name.toLowerCase().includes(this.searchTerm.toLowerCase())
-        || item.summary.toLowerCase().includes(this.searchTerm.toLowerCase());
+        || name.toLowerCase().includes(this.searchTerm.toLowerCase())
+        || summary.toLowerCase().includes(this.searchTerm.toLowerCase());
       return matchesCategory && matchesSearch;
     });
   }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ApiService } from '../../core/services/api.service';
+import { BrandService } from '../../core/services/brand.service';
+import { TeamService } from '../../core/services/team.service';
 import { TeamMember, Partner } from '../../core/models/entities';
 
 @Component({
@@ -36,18 +37,18 @@ export class AboutComponent implements OnInit {
     { name: 'Bangladesh Police', logo: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAt8SCYniong0KnxDtNACA_ohHxtLEcSZ09l_y8rGVVqdDfSfBCaj6BmOgMZgKvGGmkhZ7z3iqMint8lv4hMhMY21fOG9BqreGhqknsrCJeqiH7Ef7kcV0nMH6Zsr2_2yD01774uyCDYPAhU9e7oofEw8lfsedHRroSt9WnQTwm9VcKXb1y4uw8duGAKBx9nmIFW0nUc4Irq5bS9vJKYV1bbQk9ShLlrHFXzdXCurIIrv8I8IyBxNYfwniX0EtDvuAjhxfnJo2N0kTY' }
   ];
 
-  constructor(private api: ApiService) {}
+  constructor(private teamService: TeamService, private brandService: BrandService) {}
 
   ngOnInit() {
-    this.api.get<TeamMember[]>('/team').subscribe(data => this.team = data);
-    this.api.get<Partner[]>('/partners').subscribe(data => this.partners = data);
+    this.teamService.getTeamMembers().subscribe(data => this.team = data.filter(member => member.isActive));
+    this.brandService.getBrands().subscribe(data => this.partners = data.filter(partner => partner.isActive));
   }
 
   get leaders() {
-    return this.team.filter(m => m.isLeadership);
+    return this.team.filter(m => m.isLeadership && m.isActive);
   }
 
   get otherMinds() {
-    return this.team.filter(m => !m.isLeadership);
+    return this.team.filter(m => !m.isLeadership && m.isActive);
   }
 }

@@ -1,11 +1,31 @@
+export interface SolutionMetric {
+  label: string;
+  value: string;
+}
+
+export interface SolutionSupport {
+  label: string;
+  detail: string;
+}
+
 export interface Solution {
-  id: number;
-  title: string;
-  desc: string;
-  icon: string;
+  id: string;
+  name: string;
+  summary?: string | null;
+  description?: string | null;
+  icon?: string | null;
   category: string;
   brands: string[];
-  image: string;
+  imageUrl?: string | null;
+  isFeatured: boolean;
+  isActive: boolean;
+  capabilities: string[];
+  industries: string[];
+  integrations: string[];
+  compliance: string[];
+  deployment: string[];
+  support: SolutionSupport[];
+  metrics: SolutionMetric[];
 }
 
 export interface Job {
@@ -24,19 +44,23 @@ export interface Job {
 }
 
 export interface TeamMember {
-  id: number;
+  id: string;
   name: string;
   role: string;
-  image: string;
-  quote: string;
-  bio: string;
+  imageUrl?: string | null;
+  quote?: string;
+  bio?: string | null;
   isLeadership: boolean;
+  linkedInUrl?: string;
+  isActive: boolean;
 }
 
 export interface Partner {
-  id: number;
+  id: string;
   name: string;
-  logo: string;
+  description?: string | null;
+  logoUrl?: string | null;
+  isActive: boolean;
 }
 
 export interface Testimonial {
@@ -102,22 +126,6 @@ export interface EnterpriseSoftware {
   deploymentOptions: string[];
   metrics: { label: string; value: string }[];
   roadmap: string[];
-  image: string;
-}
-
-export interface SolutionSoftware {
-  id: string;
-  name: string;
-  category: 'Industrial' | 'Corporate' | 'Banking';
-  summary: string;
-  description: string;
-  capabilities: string[];
-  industries: string[];
-  integrations: string[];
-  compliance: string[];
-  deployment: string[];
-  support: { label: string; detail: string }[];
-  metrics: { label: string; value: string }[];
   image: string;
 }
 

@@ -4,6 +4,7 @@ import { AboutComponent } from './features/about/about.component';
 import { SolutionsComponent } from './features/solutions/solutions.component';
 import { CareerComponent } from './features/career/career.component';
 import { PartnersComponent } from './features/partners/partners.component';
+import { PartnerDetailsComponent } from './features/partners/partner-details/partner-details.component';
 import { ProductDetailsComponent } from './features/products/product-details/product-details.component';
 import { ProductListComponent } from './features/products/product-list/product-list.component';
 import { CategoryListComponent } from './features/categories/category-list/category-list.component';
@@ -25,6 +26,7 @@ export const routes: Routes = [
   { path: 'categories', component: CategoryListComponent },
   { path: 'cart', component: CartComponent },
   { path: 'enterprise-software', component: EnterpriseSoftwareComponent },
+  { path: 'partners/:id', component: PartnerDetailsComponent },
   { path: 'partners', component: PartnersComponent },
   { path: 'career', component: CareerComponent },
   { 
@@ -43,6 +45,10 @@ export const routes: Routes = [
       { 
         path: 'solutions', 
         loadComponent: () => import('./features/admin/solutions/solutions.component').then(m => m.AdminSolutionsComponent) 
+      },
+      { 
+        path: 'brands', 
+        loadComponent: () => import('./features/admin/brands/brands.component').then(m => m.AdminBrandsComponent) 
       },
       { 
         path: 'jobs', 
