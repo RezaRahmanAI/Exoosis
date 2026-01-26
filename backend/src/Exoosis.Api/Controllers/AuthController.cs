@@ -153,12 +153,25 @@ public class AuthController : ControllerBase
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
+        var email = user.Email ?? string.Empty;
+        var role = string.IsNullOrWhiteSpace(user.Role) ? "User" : user.Role;
+        var displayName = user.FullName;
+        if (string.IsNullOrWhiteSpace(displayName))
+        {
+            displayName = user.Username;
+        }
+        if (string.IsNullOrWhiteSpace(displayName))
+        {
+            displayName = email;
+        }
+        displayName ??= "User";
+
         var claims = new List<Claim>
         {
             new(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new(ClaimTypes.Email, user.Email),
-            new(ClaimTypes.Name, user.FullName),
-            new(ClaimTypes.Role, user.Role)
+            new(ClaimTypes.Email, email),
+            new(ClaimTypes.Name, displayName),
+            new(ClaimTypes.Role, role)
         };
 
         var token = new JwtSecurityToken(
