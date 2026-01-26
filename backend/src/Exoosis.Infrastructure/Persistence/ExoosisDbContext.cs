@@ -25,7 +25,7 @@ public class ExoosisDbContext : DbContext
             value => JsonSerializer.Serialize(value ?? new List<string>(), (JsonSerializerOptions?)null),
             value => string.IsNullOrWhiteSpace(value)
                 ? new List<string>()
-                : JsonSerializer.Deserialize<List<string>>(value) ?? new List<string>());
+                : JsonSerializer.Deserialize<List<string>>(value, (JsonSerializerOptions?)null) ?? new List<string>());
 
         var stringListComparer = new ValueComparer<List<string>>(
             (left, right) => (left ?? new List<string>()).SequenceEqual(right ?? new List<string>()),
@@ -36,7 +36,7 @@ public class ExoosisDbContext : DbContext
             value => JsonSerializer.Serialize(value ?? new List<SolutionSupport>(), (JsonSerializerOptions?)null),
             value => string.IsNullOrWhiteSpace(value)
                 ? new List<SolutionSupport>()
-                : JsonSerializer.Deserialize<List<SolutionSupport>>(value) ?? new List<SolutionSupport>());
+                : JsonSerializer.Deserialize<List<SolutionSupport>>(value, (JsonSerializerOptions?)null) ?? new List<SolutionSupport>());
 
         var supportListComparer = new ValueComparer<List<SolutionSupport>>(
             (left, right) => (left ?? new List<SolutionSupport>()).SequenceEqual(
@@ -49,7 +49,7 @@ public class ExoosisDbContext : DbContext
             value => JsonSerializer.Serialize(value ?? new List<SolutionMetric>(), (JsonSerializerOptions?)null),
             value => string.IsNullOrWhiteSpace(value)
                 ? new List<SolutionMetric>()
-                : JsonSerializer.Deserialize<List<SolutionMetric>>(value) ?? new List<SolutionMetric>());
+                : JsonSerializer.Deserialize<List<SolutionMetric>>(value, (JsonSerializerOptions?)null) ?? new List<SolutionMetric>());
 
         var metricListComparer = new ValueComparer<List<SolutionMetric>>(
             (left, right) => (left ?? new List<SolutionMetric>()).SequenceEqual(
