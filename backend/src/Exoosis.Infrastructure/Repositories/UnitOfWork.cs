@@ -14,11 +14,15 @@ public class UnitOfWork : IUnitOfWork
         Categories = new EfRepository<Category>(dbContext);
         Brands = new EfRepository<Brand>(dbContext);
         Products = new EfRepository<Product>(dbContext);
+        TeamMembers = new EfRepository<TeamMember>(dbContext);
+        Solutions = new EfRepository<Solution>(dbContext);
     }
 
     public IRepository<Category> Categories { get; }
     public IRepository<Brand> Brands { get; }
     public IRepository<Product> Products { get; }
+    public IRepository<TeamMember> TeamMembers { get; }
+    public IRepository<Solution> Solutions { get; }
 
     public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

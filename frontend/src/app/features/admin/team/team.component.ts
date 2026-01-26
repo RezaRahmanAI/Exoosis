@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ApiService } from '../../../core/services/api.service';
+import { TeamService } from '../../../core/services/team.service';
 import { TeamMember } from '../../../core/models/entities';
 
 @Component({
@@ -23,11 +23,12 @@ import { TeamMember } from '../../../core/models/entities';
 
       <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         <div *ngFor="let member of team" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-start gap-4 hover:shadow-md transition-shadow relative">
-          <img [src]="member.image" class="size-16 rounded-xl object-cover bg-gray-100 border border-gray-100">
+          <img [src]="member.imageUrl" class="size-16 rounded-xl object-cover bg-gray-100 border border-gray-100">
           <div class="flex-1 min-w-0">
             <div class="flex items-center gap-2">
               <h3 class="font-bold text-gray-800 truncate">{{member.name}}</h3>
               <span *ngIf="member.isLeadership" class="px-1.5 py-0.5 rounded-md bg-blue-50 text-primary text-[10px] font-bold uppercase">Lead</span>
+              <span *ngIf="!member.isActive" class="px-1.5 py-0.5 rounded-md bg-amber-50 text-amber-600 text-[10px] font-bold uppercase">Inactive</span>
             </div>
             <p class="text-sm text-gray-500 mb-2 truncate">{{member.role}}</p>
             <div class="flex gap-2">
@@ -63,8 +64,16 @@ import { TeamMember } from '../../../core/models/entities';
               </div>
             </div>
             <div>
+              <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Image URL</label>
+              <input [(ngModel)]="currentMember.imageUrl" class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-primary outline-none" placeholder="https://">
+            </div>
+            <div>
               <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Bio</label>
               <textarea [(ngModel)]="currentMember.bio" rows="3" class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-primary outline-none" placeholder="Short biography..."></textarea>
+            </div>
+            <div class="flex items-center gap-3">
+              <input type="checkbox" [(ngModel)]="currentMember.isActive" id="isActive" class="size-4 rounded border-gray-300 text-primary focus:ring-primary">
+              <label for="isActive" class="text-sm font-bold text-gray-700">Active Profile</label>
             </div>
           </div>
           <div class="p-6 bg-gray-50 flex gap-3 justify-end">
@@ -81,18 +90,22 @@ export class AdminTeamComponent implements OnInit {
   isModalOpen = false;
   currentMember: Partial<TeamMember> = {};
 
-  constructor(private api: ApiService) {}
+  constructor(private teamService: TeamService) {}
 
   ngOnInit() {
     this.loadTeam();
   }
 
   loadTeam() {
-    this.api.get<TeamMember[]>('/team').subscribe(data => this.team = data);
+    this.teamService.getTeamMembers().subscribe(data => this.team = data);
   }
 
   openModal(member: TeamMember | null = null) {
-    this.currentMember = member ? { ...member } : { isLeadership: false, image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCM2x5D94owixu9qVXa8RY7tb7VRjn0yHzJw3O27nwTAuKSg3aMpOma89mMh8wtdH4h8j9qImMUNtrzSdgz8z9Rp7-Mlcag5cwTuOOU_mNjLCT9nF7Dntxpv25u9K7o5uiXuvn-wAAtJJB_mjfFiW-Sd7OG4GocJjd77y3eEy4QeDh2yDFDfjACBoYdlOV25n1kJbSHai2nHE1aKI1cquQ83HvqhfqqJk1nfDtRGaXmHi2NVpSfHMvitIbFEAFdX_RTOWJHK2Tz2w-9' };
+    this.currentMember = member ? { ...member } : {
+      isLeadership: false,
+      isActive: true,
+      imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCM2x5D94owixu9qVXa8RY7tb7VRjn0yHzJw3O27nwTAuKSg3aMpOma89mMh8wtdH4h8j9qImMUNtrzSdgz8z9Rp7-Mlcag5cwTuOOU_mNjLCT9nF7Dntxpv25u9K7o5uiXuvn-wAAtJJB_mjfFiW-Sd7OG4GocJjd77y3eEy4QeDh2yDFDfjACBoYdlOV25n1kJbSHai2nHE1aKI1cquQ83HvqhfqqJk1nfDtRGaXmHi2NVpSfHMvitIbFEAFdX_RTOWJHK2Tz2w-9'
+    };
     this.isModalOpen = true;
   }
 
@@ -102,21 +115,21 @@ export class AdminTeamComponent implements OnInit {
 
   saveMember() {
     if (this.currentMember.id) {
-      this.api.put<TeamMember>(`/team/${this.currentMember.id}`, this.currentMember).subscribe(() => {
+      this.teamService.updateTeamMember(this.currentMember.id, this.currentMember).subscribe(() => {
         this.loadTeam();
         this.closeModal();
       });
     } else {
-      this.api.post<TeamMember>('/team', this.currentMember).subscribe(() => {
+      this.teamService.createTeamMember(this.currentMember).subscribe(() => {
         this.loadTeam();
         this.closeModal();
       });
     }
   }
 
-  deleteMember(id: number) {
+  deleteMember(id: string) {
     if (confirm('Are you sure you want to remove this team member?')) {
-      this.api.delete(`/team/${id}`).subscribe(() => this.loadTeam());
+      this.teamService.deleteTeamMember(id).subscribe(() => this.loadTeam());
     }
   }
 }

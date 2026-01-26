@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { ApiService } from '../../../core/services/api.service';
-import { SolutionSoftware } from '../../../core/models/entities';
+import { SolutionService } from '../../../core/services/solution.service';
+import { Solution } from '../../../core/models/entities';
 
 @Component({
   selector: 'app-software-details',
@@ -11,14 +11,20 @@ import { SolutionSoftware } from '../../../core/models/entities';
   templateUrl: './software-details.component.html'
 })
 export class SoftwareDetailsComponent implements OnInit {
-  software?: SolutionSoftware;
+  software?: Solution;
 
-  constructor(private route: ActivatedRoute, private api: ApiService) {}
+  constructor(private route: ActivatedRoute, private solutionService: SolutionService) {}
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
-    this.api.get<SolutionSoftware[]>('/solutionSoftware').subscribe(data => {
-      this.software = data.find(item => item.id === id);
+    if (!id) {
+      return;
+    }
+
+    this.solutionService.getSolutionById(id).subscribe({
+      next: data => {
+        this.software = data;
+      }
     });
   }
 }

@@ -40,6 +40,50 @@
       </div>
     </div>
   </section>
+  <!-- Partner Directory -->
+  <section class="bg-white dark:bg-surface-dark py-16 border-b border-gray-100 dark:border-gray-800">
+    <div class="page-container">
+      <div class="text-center max-w-3xl mx-auto">
+        <p class="text-sm font-semibold text-primary uppercase tracking-widest">Partner Directory</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-[#0d121b] dark:text-white mt-4">Brands powering our ecosystem</h2>
+        <p class="text-gray-500 dark:text-gray-400 mt-4">
+          Browse our active partner roster and learn more about the technology leaders we collaborate with across industries.
+        </p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
+        <a
+          *ngFor="let partner of partners"
+          class="group bg-surface-light dark:bg-surface-dark rounded-2xl border border-[#e7ebf3] dark:border-[#2d3748] p-6 flex flex-col gap-4 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/5 transition-all"
+          [routerLink]="['/partners', partner.id]"
+        >
+          <div class="h-20 flex items-center justify-center bg-white dark:bg-[#1e2736] rounded-xl border border-gray-100 dark:border-[#2d3748]">
+            <img
+              *ngIf="partner.logoUrl"
+              [alt]="partner.name"
+              class="h-12 w-auto object-contain"
+              [src]="partner.logoUrl"
+            />
+            <span *ngIf="!partner.logoUrl" class="text-gray-400 text-sm font-semibold">Logo Coming Soon</span>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-[#0d121b] dark:text-white group-hover:text-primary transition-colors">
+              {{ partner.name }}
+            </h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-2 line-clamp-3">
+              {{ partner.description || 'Strategic technology partner delivering enterprise-grade solutions.' }}
+            </p>
+          </div>
+          <span class="text-sm font-semibold text-primary inline-flex items-center gap-1">
+            View details
+            <span class="material-symbols-outlined text-base">arrow_forward</span>
+          </span>
+        </a>
+      </div>
+      <div *ngIf="partners.length === 0" class="text-center mt-10 text-gray-500 dark:text-gray-400">
+        No partners available yet. Check back soon for updates.
+      </div>
+    </div>
+  </section>
   <!-- Filters Section -->
   <section
     class="sticky top-[65px] z-40 border-b border-[#e7ebf3] dark:border-[#2d3748] bg-surface-light/90 dark:bg-surface-dark/90 backdrop-blur-md"

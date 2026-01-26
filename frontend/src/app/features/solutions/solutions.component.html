@@ -53,7 +53,7 @@
         >
           <div class="flex items-center justify-between">
             <span class="text-xs font-semibold uppercase tracking-widest text-primary">{{ software.category }}</span>
-            <span class="text-xs text-slate-500 dark:text-slate-400">{{ software.metrics[0].value }}</span>
+            <span class="text-xs text-slate-500 dark:text-slate-400">{{ software.metrics[0]?.value || 'Optimized' }}</span>
           </div>
           <h2 class="text-xl font-bold text-slate-900 dark:text-white mt-4">{{ software.name }}</h2>
           <p class="text-slate-600 dark:text-slate-300 mt-3">{{ software.summary }}</p>

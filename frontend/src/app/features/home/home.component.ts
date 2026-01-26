@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { BrandService } from '../../core/services/brand.service';
+import { SolutionService } from '../../core/services/solution.service';
 import { ApiService } from '../../core/services/api.service';
 import { Solution, Partner, Testimonial } from '../../core/models/entities';
 import { HeroSectionComponent } from './sections/hero-section.component';
@@ -112,11 +114,24 @@ export class HomeComponent implements OnInit {
     }
   ];
 
-  constructor(private api: ApiService) {}
+  constructor(
+    private api: ApiService,
+    private solutionService: SolutionService,
+    private brandService: BrandService
+  ) {}
 
   ngOnInit() {
-    this.api.get<Solution[]>('/solutions').subscribe(data => this.solutions = data.slice(0, 3));
-    this.api.get<Partner[]>('/partners').subscribe(data => this.logos = data);
+    this.solutionService.getSolutions().subscribe(data => {
+      const activeSolutions = data.filter(solution => solution.isActive);
+      const featuredSolutions = activeSolutions.filter(solution => solution.isFeatured);
+      const list = featuredSolutions.length ? featuredSolutions : activeSolutions;
+      this.solutions = list.slice(0, 3);
+    });
+
+    this.brandService.getBrands().subscribe(data => {
+      this.logos = data.filter(brand => brand.isActive);
+    });
+
     this.api.get<Testimonial[]>('/testimonials').subscribe(data => {
       this.testimonials = data;
     });

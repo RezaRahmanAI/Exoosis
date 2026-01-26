@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ApiService } from '../../../core/services/api.service';
-import { Solution } from '../../../core/models/entities';
+import { SolutionService } from '../../../core/services/solution.service';
+import { Solution, SolutionMetric, SolutionSupport } from '../../../core/models/entities';
 
 @Component({
   selector: 'app-admin-solutions',
@@ -28,7 +28,7 @@ import { Solution } from '../../../core/models/entities';
             <tr>
               <th class="px-6 py-4">Solution</th>
               <th class="px-6 py-4">Category</th>
-              <th class="px-6 py-4">Brands</th>
+              <th class="px-6 py-4">Industries</th>
               <th class="px-6 py-4 text-right">Actions</th>
             </tr>
           </thead>
@@ -40,8 +40,8 @@ import { Solution } from '../../../core/models/entities';
                     <span class="material-symbols-outlined text-xl">{{sol.icon}}</span>
                   </div>
                   <div>
-                    <p class="font-bold text-gray-800 line-clamp-1">{{sol.title}}</p>
-                    <p class="text-xs text-gray-400 max-w-xs truncate">{{sol.desc}}</p>
+                    <p class="font-bold text-gray-800 line-clamp-1">{{sol.name}}</p>
+                    <p class="text-xs text-gray-400 max-w-xs truncate">{{sol.summary}}</p>
                   </div>
                 </div>
               </td>
@@ -50,7 +50,7 @@ import { Solution } from '../../../core/models/entities';
               </td>
               <td class="px-6 py-4">
                 <div class="flex flex-wrap gap-1">
-                  <span *ngFor="let brand of sol.brands" class="px-1.5 py-0.5 rounded-md bg-gray-100 text-gray-500 text-[10px]">{{brand}}</span>
+                  <span *ngFor="let industry of sol.industries" class="px-1.5 py-0.5 rounded-md bg-gray-100 text-gray-500 text-[10px]">{{industry}}</span>
                 </div>
               </td>
               <td class="px-6 py-4 text-right">
@@ -68,38 +68,89 @@ import { Solution } from '../../../core/models/entities';
         </table>
       </div>
 
-      <!-- Edit/Add Modal (Simplified) -->
+      <!-- Edit/Add Modal -->
       <div *ngIf="isModalOpen" class="fixed inset-0 bg-navy-blue/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden animate-fade-in-up">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl overflow-hidden animate-fade-in-up">
           <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50">
             <h3 class="text-xl font-bold text-gray-800">{{ currentSol.id ? 'Edit' : 'Add' }} Solution</h3>
             <button (click)="closeModal()" class="text-gray-400 hover:text-gray-600">
               <span class="material-symbols-outlined">close</span>
             </button>
           </div>
-          <div class="p-6 space-y-4">
+          <div class="p-6 space-y-4 max-h-[70vh] overflow-y-auto">
             <div>
-              <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Title</label>
-              <input [(ngModel)]="currentSol.title" class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all outline-none" placeholder="e.g. IT Hardware">
+              <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Name</label>
+              <input [(ngModel)]="currentSol.name" class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all outline-none" placeholder="e.g. Industrial Automation Suite">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Summary</label>
+              <input [(ngModel)]="currentSol.summary" class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all outline-none" placeholder="Short overview...">
             </div>
             <div>
               <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Description</label>
-              <textarea [(ngModel)]="currentSol.desc" rows="3" class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all outline-none" placeholder="Enter solution details..."></textarea>
+              <textarea [(ngModel)]="currentSol.description" rows="3" class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all outline-none" placeholder="Enter solution details..."></textarea>
             </div>
             <div class="grid grid-cols-2 gap-4">
               <div>
                 <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Category</label>
-                <select [(ngModel)]="currentSol.category" class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all outline-none appearance-none">
-                  <option value="Hardware">Hardware</option>
-                  <option value="Networking">Networking</option>
-                  <option value="Security">Security</option>
-                  <option value="Software">Software</option>
-                </select>
+                <input [(ngModel)]="currentSol.category" class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all outline-none" placeholder="Industrial, Corporate, Banking...">
               </div>
               <div>
                 <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Icon</label>
-                <input [(ngModel)]="currentSol.icon" class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all outline-none" placeholder="e.g. computer">
+                <input [(ngModel)]="currentSol.icon" class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all outline-none" placeholder="e.g. precision_manufacturing">
               </div>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Image URL</label>
+              <input [(ngModel)]="currentSol.imageUrl" class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all outline-none" placeholder="https://">
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Industries (comma separated)</label>
+                <input [(ngModel)]="industriesText" class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-primary outline-none" placeholder="Manufacturing, Logistics">
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Brands (comma separated)</label>
+                <input [(ngModel)]="brandsText" class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-primary outline-none" placeholder="Cisco, Dell">
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Capabilities (comma separated)</label>
+              <input [(ngModel)]="capabilitiesText" class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-primary outline-none" placeholder="Automation, Analytics">
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Integrations (comma separated)</label>
+                <input [(ngModel)]="integrationsText" class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-primary outline-none" placeholder="ERP, CRM">
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Compliance (comma separated)</label>
+                <input [(ngModel)]="complianceText" class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-primary outline-none" placeholder="ISO 27001, GDPR">
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Deployment (comma separated)</label>
+              <input [(ngModel)]="deploymentText" class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-primary outline-none" placeholder="Cloud, On-premises">
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Metrics (one per line, label:value)</label>
+                <textarea [(ngModel)]="metricsText" rows="3" class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-primary outline-none" placeholder="Uptime:99.9%"></textarea>
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Support (one per line, label:detail)</label>
+                <textarea [(ngModel)]="supportText" rows="3" class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-primary outline-none" placeholder="Implementation:90-day onboarding"></textarea>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-6">
+              <label class="inline-flex items-center gap-2 text-sm font-semibold text-gray-700">
+                <input type="checkbox" [(ngModel)]="currentSol.isFeatured" class="size-4 rounded border-gray-300 text-primary focus:ring-primary">
+                Featured on homepage
+              </label>
+              <label class="inline-flex items-center gap-2 text-sm font-semibold text-gray-700">
+                <input type="checkbox" [(ngModel)]="currentSol.isActive" class="size-4 rounded border-gray-300 text-primary focus:ring-primary">
+                Active
+              </label>
             </div>
           </div>
           <div class="p-6 bg-gray-50 flex gap-3 justify-end">
@@ -116,18 +167,45 @@ export class AdminSolutionsComponent implements OnInit {
   isModalOpen = false;
   currentSol: Partial<Solution> = {};
 
-  constructor(private api: ApiService) {}
+  brandsText = '';
+  capabilitiesText = '';
+  industriesText = '';
+  integrationsText = '';
+  complianceText = '';
+  deploymentText = '';
+  metricsText = '';
+  supportText = '';
+
+  constructor(private solutionService: SolutionService) {}
 
   ngOnInit() {
     this.loadSolutions();
   }
 
   loadSolutions() {
-    this.api.get<Solution[]>('/solutions').subscribe(data => this.solutions = data);
+    this.solutionService.getSolutions().subscribe(data => this.solutions = data);
   }
 
   openModal(sol: Solution | null = null) {
-    this.currentSol = sol ? { ...sol } : { brands: [], icon: 'grid_view', category: 'Hardware' };
+    this.currentSol = sol ? { ...sol } : {
+      name: '',
+      summary: '',
+      description: '',
+      category: 'Industrial',
+      icon: 'grid_view',
+      brands: [],
+      capabilities: [],
+      industries: [],
+      integrations: [],
+      compliance: [],
+      deployment: [],
+      metrics: [],
+      support: [],
+      imageUrl: '',
+      isFeatured: false,
+      isActive: true
+    };
+    this.syncTextFields();
     this.isModalOpen = true;
   }
 
@@ -136,22 +214,77 @@ export class AdminSolutionsComponent implements OnInit {
   }
 
   saveSolution() {
+    const payload = this.buildPayload();
     if (this.currentSol.id) {
-      this.api.put<Solution>(`/solutions/${this.currentSol.id}`, this.currentSol).subscribe(() => {
+      this.solutionService.updateSolution(this.currentSol.id, payload).subscribe(() => {
         this.loadSolutions();
         this.closeModal();
       });
     } else {
-      this.api.post<Solution>('/solutions', this.currentSol).subscribe(() => {
+      this.solutionService.createSolution(payload).subscribe(() => {
         this.loadSolutions();
         this.closeModal();
       });
     }
   }
 
-  deleteSolution(id: number) {
+  deleteSolution(id: string) {
     if (confirm('Are you sure you want to delete this solution?')) {
-      this.api.delete(`/solutions/${id}`).subscribe(() => this.loadSolutions());
+      this.solutionService.deleteSolution(id).subscribe(() => this.loadSolutions());
     }
+  }
+
+  private syncTextFields() {
+    this.brandsText = (this.currentSol.brands ?? []).join(', ');
+    this.capabilitiesText = (this.currentSol.capabilities ?? []).join(', ');
+    this.industriesText = (this.currentSol.industries ?? []).join(', ');
+    this.integrationsText = (this.currentSol.integrations ?? []).join(', ');
+    this.complianceText = (this.currentSol.compliance ?? []).join(', ');
+    this.deploymentText = (this.currentSol.deployment ?? []).join(', ');
+    this.metricsText = (this.currentSol.metrics ?? [])
+      .map(metric => `${metric.label}:${metric.value}`)
+      .join('\n');
+    this.supportText = (this.currentSol.support ?? [])
+      .map(item => `${item.label}:${item.detail}`)
+      .join('\n');
+  }
+
+  private buildPayload(): Partial<Solution> {
+    return {
+      ...this.currentSol,
+      brands: this.parseList(this.brandsText),
+      capabilities: this.parseList(this.capabilitiesText),
+      industries: this.parseList(this.industriesText),
+      integrations: this.parseList(this.integrationsText),
+      compliance: this.parseList(this.complianceText),
+      deployment: this.parseList(this.deploymentText),
+      metrics: this.parsePairs(this.metricsText, (label, value) => ({ label, value })),
+      support: this.parsePairs(this.supportText, (label, detail) => ({ label, detail }))
+    };
+  }
+
+  private parseList(value: string): string[] {
+    return value
+      .split(',')
+      .map(item => item.trim())
+      .filter(Boolean);
+  }
+
+  private parsePairs<T>(value: string, factory: (label: string, detail: string) => T): T[] {
+    return value
+      .split('\n')
+      .map(line => line.trim())
+      .filter(Boolean)
+      .map(line => {
+        const [label, ...rest] = line.split(':');
+        const detail = rest.join(':').trim();
+        return factory(label.trim(), detail || '');
+      })
+      .filter(item => {
+        if ('label' in (item as SolutionMetric | SolutionSupport)) {
+          return Boolean((item as SolutionMetric | SolutionSupport).label);
+        }
+        return true;
+      });
   }
 }

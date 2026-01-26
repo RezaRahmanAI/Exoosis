@@ -2,6 +2,8 @@ using AutoMapper;
 using Exoosis.Application.DTOs.Brands;
 using Exoosis.Application.DTOs.Categories;
 using Exoosis.Application.DTOs.Products;
+using Exoosis.Application.DTOs.Solutions;
+using Exoosis.Application.DTOs.TeamMembers;
 using Exoosis.Domain.Entities;
 
 namespace Exoosis.Application.Mapping;
@@ -23,5 +25,15 @@ public class CatalogProfile : Profile
             .ForMember(dest => dest.BrandName, opt => opt.MapFrom(src => src.Brand != null ? src.Brand.Name : null));
         CreateMap<CreateProductRequest, Product>();
         CreateMap<UpdateProductRequest, Product>();
+
+        CreateMap<TeamMember, TeamMemberDto>();
+        CreateMap<CreateTeamMemberRequest, TeamMember>();
+        CreateMap<UpdateTeamMemberRequest, TeamMember>();
+
+        CreateMap<SolutionSupport, SolutionSupportDto>();
+        CreateMap<SolutionMetric, SolutionMetricDto>();
+        CreateMap<Solution, SolutionDto>();
+        CreateMap<CreateSolutionRequest, Solution>();
+        CreateMap<UpdateSolutionRequest, Solution>();
     }
 }
