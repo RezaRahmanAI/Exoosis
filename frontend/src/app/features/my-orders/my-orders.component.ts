@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { OrderService } from '../../core/services/order.service';
+import { OrderPayload } from '../../core/models/entities';
 
 @Component({
   selector: 'app-my-orders',
@@ -7,9 +9,20 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   templateUrl: './my-orders.component.html'
 })
-export class MyOrdersComponent {
-  orders = [
-    { id: 'ORD-1001', status: 'Processing', total: 1299, placedAt: '2024-06-15' },
-    { id: 'ORD-1002', status: 'Delivered', total: 799, placedAt: '2024-05-22' }
-  ];
+export class MyOrdersComponent implements OnInit {
+  orders: OrderPayload[] = [];
+  isLoading = true;
+
+  constructor(private orderService: OrderService) {}
+
+  ngOnInit(): void {
+    this.orderService.getOrders().subscribe(orders => {
+      this.orders = orders;
+      this.isLoading = false;
+    });
+  }
+
+  formatOrderId(id: number) {
+    return `ORD-${id.toString().padStart(4, '0')}`;
+  }
 }

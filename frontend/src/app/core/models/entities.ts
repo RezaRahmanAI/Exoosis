@@ -218,6 +218,7 @@ export interface OrderPayload {
   customerPhone: string;
   customerAddress: string;
   placedAt: string;
+  status?: string;
   total: number;
   items: CartItem[];
 }

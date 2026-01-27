@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, forkJoin, map, of, switchMap, tap } from 'rxjs';
 import { ApiService } from './api.service';
+import { OrderService } from './order.service';
 import { CartItem, OrderPayload, ProductDetail } from '../models/entities';
 import { environment } from '../../../environments/environment';
 
@@ -18,7 +19,7 @@ export class CartService {
     map(items => items.reduce((total, item) => total + item.price * item.quantity, 0))
   );
 
-  constructor(private api: ApiService) {
+  constructor(private api: ApiService, private orderService: OrderService) {
     this.loadCart().subscribe();
   }
 
@@ -103,20 +104,17 @@ export class CartService {
   }
 
   placeOrder(payload: Omit<OrderPayload, 'id' | 'placedAt' | 'items' | 'total'>) {
-    if (environment.useMockData) {
-      return this.placeMockOrder(payload);
-    }
-
     const items = this.cartItemsSubject.value;
     const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
     const order: Omit<OrderPayload, 'id'> = {
       ...payload,
       placedAt: new Date().toISOString(),
+      status: 'Processing',
       total,
       items
     };
 
-    return this.api.post<OrderPayload>('/orders', order).pipe(
+    return this.orderService.createOrder(order).pipe(
       switchMap(() => this.clearCart()),
       map(() => undefined)
     );
@@ -194,17 +192,4 @@ export class CartService {
     return of([]);
   }
 
-  private placeMockOrder(payload: Omit<OrderPayload, 'id' | 'placedAt' | 'items' | 'total'>) {
-    const items = this.loadMockCart();
-    const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const order: Omit<OrderPayload, 'id'> = {
-      ...payload,
-      placedAt: new Date().toISOString(),
-      total,
-      items
-    };
-
-    this.clearMockCart();
-    return of(order).pipe(map(() => undefined));
-  }
 }
