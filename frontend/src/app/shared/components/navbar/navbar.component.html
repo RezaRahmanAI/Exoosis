@@ -7,15 +7,16 @@
           <a routerLink="/"
             class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
             <img class="h-14" [src]="settings.general.logoUrl" [alt]="settings.general.websiteName" />
-            <span class="hidden lg:inline-block">{{ settings.general.websiteName }}</span>
+            <!-- <span class="hidden lg:inline-block">{{ settings.general.websiteName }}</span> -->
           </a>
         </ng-container>
       </div>
       <div class="hidden md:flex space-x-8 items-center">
+        <a class="text-sm font-medium hover:text-primary transition-colors" routerLink="/"
+          routerLinkActive="text-primary">Home</a>
         <a class="text-sm font-medium hover:text-primary transition-colors" routerLink="/products"
           routerLinkActive="text-primary">Products</a>
-        <a class="text-sm font-medium hover:text-primary transition-colors" routerLink="/categories"
-          routerLinkActive="text-primary">Categories</a>
+        
         <a class="text-sm font-medium hover:text-primary transition-colors" routerLink="/solutions"
           routerLinkActive="text-primary">Solutions</a>
         <a class="text-sm font-medium hover:text-primary transition-colors" routerLink="/partners"
