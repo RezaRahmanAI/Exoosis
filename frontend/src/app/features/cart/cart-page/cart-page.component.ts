@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CartService, Cart, CartItem } from '../../../core/services/cart.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart-page',
@@ -17,7 +18,10 @@ export class CartPageComponent implements OnInit {
   // Mock userId - in production, get from AuthService
   userId = 'user-123';
 
-  constructor(private cartService: CartService) {}
+  constructor(
+    private cartService: CartService,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.loadCart();
@@ -102,5 +106,9 @@ export class CartPageComponent implements OnInit {
 
   get total(): number {
     return this.subtotal + this.tax;
+  }
+
+  proceedToCheckout(): void {
+    this.router.navigate(['/checkout']);
   }
 }

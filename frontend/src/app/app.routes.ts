@@ -22,6 +22,7 @@ import { authGuard } from './core/guards/auth.guard';
 import { adminGuard } from './core/guards/admin.guard';
 
 import { AdminLayoutComponent } from './features/admin/admin-layout.component';
+import { CheckoutComponent } from './features/checkout/checkout.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -221,5 +222,7 @@ export const routes: Routes = [
       },
     ],
   },
+  { path: 'checkout', component: CheckoutComponent },
+  { path: 'checkout/callback', component: CheckoutComponent },
   { path: '**', redirectTo: '' },
 ];

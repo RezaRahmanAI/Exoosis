@@ -6,9 +6,9 @@ using Exoosis.Application.Mapping;
 using Exoosis.Application.Services;
 using Exoosis.Application.Validators;
 using Exoosis.Infrastructure.Persistence;
-using Exoosis.Infrastructure.Repositories;
 using Exoosis.Infrastructure.Services;
 using Exoosis.Domain.Entities;
+using Exoosis.Infrastructure.External.Bkash;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Exoosis.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +33,9 @@ builder.Services.AddScoped<ITeamMemberService, TeamMemberService>();
 builder.Services.AddScoped<ISolutionService, SolutionService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<ICartService, CartService>();
+
+builder.Services.Configure<BkashSettings>(builder.Configuration.GetSection("BkashSettings"));
+builder.Services.AddHttpClient<IBkashService, BkashService>();
 
 builder.Services.AddAutoMapper(typeof(CatalogProfile).Assembly);
 
