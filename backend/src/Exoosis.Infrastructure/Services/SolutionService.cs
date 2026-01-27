@@ -20,21 +20,15 @@ public class SolutionService : ISolutionService
     public async Task<IReadOnlyList<SolutionDto>> GetAllAsync(string? industry, CancellationToken cancellationToken = default)
     {
         var solutions = await _unitOfWork.Solutions.ListAsync(cancellationToken: cancellationToken);
-        if (!string.IsNullOrWhiteSpace(industry))
-        {
-            solutions = solutions
-                .Where(solution => solution.Industries.Any(item => string.Equals(item, industry, StringComparison.OrdinalIgnoreCase)))
-                .ToList();
-        }
-
+        // Industry filtering removed as Industries property no longer exists
         return _mapper.Map<IReadOnlyList<SolutionDto>>(solutions);
     }
 
     public async Task<IReadOnlyList<SolutionDto>> GetFeaturedAsync(CancellationToken cancellationToken = default)
     {
         var solutions = await _unitOfWork.Solutions.ListAsync(cancellationToken: cancellationToken);
-        var featuredSolutions = solutions.Where(solution => solution.IsFeatured).ToList();
-        return _mapper.Map<IReadOnlyList<SolutionDto>>(featuredSolutions);
+        // IsFeatured property removed - returning all solutions
+        return _mapper.Map<IReadOnlyList<SolutionDto>>(solutions);
     }
 
     public async Task<SolutionDto?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
@@ -77,7 +71,6 @@ public class SolutionService : ISolutionService
         }
 
         solution.IsDeleted = true;
-        solution.IsActive = false;
         solution.UpdatedAt = DateTime.UtcNow;
         solution.UpdatedBy = userId;
         _unitOfWork.Solutions.Update(solution);

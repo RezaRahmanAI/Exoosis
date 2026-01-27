@@ -11,7 +11,7 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './solutions.component.html',
-  styleUrl: './solutions.component.css'
+  styleUrl: './solutions.component.css',
 })
 export class SolutionsComponent implements OnInit {
   softwareCatalog: Solution[] = [];
@@ -21,24 +21,26 @@ export class SolutionsComponent implements OnInit {
   constructor(private solutionService: SolutionService) {}
 
   ngOnInit() {
-    this.solutionService.getSolutions().subscribe(data => {
-      this.softwareCatalog = data.filter(solution => solution.isActive);
+    this.solutionService.getSolutions().subscribe((data) => {
+      this.softwareCatalog = data;
     });
   }
 
   get categories() {
-    const unique = Array.from(new Set(this.softwareCatalog.map(item => item.category)));
+    const unique = Array.from(new Set(this.softwareCatalog.map((item) => item.category)));
     return ['All', ...unique] as Array<'All' | string>;
   }
 
   get filteredSoftware() {
-    return this.softwareCatalog.filter(item => {
-      const matchesCategory = this.selectedCategory === 'All' || item.category === this.selectedCategory;
+    return this.softwareCatalog.filter((item) => {
+      const matchesCategory =
+        this.selectedCategory === 'All' || item.category === this.selectedCategory;
       const name = item.name ?? '';
       const summary = item.summary ?? '';
-      const matchesSearch = !this.searchTerm
-        || name.toLowerCase().includes(this.searchTerm.toLowerCase())
-        || summary.toLowerCase().includes(this.searchTerm.toLowerCase());
+      const matchesSearch =
+        !this.searchTerm ||
+        name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        summary.toLowerCase().includes(this.searchTerm.toLowerCase());
       return matchesCategory && matchesSearch;
     });
   }

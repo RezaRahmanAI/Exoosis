@@ -39,32 +39,6 @@ public class ExoosisDbContext : DbContext
             value => value == null ? 0 : value.Aggregate(0, (current, item) => HashCode.Combine(current, item.GetHashCode())),
             value => value == null ? new List<string>() : value.ToList());
 
-        var supportListConverter = new ValueConverter<List<SolutionSupport>, string>(
-            value => JsonSerializer.Serialize(value ?? new List<SolutionSupport>(), (JsonSerializerOptions?)null),
-            value => string.IsNullOrWhiteSpace(value)
-                ? new List<SolutionSupport>()
-                : JsonSerializer.Deserialize<List<SolutionSupport>>(value, (JsonSerializerOptions?)null) ?? new List<SolutionSupport>());
-
-        var supportListComparer = new ValueComparer<List<SolutionSupport>>(
-            (left, right) => (left ?? new List<SolutionSupport>()).SequenceEqual(
-                right ?? new List<SolutionSupport>(),
-                new SolutionSupportComparer()),
-            value => value == null ? 0 : value.Aggregate(0, (current, item) => HashCode.Combine(current, item.Label, item.Detail)),
-            value => value == null ? new List<SolutionSupport>() : value.Select(item => new SolutionSupport { Label = item.Label, Detail = item.Detail }).ToList());
-
-        var metricListConverter = new ValueConverter<List<SolutionMetric>, string>(
-            value => JsonSerializer.Serialize(value ?? new List<SolutionMetric>(), (JsonSerializerOptions?)null),
-            value => string.IsNullOrWhiteSpace(value)
-                ? new List<SolutionMetric>()
-                : JsonSerializer.Deserialize<List<SolutionMetric>>(value, (JsonSerializerOptions?)null) ?? new List<SolutionMetric>());
-
-        var metricListComparer = new ValueComparer<List<SolutionMetric>>(
-            (left, right) => (left ?? new List<SolutionMetric>()).SequenceEqual(
-                right ?? new List<SolutionMetric>(),
-                new SolutionMetricComparer()),
-            value => value == null ? 0 : value.Aggregate(0, (current, item) => HashCode.Combine(current, item.Label, item.Value)),
-            value => value == null ? new List<SolutionMetric>() : value.Select(item => new SolutionMetric { Label = item.Label, Value = item.Value }).ToList());
-
         var generalConverter = CreateJsonConverter<GeneralSettings>();
         var contactConverter = CreateJsonConverter<ContactSettings>();
         var socialConverter = CreateJsonConverter<SocialSettings>();
@@ -130,33 +104,11 @@ public class ExoosisDbContext : DbContext
             entity.Property(x => x.Name).HasMaxLength(200).IsRequired();
             entity.Property(x => x.Summary).HasMaxLength(500);
             entity.Property(x => x.Description).HasMaxLength(4000);
-            entity.Property(x => x.Category).HasMaxLength(150).IsRequired();
-            entity.Property(x => x.Icon).HasMaxLength(100);
+            entity.Property(x => x.Category).HasConversion<string>().IsRequired();
             entity.Property(x => x.ImageUrl).HasMaxLength(500);
-            entity.Property(x => x.Brands)
+            entity.Property(x => x.TechnologyStack)
                 .HasConversion(stringListConverter)
                 .Metadata.SetValueComparer(stringListComparer);
-            entity.Property(x => x.Capabilities)
-                .HasConversion(stringListConverter)
-                .Metadata.SetValueComparer(stringListComparer);
-            entity.Property(x => x.Industries)
-                .HasConversion(stringListConverter)
-                .Metadata.SetValueComparer(stringListComparer);
-            entity.Property(x => x.Integrations)
-                .HasConversion(stringListConverter)
-                .Metadata.SetValueComparer(stringListComparer);
-            entity.Property(x => x.Compliance)
-                .HasConversion(stringListConverter)
-                .Metadata.SetValueComparer(stringListComparer);
-            entity.Property(x => x.Deployment)
-                .HasConversion(stringListConverter)
-                .Metadata.SetValueComparer(stringListComparer);
-            entity.Property(x => x.Support)
-                .HasConversion(supportListConverter)
-                .Metadata.SetValueComparer(supportListComparer);
-            entity.Property(x => x.Metrics)
-                .HasConversion(metricListConverter)
-                .Metadata.SetValueComparer(metricListComparer);
             entity.HasIndex(x => x.Name).IsUnique(false);
             entity.HasQueryFilter(x => !x.IsDeleted);
         });
@@ -224,53 +176,5 @@ public class ExoosisDbContext : DbContext
             value => string.IsNullOrWhiteSpace(value)
                 ? new T()
                 : JsonSerializer.Deserialize<T>(value, (JsonSerializerOptions?)null) ?? new T());
-    }
-
-    private sealed class SolutionSupportComparer : IEqualityComparer<SolutionSupport>
-    {
-        public bool Equals(SolutionSupport? x, SolutionSupport? y)
-        {
-            if (x is null && y is null)
-            {
-                return true;
-            }
-
-            if (x is null || y is null)
-            {
-                return false;
-            }
-
-            return string.Equals(x.Label, y.Label, StringComparison.Ordinal)
-                && string.Equals(x.Detail, y.Detail, StringComparison.Ordinal);
-        }
-
-        public int GetHashCode(SolutionSupport obj)
-        {
-            return HashCode.Combine(obj.Label, obj.Detail);
-        }
-    }
-
-    private sealed class SolutionMetricComparer : IEqualityComparer<SolutionMetric>
-    {
-        public bool Equals(SolutionMetric? x, SolutionMetric? y)
-        {
-            if (x is null && y is null)
-            {
-                return true;
-            }
-
-            if (x is null || y is null)
-            {
-                return false;
-            }
-
-            return string.Equals(x.Label, y.Label, StringComparison.Ordinal)
-                && string.Equals(x.Value, y.Value, StringComparison.Ordinal);
-        }
-
-        public int GetHashCode(SolutionMetric obj)
-        {
-            return HashCode.Combine(obj.Label, obj.Value);
-        }
     }
 }

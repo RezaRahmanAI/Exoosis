@@ -8,24 +8,22 @@ export interface SolutionSupport {
   detail: string;
 }
 
+export enum SolutionCategory {
+  Industrial = 'Industrial',
+  Corporate = 'Corporate',
+  Banking = 'Banking',
+}
+
 export interface Solution {
   id: string;
   name: string;
-  summary?: string | null;
-  description?: string | null;
-  icon?: string | null;
-  category: string;
-  brands: string[];
-  imageUrl?: string | null;
-  isFeatured: boolean;
-  isActive: boolean;
-  capabilities: string[];
-  industries: string[];
-  integrations: string[];
-  compliance: string[];
-  deployment: string[];
-  support: SolutionSupport[];
-  metrics: SolutionMetric[];
+  summary?: string;
+  description?: string;
+  category: SolutionCategory;
+  imageUrl?: string;
+  technologyStack: string[];
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface Job {

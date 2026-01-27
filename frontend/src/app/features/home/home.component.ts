@@ -193,10 +193,8 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.solutionService.getSolutions().subscribe((data) => {
-      const activeSolutions = data.filter((solution) => solution.isActive);
-      const featuredSolutions = activeSolutions.filter((solution) => solution.isFeatured);
-      const list = featuredSolutions.length ? featuredSolutions : activeSolutions;
-      this.solutions = list.slice(0, 3);
+      // Display first 3 solutions
+      this.solutions = data.slice(0, 3);
     });
 
     this.brandService.getBrands().subscribe((data) => {

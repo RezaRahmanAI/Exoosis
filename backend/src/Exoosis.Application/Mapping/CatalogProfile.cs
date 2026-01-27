@@ -30,8 +30,6 @@ public class CatalogProfile : Profile
         CreateMap<CreateTeamMemberRequest, TeamMember>();
         CreateMap<UpdateTeamMemberRequest, TeamMember>();
 
-        CreateMap<SolutionSupport, SolutionSupportDto>();
-        CreateMap<SolutionMetric, SolutionMetricDto>();
         CreateMap<Solution, SolutionDto>();
         CreateMap<CreateSolutionRequest, Solution>();
         CreateMap<UpdateSolutionRequest, Solution>();
