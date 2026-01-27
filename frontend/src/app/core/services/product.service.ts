@@ -51,6 +51,29 @@ export class ProductService {
     );
   }
 
+  getCatalogProducts(params?: ProductQueryParams): Observable<ApiProduct[]> {
+    const httpParams = new HttpParams({
+      fromObject: {
+        ...(params?.search ? { search: params.search } : {}),
+        ...(params?.categoryId ? { categoryId: params.categoryId } : {}),
+        ...(params?.brandId ? { brandId: params.brandId } : {}),
+        ...(params?.sortBy ? { sortBy: params.sortBy } : {}),
+        ...(params?.sortDescending !== undefined ? { sortDescending: params.sortDescending } : {}),
+        ...(params?.page ? { page: params.page } : {}),
+        ...(params?.pageSize ? { pageSize: params.pageSize } : {})
+      }
+    });
+
+    this.loadingSubject.next(true);
+    this.errorSubject.next(null);
+
+    return this.api.get<ApiResponse<ApiProduct[]>>('/products', httpParams).pipe(
+      map(response => response.data ?? []),
+      catchError(error => this.handleError(error)),
+      finalize(() => this.loadingSubject.next(false))
+    );
+  }
+
   getProductById(id: string): Observable<ProductDetail> {
     this.loadingSubject.next(true);
     this.errorSubject.next(null);

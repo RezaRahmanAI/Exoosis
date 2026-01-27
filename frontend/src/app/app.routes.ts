@@ -78,6 +78,14 @@ export const routes: Routes = [
         path: 'brands', 
         loadComponent: () => import('./features/admin/brands/brands.component').then(m => m.AdminBrandsComponent) 
       },
+      {
+        path: 'categories',
+        loadComponent: () => import('./features/admin/categories/categories.component').then(m => m.AdminCategoriesComponent)
+      },
+      {
+        path: 'products',
+        loadComponent: () => import('./features/admin/products/products.component').then(m => m.AdminProductsComponent)
+      },
       { 
         path: 'jobs', 
         loadComponent: () => import('./features/admin/jobs/jobs.component').then(m => m.AdminJobsComponent) 
@@ -120,6 +128,14 @@ export const routes: Routes = [
       { 
         path: 'brands', 
         loadComponent: () => import('./features/admin/brands/brands.component').then(m => m.AdminBrandsComponent) 
+      },
+      {
+        path: 'categories',
+        loadComponent: () => import('./features/admin/categories/categories.component').then(m => m.AdminCategoriesComponent)
+      },
+      {
+        path: 'products',
+        loadComponent: () => import('./features/admin/products/products.component').then(m => m.AdminProductsComponent)
       },
       { 
         path: 'jobs', 

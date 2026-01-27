@@ -32,7 +32,6 @@ import { ApiBrand } from '../../../core/models/catalog';
               <h3 class="font-bold text-gray-800 truncate">{{brand.name}}</h3>
               <span *ngIf="!brand.isActive" class="px-1.5 py-0.5 rounded-md bg-amber-50 text-amber-600 text-[10px] font-bold uppercase">Inactive</span>
             </div>
-            <p class="text-sm text-gray-500 mb-3 line-clamp-2">{{brand.description || 'No description provided yet.'}}</p>
             <div class="flex gap-2">
               <button (click)="openModal(brand)" class="text-xs font-bold text-primary hover:underline">Edit</button>
               <button (click)="deleteBrand(brand.id)" class="text-xs font-bold text-red-500 hover:underline">Remove</button>
@@ -53,10 +52,6 @@ import { ApiBrand } from '../../../core/models/catalog';
             <div>
               <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Name</label>
               <input [(ngModel)]="currentBrand.name" class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-primary outline-none" placeholder="Brand name">
-            </div>
-            <div>
-              <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Description</label>
-              <textarea [(ngModel)]="currentBrand.description" rows="3" class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-primary outline-none" placeholder="Short description"></textarea>
             </div>
             <div>
               <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Logo URL</label>
@@ -104,7 +99,6 @@ export class AdminBrandsComponent implements OnInit {
     if (this.currentBrand.id) {
       this.brandService.updateBrand(this.currentBrand.id, {
         name: this.currentBrand.name ?? '',
-        description: this.currentBrand.description,
         logoUrl: this.currentBrand.logoUrl,
         isActive: this.currentBrand.isActive
       }).subscribe(() => {
@@ -114,7 +108,6 @@ export class AdminBrandsComponent implements OnInit {
     } else {
       this.brandService.createBrand({
         name: this.currentBrand.name ?? '',
-        description: this.currentBrand.description,
         logoUrl: this.currentBrand.logoUrl,
         isActive: this.currentBrand.isActive
       }).subscribe(() => {
