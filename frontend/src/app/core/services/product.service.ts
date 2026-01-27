@@ -10,6 +10,7 @@ export interface ProductQueryParams {
   search?: string;
   categoryId?: string;
   brandId?: string;
+  isFeatured?: boolean;
   sortBy?: string;
   sortDescending?: boolean;
   page?: number;
@@ -17,7 +18,7 @@ export interface ProductQueryParams {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductService {
   private loadingSubject = new BehaviorSubject<boolean>(false);
@@ -34,20 +35,21 @@ export class ProductService {
         ...(params?.search ? { search: params.search } : {}),
         ...(params?.categoryId ? { categoryId: params.categoryId } : {}),
         ...(params?.brandId ? { brandId: params.brandId } : {}),
+        ...(params?.isFeatured !== undefined ? { isFeatured: params.isFeatured } : {}),
         ...(params?.sortBy ? { sortBy: params.sortBy } : {}),
         ...(params?.sortDescending !== undefined ? { sortDescending: params.sortDescending } : {}),
         ...(params?.page ? { page: params.page } : {}),
-        ...(params?.pageSize ? { pageSize: params.pageSize } : {})
-      }
+        ...(params?.pageSize ? { pageSize: params.pageSize } : {}),
+      },
     });
 
     this.loadingSubject.next(true);
     this.errorSubject.next(null);
 
     return this.api.get<ApiResponse<ApiProduct[]>>('/products', httpParams).pipe(
-      map(response => (response.data ?? []).map(product => this.mapProduct(product))),
-      catchError(error => this.handleError(error)),
-      finalize(() => this.loadingSubject.next(false))
+      map((response) => (response.data ?? []).map((product) => this.mapProduct(product))),
+      catchError((error) => this.handleError(error)),
+      finalize(() => this.loadingSubject.next(false)),
     );
   }
 
@@ -60,17 +62,17 @@ export class ProductService {
         ...(params?.sortBy ? { sortBy: params.sortBy } : {}),
         ...(params?.sortDescending !== undefined ? { sortDescending: params.sortDescending } : {}),
         ...(params?.page ? { page: params.page } : {}),
-        ...(params?.pageSize ? { pageSize: params.pageSize } : {})
-      }
+        ...(params?.pageSize ? { pageSize: params.pageSize } : {}),
+      },
     });
 
     this.loadingSubject.next(true);
     this.errorSubject.next(null);
 
     return this.api.get<ApiResponse<ApiProduct[]>>('/products', httpParams).pipe(
-      map(response => response.data ?? []),
-      catchError(error => this.handleError(error)),
-      finalize(() => this.loadingSubject.next(false))
+      map((response) => response.data ?? []),
+      catchError((error) => this.handleError(error)),
+      finalize(() => this.loadingSubject.next(false)),
     );
   }
 
@@ -79,13 +81,16 @@ export class ProductService {
     this.errorSubject.next(null);
 
     return this.api.get<ApiResponse<ApiProduct>>(`/products/${id}`).pipe(
-      map(response => this.mapProduct(response.data)),
-      catchError(error => this.handleError(error)),
-      finalize(() => this.loadingSubject.next(false))
+      map((response) => this.mapProduct(response.data)),
+      catchError((error) => this.handleError(error)),
+      finalize(() => this.loadingSubject.next(false)),
     );
   }
 
-  searchProducts(query: string, params?: Omit<ProductQueryParams, 'search'>): Observable<ProductDetail[]> {
+  searchProducts(
+    query: string,
+    params?: Omit<ProductQueryParams, 'search'>,
+  ): Observable<ProductDetail[]> {
     const httpParams = new HttpParams({
       fromObject: {
         q: query,
@@ -94,17 +99,17 @@ export class ProductService {
         ...(params?.sortBy ? { sortBy: params.sortBy } : {}),
         ...(params?.sortDescending !== undefined ? { sortDescending: params.sortDescending } : {}),
         ...(params?.page ? { page: params.page } : {}),
-        ...(params?.pageSize ? { pageSize: params.pageSize } : {})
-      }
+        ...(params?.pageSize ? { pageSize: params.pageSize } : {}),
+      },
     });
 
     this.loadingSubject.next(true);
     this.errorSubject.next(null);
 
     return this.api.get<ApiResponse<ApiProduct[]>>('/products/search', httpParams).pipe(
-      map(response => (response.data ?? []).map(product => this.mapProduct(product))),
-      catchError(error => this.handleError(error)),
-      finalize(() => this.loadingSubject.next(false))
+      map((response) => (response.data ?? []).map((product) => this.mapProduct(product))),
+      catchError((error) => this.handleError(error)),
+      finalize(() => this.loadingSubject.next(false)),
     );
   }
 
@@ -117,17 +122,17 @@ export class ProductService {
         ...(params?.sortBy ? { sortBy: params.sortBy } : {}),
         ...(params?.sortDescending !== undefined ? { sortDescending: params.sortDescending } : {}),
         ...(params?.page ? { page: params.page } : {}),
-        ...(params?.pageSize ? { pageSize: params.pageSize } : {})
-      }
+        ...(params?.pageSize ? { pageSize: params.pageSize } : {}),
+      },
     });
 
     this.loadingSubject.next(true);
     this.errorSubject.next(null);
 
     return this.api.get<ApiResponse<ApiProduct[]>>('/products/filter', httpParams).pipe(
-      map(response => (response.data ?? []).map(product => this.mapProduct(product))),
-      catchError(error => this.handleError(error)),
-      finalize(() => this.loadingSubject.next(false))
+      map((response) => (response.data ?? []).map((product) => this.mapProduct(product))),
+      catchError((error) => this.handleError(error)),
+      finalize(() => this.loadingSubject.next(false)),
     );
   }
 
@@ -138,9 +143,9 @@ export class ProductService {
     this.errorSubject.next(null);
 
     return this.api.get<ApiResponse<ApiProduct[]>>('/products/low-stock', httpParams).pipe(
-      map(response => (response.data ?? []).map(product => this.mapProduct(product))),
-      catchError(error => this.handleError(error)),
-      finalize(() => this.loadingSubject.next(false))
+      map((response) => (response.data ?? []).map((product) => this.mapProduct(product))),
+      catchError((error) => this.handleError(error)),
+      finalize(() => this.loadingSubject.next(false)),
     );
   }
 
@@ -153,34 +158,39 @@ export class ProductService {
     stockQuantity: number;
     imageUrls: string;
     isActive?: boolean;
+    isFeatured?: boolean;
   }): Observable<ProductDetail> {
     this.loadingSubject.next(true);
     this.errorSubject.next(null);
 
     return this.api.post<ApiResponse<ApiProduct>>('/products', payload).pipe(
-      map(response => this.mapProduct(response.data)),
-      catchError(error => this.handleError(error)),
-      finalize(() => this.loadingSubject.next(false))
+      map((response) => this.mapProduct(response.data)),
+      catchError((error) => this.handleError(error)),
+      finalize(() => this.loadingSubject.next(false)),
     );
   }
 
-  updateProduct(id: string, payload: {
-    name: string;
-    description?: string | null;
-    price: number;
-    categoryId: string;
-    brandId: string;
-    stockQuantity: number;
-    imageUrls: string;
-    isActive?: boolean;
-  }): Observable<ProductDetail> {
+  updateProduct(
+    id: string,
+    payload: {
+      name: string;
+      description?: string | null;
+      price: number;
+      categoryId: string;
+      brandId: string;
+      stockQuantity: number;
+      imageUrls: string;
+      isActive?: boolean;
+      isFeatured?: boolean;
+    },
+  ): Observable<ProductDetail> {
     this.loadingSubject.next(true);
     this.errorSubject.next(null);
 
     return this.api.put<ApiResponse<ApiProduct>>(`/products/${id}`, payload).pipe(
-      map(response => this.mapProduct(response.data)),
-      catchError(error => this.handleError(error)),
-      finalize(() => this.loadingSubject.next(false))
+      map((response) => this.mapProduct(response.data)),
+      catchError((error) => this.handleError(error)),
+      finalize(() => this.loadingSubject.next(false)),
     );
   }
 
@@ -189,15 +199,18 @@ export class ProductService {
     this.errorSubject.next(null);
 
     return this.api.delete<ApiResponse<string>>(`/products/${id}`).pipe(
-      map(response => response.data),
-      catchError(error => this.handleError(error)),
-      finalize(() => this.loadingSubject.next(false))
+      map((response) => response.data),
+      catchError((error) => this.handleError(error)),
+      finalize(() => this.loadingSubject.next(false)),
     );
   }
 
   private mapProduct(product: ApiProduct): ProductDetail {
     const imageUrl = product.imageUrls
-      ? product.imageUrls.split(',').map(item => item.trim()).find(Boolean) ?? ''
+      ? (product.imageUrls
+          .split(',')
+          .map((item) => item.trim())
+          .find(Boolean) ?? '')
       : '';
 
     return {
@@ -208,11 +221,13 @@ export class ProductService {
       price: product.price,
       priceUnit: '',
       brand: product.brandName ?? '',
+      isActive: product.isActive,
+      isFeatured: product.isFeatured,
       highlights: [],
       integrations: [],
       specs: [],
       pricingTiers: [],
-      image: imageUrl
+      image: imageUrl,
     };
   }
 

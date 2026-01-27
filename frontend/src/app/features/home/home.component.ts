@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { BrandService } from '../../core/services/brand.service';
 import { SolutionService } from '../../core/services/solution.service';
+import { ProductService } from '../../core/services/product.service';
 import { ApiService } from '../../core/services/api.service';
-import { Solution, Partner, Testimonial } from '../../core/models/entities';
+import { Solution, Partner, Testimonial, ProductDetail } from '../../core/models/entities';
 import { ApiResponse } from '../../core/models/api-response';
 import { environment } from '../../../environments/environment';
 import { HeroSectionComponent } from './sections/hero-section.component';
@@ -39,6 +40,7 @@ import { BulkProcurementSectionComponent } from './sections/bulk-procurement-sec
 export class HomeComponent implements OnInit {
   solutions: Solution[] = [];
   logos: Partner[] = [];
+  featuredProducts: ProductDetail[] = [];
   categories = [
     { icon: 'monitor', name: 'Monitors', desc: '4K, Curved & Ultrawide' },
     { icon: 'hub', name: 'Docking Stations', desc: 'Thunderbolt 4 & USB-C' },
@@ -188,6 +190,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private api: ApiService,
     private solutionService: SolutionService,
+    private productService: ProductService,
     private brandService: BrandService,
   ) {}
 
@@ -199,6 +202,10 @@ export class HomeComponent implements OnInit {
 
     this.brandService.getBrands().subscribe((data) => {
       this.logos = data.filter((brand) => brand.isActive);
+    });
+
+    this.productService.getProducts({ isFeatured: true }).subscribe((data) => {
+      this.featuredProducts = data;
     });
 
     if (environment.useMockData) {

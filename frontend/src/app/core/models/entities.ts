@@ -68,6 +68,8 @@ export interface ProductDetail {
   price: number;
   priceUnit: string;
   brand: string;
+  isActive: boolean;
+  isFeatured: boolean;
   highlights: string[];
   integrations: string[];
   specs: { label: string; value: string }[];

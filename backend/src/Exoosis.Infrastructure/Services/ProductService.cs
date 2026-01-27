@@ -41,6 +41,11 @@ public class ProductService : IProductService
             query = query.Where(product => product.BrandId == parameters.BrandId.Value);
         }
 
+        if (parameters.IsFeatured.HasValue)
+        {
+            query = query.Where(product => product.IsFeatured == parameters.IsFeatured.Value);
+        }
+
         if (!string.IsNullOrWhiteSpace(parameters.SortBy))
         {
             query = parameters.SortBy.ToLowerInvariant() switch

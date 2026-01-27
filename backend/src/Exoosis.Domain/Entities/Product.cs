@@ -11,4 +11,5 @@ public class Product : BaseEntity
     public Brand? Brand { get; set; }
     public int StockQuantity { get; set; }
     public string ImageUrls { get; set; } = string.Empty;
+    public bool IsFeatured { get; set; } = false;
 }

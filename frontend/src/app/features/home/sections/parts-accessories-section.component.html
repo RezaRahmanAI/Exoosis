@@ -6,25 +6,35 @@
         <p class="text-xs font-bold tracking-widest text-primary uppercase mb-2">Corporate Computing</p>
         <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white">Business Laptops & Desktops</h2>
       </div>
-      <a class="text-primary font-semibold hover:underline mt-4 md:mt-0 flex items-center gap-1" routerLink="/solutions">Explore Full Range <span class="material-icons text-sm">chevron_right</span></a>
+      <a class="text-primary font-semibold hover:underline mt-4 md:mt-0 flex items-center gap-1"
+        routerLink="/solutions">Explore Full Range <span class="material-icons text-sm">chevron_right</span></a>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <div *ngFor="let product of laptops" class="group bg-surface-light dark:bg-slate-900 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-800 hover:shadow-2xl transition-all duration-300">
+      <div *ngFor="let product of products"
+        class="group bg-surface-light dark:bg-slate-900 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-800 hover:shadow-2xl transition-all duration-300">
         <div class="relative aspect-video bg-white overflow-hidden">
-          <img [alt]="product.title" class="w-full h-full object-contain p-8 group-hover:scale-110 transition-transform duration-500" [src]="product.image" />
+          <img [alt]="product.name"
+            class="w-full h-full object-contain p-8 group-hover:scale-110 transition-transform duration-500"
+            [src]="product.image" />
           <div class="absolute top-4 left-4">
-            <span class="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-widest">{{product.tag}}</span>
+            <span
+              class="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-widest">{{
+              product.category }}</span>
           </div>
         </div>
         <div class="p-8">
-          <h3 class="text-xl font-bold mb-3 text-gray-900 dark:text-white">{{product.title}}</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400 mb-6">{{product.desc}}</p>
-          <ul class="space-y-2 mb-8">
-            <li *ngFor="let feat of product.features" class="flex items-center text-xs text-gray-500">
-              <span class="material-icons text-primary text-base mr-2">check_circle</span>{{feat}}
-            </li>
-          </ul>
-          <button class="w-full py-3 rounded-xl border-2 border-primary text-primary font-bold hover:bg-primary hover:text-white transition-all">View Models</button>
+          <h3 class="text-xl font-bold mb-3 text-gray-900 dark:text-white">{{ product.name }}</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mb-6 line-clamp-2">
+            {{ product.summary }}
+          </p>
+          <div class="mb-4">
+            <span class="text-2xl font-bold text-primary">{{ product.price | number : '1.0-0' }} BDT</span>
+          </div>
+          <button
+            class="w-full py-3 rounded-xl border-2 border-primary text-primary font-bold hover:bg-primary hover:text-white transition-all"
+            [routerLink]="['/products', product.id]">
+            View Details
+          </button>
         </div>
       </div>
     </div>

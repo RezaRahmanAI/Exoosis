@@ -10,4 +10,5 @@ public class CreateProductRequest
     public int StockQuantity { get; set; }
     public string ImageUrls { get; set; } = string.Empty;
     public bool IsActive { get; set; } = true;
+    public bool IsFeatured { get; set; } = false;
 }

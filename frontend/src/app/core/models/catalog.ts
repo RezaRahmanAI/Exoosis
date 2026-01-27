@@ -29,6 +29,7 @@ export interface ApiProduct {
   stockQuantity: number;
   imageUrls: string;
   isActive: boolean;
+  isFeatured: boolean;
   createdAt: string;
   updatedAt?: string | null;
 }
