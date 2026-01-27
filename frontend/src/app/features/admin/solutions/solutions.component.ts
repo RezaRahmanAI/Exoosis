@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SolutionService } from '../../../core/services/solution.service';
 import { Solution, SolutionCategory } from '../../../core/models/entities';
+import { SolutionCategoryPipe } from '../../../core/pipes/solution-category.pipe';
 
 @Component({
   selector: 'app-admin-solutions',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, SolutionCategoryPipe],
   template: `
     <div class="space-y-6">
       <div class="flex justify-between items-center">
@@ -61,7 +62,7 @@ import { Solution, SolutionCategory } from '../../../core/models/entities';
               <td class="px-6 py-4">
                 <span
                   class="px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 text-xs font-medium"
-                  >{{ sol.category }}</span
+                  >{{ sol.category | solutionCategory }}</span
                 >
               </td>
               <td class="px-6 py-4">

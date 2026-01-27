@@ -3,17 +3,21 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { SolutionService } from '../../../core/services/solution.service';
 import { Solution } from '../../../core/models/entities';
+import { SolutionCategoryPipe } from '../../../core/pipes/solution-category.pipe';
 
 @Component({
   selector: 'app-software-details',
   standalone: true,
-  imports: [CommonModule, RouterLink],
-  templateUrl: './software-details.component.html'
+  imports: [CommonModule, RouterLink, SolutionCategoryPipe],
+  templateUrl: './software-details.component.html',
 })
 export class SoftwareDetailsComponent implements OnInit {
   software?: Solution;
 
-  constructor(private route: ActivatedRoute, private solutionService: SolutionService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private solutionService: SolutionService,
+  ) {}
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
@@ -22,9 +26,9 @@ export class SoftwareDetailsComponent implements OnInit {
     }
 
     this.solutionService.getSolutionById(id).subscribe({
-      next: data => {
+      next: (data) => {
         this.software = data;
-      }
+      },
     });
   }
 }

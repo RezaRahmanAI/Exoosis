@@ -1,17 +1,7 @@
-export interface SolutionMetric {
-  label: string;
-  value: string;
-}
-
-export interface SolutionSupport {
-  label: string;
-  detail: string;
-}
-
 export enum SolutionCategory {
-  Industrial = 'Industrial',
-  Corporate = 'Corporate',
-  Banking = 'Banking',
+  Industrial = 0,
+  Corporate = 1,
+  Banking = 2,
 }
 
 export interface Solution {

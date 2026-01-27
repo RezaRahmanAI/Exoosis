@@ -20,7 +20,7 @@
       </div>
 
       <div class="flex flex-wrap gap-3 mt-8">
-        <button *ngFor="let category of categories" type="button" (click)="selectedCategory = category"
+        <button *ngFor="let category of categories" type="button" (click)="selectCategory(category)"
           class="px-4 py-2 rounded-full text-sm font-semibold border transition-all"
           [class.bg-primary]="selectedCategory === category" [class.text-white]="selectedCategory === category"
           [class.border-primary]="selectedCategory === category" [class.text-slate-600]="selectedCategory !== category"
@@ -40,7 +40,8 @@
         <article *ngFor="let software of filteredSoftware"
           class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm hover:shadow-xl transition-all">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-semibold uppercase tracking-widest text-primary">{{ software.category }}</span>
+            <span class="text-xs font-semibold uppercase tracking-widest text-primary">{{ software.category |
+              solutionCategory }}</span>
           </div>
           <h2 class="text-xl font-bold text-slate-900 dark:text-white mt-4">{{ software.name }}</h2>
           <p class="text-slate-600 dark:text-slate-300 mt-3">{{ software.summary }}</p>
