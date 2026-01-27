@@ -1,5 +1,5 @@
 <main class="bg-white dark:bg-background-dark min-h-screen">
-  <section class="page-container pt-10 pb-6">
+  <section class="page-container pt-20 pb-6">
     <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
       <div class="space-y-3">
         <nav aria-label="Breadcrumb" class="flex">
@@ -22,31 +22,33 @@
         </nav>
         <h1 class="text-3xl font-bold text-navy-blue dark:text-white">EXOSISTECH product catalog</h1>
         <p class="max-w-2xl text-sm text-slate-500 dark:text-slate-300">
-          Discover curated hardware and software bundles for modern enterprise teams. Filter by category, explore product
+          Discover curated hardware and software bundles for modern enterprise teams. Filter by category, explore
+          product
           highlights, and request quotes in one place.
         </p>
       </div>
       <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
-        <label class="flex w-full min-w-[240px] items-center rounded-full border border-slate-200 bg-white px-4 py-2.5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+        <label
+          class="flex w-full min-w-[240px] items-center rounded-full border border-slate-200 bg-white px-4 py-2.5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
           <span class="material-symbols-outlined text-slate-400 text-lg">search</span>
           <input
             class="ml-3 w-full border-none bg-transparent text-sm text-slate-600 focus:outline-none focus:ring-0 dark:text-slate-200"
-            type="text"
-            placeholder="Search products"
-            [(ngModel)]="searchTerm"
-          />
+            type="text" placeholder="Search products" [(ngModel)]="searchTerm" />
         </label>
-        <div class="rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-wide text-slate-600 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200">
+        <div
+          class="rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-wide text-slate-600 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200">
           {{ filteredProducts.length }} products
         </div>
         <div class="relative">
-          <select class="appearance-none rounded-full border border-slate-200 bg-white px-5 py-2 text-xs font-semibold uppercase tracking-wide text-slate-600 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200">
+          <select
+            class="appearance-none rounded-full border border-slate-200 bg-white px-5 py-2 text-xs font-semibold uppercase tracking-wide text-slate-600 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200">
             <option>Most Relevant</option>
             <option>Newest Arrivals</option>
             <option>Price: Low to High</option>
             <option>Price: High to Low</option>
           </select>
-          <span class="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">expand_more</span>
+          <span
+            class="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">expand_more</span>
         </div>
       </div>
     </div>
@@ -73,24 +75,15 @@
               <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">Categories</h4>
               <div class="mt-3 space-y-2">
                 <label class="flex items-center gap-3 text-sm font-medium text-slate-600 dark:text-slate-300">
-                  <input
-                    class="form-checkbox h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary"
-                    type="checkbox"
-                    [checked]="selectedCategory === 'All'"
-                    (change)="selectedCategory = 'All'"
-                  />
+                  <input class="form-checkbox h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary"
+                    type="checkbox" [checked]="selectedCategory === 'All'" (change)="selectedCategory = 'All'" />
                   All Categories
                 </label>
                 <label
                   class="flex items-center gap-3 text-sm font-medium text-slate-600 transition-colors hover:text-primary dark:text-slate-300"
-                  *ngFor="let category of categoryOptions"
-                >
-                  <input
-                    class="form-checkbox h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary"
-                    type="checkbox"
-                    [checked]="selectedCategory === category"
-                    (change)="toggleCategory(category)"
-                  />
+                  *ngFor="let category of categoryOptions">
+                  <input class="form-checkbox h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary"
+                    type="checkbox" [checked]="selectedCategory === category" (change)="toggleCategory(category)" />
                   {{ category }}
                 </label>
               </div>
@@ -100,9 +93,9 @@
               <div class="mt-3 space-y-2">
                 <label
                   class="flex items-center gap-3 text-sm font-medium text-slate-600 transition-colors hover:text-primary dark:text-slate-300"
-                  *ngFor="let brand of brandOptions"
-                >
-                  <input class="form-checkbox h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary" type="checkbox" />
+                  *ngFor="let brand of brandOptions">
+                  <input class="form-checkbox h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary"
+                    type="checkbox" />
                   {{ brand }}
                 </label>
               </div>
@@ -110,7 +103,8 @@
             <div>
               <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">Availability</h4>
               <label class="mt-3 flex items-center gap-3 text-sm font-medium text-slate-600 dark:text-slate-300">
-                <input class="form-checkbox h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary" type="checkbox" />
+                <input class="form-checkbox h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary"
+                  type="checkbox" />
                 In stock only
               </label>
             </div>
@@ -134,16 +128,16 @@
 
       <div class="flex-1">
         <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          <article
-            *ngFor="let product of filteredProducts"
-            class="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl dark:border-slate-800 dark:bg-slate-900"
-          >
+          <article *ngFor="let product of filteredProducts"
+            class="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl dark:border-slate-800 dark:bg-slate-900">
             <div class="relative flex aspect-[4/3] items-center justify-center bg-slate-50 p-6 dark:bg-slate-800">
               <button class="absolute right-4 top-4 text-slate-400 transition hover:text-red-500">
                 <span class="material-symbols-outlined">favorite</span>
               </button>
-              <img class="h-full w-full object-contain transition duration-500 group-hover:scale-105" [src]="product.image" [alt]="product.name" />
-              <span class="absolute left-4 bottom-4 rounded-full border border-slate-100 bg-white/90 px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-navy-blue shadow-sm dark:border-slate-600 dark:bg-slate-900 dark:text-white">
+              <img class="h-full w-full object-contain transition duration-500 group-hover:scale-105"
+                [src]="product.image" [alt]="product.name" />
+              <span
+                class="absolute left-4 bottom-4 rounded-full border border-slate-100 bg-white/90 px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-navy-blue shadow-sm dark:border-slate-600 dark:bg-slate-900 dark:text-white">
                 {{ product.brand }}
               </span>
             </div>
@@ -161,7 +155,8 @@
                   {{ highlight }}
                 </li>
               </ul>
-              <div class="mt-auto flex items-center justify-between gap-3 border-t border-slate-100 pt-4 text-sm dark:border-slate-800">
+              <div
+                class="mt-auto flex items-center justify-between gap-3 border-t border-slate-100 pt-4 text-sm dark:border-slate-800">
                 <div>
                   <p class="text-xs uppercase text-slate-400">Price</p>
                   <p class="text-lg font-bold text-navy-blue dark:text-white">
@@ -171,14 +166,11 @@
                 <div class="flex flex-1 flex-col gap-2">
                   <button
                     class="rounded-full bg-primary px-4 py-2 text-xs font-semibold text-white transition hover:bg-blue-600"
-                    (click)="addToCart(product)"
-                  >
+                    (click)="addToCart(product)">
                     Add to cart
                   </button>
-                  <a
-                    class="rounded-full border border-slate-200 px-4 py-2 text-center text-xs font-semibold text-slate-600 transition hover:border-primary hover:text-primary dark:border-slate-700 dark:text-slate-200"
-                    [routerLink]="['/products', product.id]"
-                  >
+                  <a class="rounded-full border border-slate-200 px-4 py-2 text-center text-xs font-semibold text-slate-600 transition hover:border-primary hover:text-primary dark:border-slate-700 dark:text-slate-200"
+                    [routerLink]="['/products', product.id]">
                     View Details
                   </a>
                 </div>
@@ -188,14 +180,19 @@
         </div>
 
         <div class="mt-10 flex items-center justify-center gap-2">
-          <button class="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-slate-500 hover:bg-slate-50 dark:border-slate-700 dark:hover:bg-slate-800">
+          <button
+            class="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-slate-500 hover:bg-slate-50 dark:border-slate-700 dark:hover:bg-slate-800">
             <span class="material-symbols-outlined">chevron_left</span>
           </button>
-          <button class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-sm font-bold text-white">1</button>
-          <button class="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-sm font-bold text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">2</button>
-          <button class="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-sm font-bold text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">3</button>
+          <button
+            class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-sm font-bold text-white">1</button>
+          <button
+            class="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-sm font-bold text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">2</button>
+          <button
+            class="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-sm font-bold text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">3</button>
           <span class="flex h-10 w-10 items-center justify-center text-slate-400">...</span>
-          <button class="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-slate-500 hover:bg-slate-50 dark:border-slate-700 dark:hover:bg-slate-800">
+          <button
+            class="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-slate-500 hover:bg-slate-50 dark:border-slate-700 dark:hover:bg-slate-800">
             <span class="material-symbols-outlined">chevron_right</span>
           </button>
         </div>

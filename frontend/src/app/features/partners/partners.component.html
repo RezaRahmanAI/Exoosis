@@ -1,20 +1,18 @@
 <main class="flex-1">
   <!-- Hero Section -->
-  <section class="relative bg-surface-dark py-16 md:py-24 overflow-hidden">
+  <section class="relative bg-surface-dark pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden">
     <!-- Background Image with Overlay -->
     <div class="absolute inset-0 z-0">
-      <div
-        class="w-full h-full bg-cover bg-center opacity-30"
+      <div class="w-full h-full bg-cover bg-center opacity-30"
         data-alt="Abstract blue technology network connections background"
-        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCvh9D44EgTLSm6ASz04C1VmoTfCbJDldKbik2cWh_r888c1Ft_g4AUAV8U6NIamiUKr4idrrvXyhvjdzf46h1VrwF4_SohJwfU1h-IvS6lE5S2ZwaMS0N7yFg4Gm9bE3Y4O4xI9II_DOqtu4ZZ8rObEco34gSOGAuMP62-y4viQ4j0wyuaG4VJ8mg4AwOt_UBgRF2PZgbH-kYdrCK9YCUSiodKs2EVs8RQimw7R0E3R6aNmC0vdjK_STIhie6cchajKICWj8xtlmFW");'
-      ></div>
+        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCvh9D44EgTLSm6ASz04C1VmoTfCbJDldKbik2cWh_r888c1Ft_g4AUAV8U6NIamiUKr4idrrvXyhvjdzf46h1VrwF4_SohJwfU1h-IvS6lE5S2ZwaMS0N7yFg4Gm9bE3Y4O4xI9II_DOqtu4ZZ8rObEco34gSOGAuMP62-y4viQ4j0wyuaG4VJ8mg4AwOt_UBgRF2PZgbH-kYdrCK9YCUSiodKs2EVs8RQimw7R0E3R6aNmC0vdjK_STIhie6cchajKICWj8xtlmFW");'>
+      </div>
       <div class="absolute inset-0 bg-gradient-to-b from-background-dark/80 to-background-dark"></div>
     </div>
     <div class="relative z-10 page-container flex flex-col items-center justify-center text-center">
       <div class="max-w-[800px] flex flex-col gap-6 items-center">
         <span
-          class="inline-flex items-center gap-1 rounded-full bg-primary/20 px-3 py-1 text-sm font-medium text-primary border border-primary/20"
-        >
+          class="inline-flex items-center gap-1 rounded-full bg-primary/20 px-3 py-1 text-sm font-medium text-primary border border-primary/20">
           <span class="material-symbols-outlined text-[18px]">verified</span>
           Trusted Global Network
         </span>
@@ -27,13 +25,11 @@
         </p>
         <div class="flex flex-wrap gap-4 justify-center pt-4">
           <button
-            class="flex items-center justify-center rounded-lg h-12 px-8 bg-primary text-white text-base font-bold hover:bg-primary/90 transition-all shadow-lg shadow-primary/25"
-          >
+            class="flex items-center justify-center rounded-lg h-12 px-8 bg-primary text-white text-base font-bold hover:bg-primary/90 transition-all shadow-lg shadow-primary/25">
             Become a Partner
           </button>
           <button
-            class="flex items-center justify-center rounded-lg h-12 px-8 bg-white/10 text-white border border-white/20 text-base font-medium hover:bg-white/20 transition-all backdrop-blur-sm"
-          >
+            class="flex items-center justify-center rounded-lg h-12 px-8 bg-white/10 text-white border border-white/20 text-base font-medium hover:bg-white/20 transition-all backdrop-blur-sm">
             View Solutions
           </button>
         </div>
@@ -45,24 +41,21 @@
     <div class="page-container">
       <div class="text-center max-w-3xl mx-auto">
         <p class="text-sm font-semibold text-primary uppercase tracking-widest">Partner Directory</p>
-        <h2 class="text-3xl md:text-4xl font-bold text-[#0d121b] dark:text-white mt-4">Brands powering our ecosystem</h2>
+        <h2 class="text-3xl md:text-4xl font-bold text-[#0d121b] dark:text-white mt-4">Brands powering our ecosystem
+        </h2>
         <p class="text-gray-500 dark:text-gray-400 mt-4">
-          Browse our active partner roster and learn more about the technology leaders we collaborate with across industries.
+          Browse our active partner roster and learn more about the technology leaders we collaborate with across
+          industries.
         </p>
       </div>
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
-        <a
-          *ngFor="let partner of partners"
+        <a *ngFor="let partner of partners"
           class="group bg-surface-light dark:bg-surface-dark rounded-2xl border border-[#e7ebf3] dark:border-[#2d3748] p-6 flex flex-col gap-4 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/5 transition-all"
-          [routerLink]="['/partners', partner.id]"
-        >
-          <div class="h-20 flex items-center justify-center bg-white dark:bg-[#1e2736] rounded-xl border border-gray-100 dark:border-[#2d3748]">
-            <img
-              *ngIf="partner.logoUrl"
-              [alt]="partner.name"
-              class="h-12 w-auto object-contain"
-              [src]="partner.logoUrl"
-            />
+          [routerLink]="['/partners', partner.id]">
+          <div
+            class="h-20 flex items-center justify-center bg-white dark:bg-[#1e2736] rounded-xl border border-gray-100 dark:border-[#2d3748]">
+            <img *ngIf="partner.logoUrl" [alt]="partner.name" class="h-12 w-auto object-contain"
+              [src]="partner.logoUrl" />
             <span *ngIf="!partner.logoUrl" class="text-gray-400 text-sm font-semibold">Logo Coming Soon</span>
           </div>
           <div>
@@ -86,42 +79,31 @@
   </section>
   <!-- Filters Section -->
   <section
-    class="sticky top-[65px] z-40 border-b border-[#e7ebf3] dark:border-[#2d3748] bg-surface-light/90 dark:bg-surface-dark/90 backdrop-blur-md"
-  >
+    class="sticky top-[65px] z-40 border-b border-[#e7ebf3] dark:border-[#2d3748] bg-surface-light/90 dark:bg-surface-dark/90 backdrop-blur-md">
     <div class="page-container py-4 overflow-x-auto hide-scrollbar">
       <div class="flex gap-3 min-w-max justify-start md:justify-center">
-        <a
-          class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary text-white pl-4 pr-5 shadow-sm transition-all hover:shadow-md"
-          href="#"
-        >
+        <a class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary text-white pl-4 pr-5 shadow-sm transition-all hover:shadow-md"
+          href="#">
           <span class="material-symbols-outlined text-[20px]">grid_view</span>
           <span class="text-sm font-bold">All Partners</span>
         </a>
-        <a
-          class="group flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-surface-dark border border-[#e7ebf3] dark:border-[#2d3748] hover:border-primary/50 pl-4 pr-5 transition-all hover:bg-gray-50 dark:hover:bg-[#1e2736]"
-          href="#computing"
-        >
+        <a class="group flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-surface-dark border border-[#e7ebf3] dark:border-[#2d3748] hover:border-primary/50 pl-4 pr-5 transition-all hover:bg-gray-50 dark:hover:bg-[#1e2736]"
+          href="#computing">
           <span class="material-symbols-outlined text-[20px] text-gray-500 group-hover:text-primary">computer</span>
           <span class="text-[#0d121b] dark:text-gray-300 text-sm font-medium">Computing &amp; Hardware</span>
         </a>
-        <a
-          class="group flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-surface-dark border border-[#e7ebf3] dark:border-[#2d3748] hover:border-primary/50 pl-4 pr-5 transition-all hover:bg-gray-50 dark:hover:bg-[#1e2736]"
-          href="#networking"
-        >
+        <a class="group flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-surface-dark border border-[#e7ebf3] dark:border-[#2d3748] hover:border-primary/50 pl-4 pr-5 transition-all hover:bg-gray-50 dark:hover:bg-[#1e2736]"
+          href="#networking">
           <span class="material-symbols-outlined text-[20px] text-gray-500 group-hover:text-primary">router</span>
           <span class="text-[#0d121b] dark:text-gray-300 text-sm font-medium">Networking</span>
         </a>
-        <a
-          class="group flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-surface-dark border border-[#e7ebf3] dark:border-[#2d3748] hover:border-primary/50 pl-4 pr-5 transition-all hover:bg-gray-50 dark:hover:bg-[#1e2736]"
-          href="#security"
-        >
+        <a class="group flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-surface-dark border border-[#e7ebf3] dark:border-[#2d3748] hover:border-primary/50 pl-4 pr-5 transition-all hover:bg-gray-50 dark:hover:bg-[#1e2736]"
+          href="#security">
           <span class="material-symbols-outlined text-[20px] text-gray-500 group-hover:text-primary">shield</span>
           <span class="text-[#0d121b] dark:text-gray-300 text-sm font-medium">Security</span>
         </a>
-        <a
-          class="group flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-surface-dark border border-[#e7ebf3] dark:border-[#2d3748] hover:border-primary/50 pl-4 pr-5 transition-all hover:bg-gray-50 dark:hover:bg-[#1e2736]"
-          href="#software"
-        >
+        <a class="group flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-surface-dark border border-[#e7ebf3] dark:border-[#2d3748] hover:border-primary/50 pl-4 pr-5 transition-all hover:bg-gray-50 dark:hover:bg-[#1e2736]"
+          href="#software">
           <span class="material-symbols-outlined text-[20px] text-gray-500 group-hover:text-primary">terminal</span>
           <span class="text-[#0d121b] dark:text-gray-300 text-sm font-medium">Enterprise Software</span>
         </a>
@@ -145,50 +127,40 @@
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         <!-- Card: HP -->
         <div
-          class="logo-card group bg-surface-light dark:bg-surface-dark rounded-xl border border-[#e7ebf3] dark:border-[#2d3748] p-8 flex flex-col items-center justify-center gap-4 grayscale hover:grayscale-0 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/5 cursor-pointer relative overflow-hidden"
-        >
+          class="logo-card group bg-surface-light dark:bg-surface-dark rounded-xl border border-[#e7ebf3] dark:border-[#2d3748] p-8 flex flex-col items-center justify-center gap-4 grayscale hover:grayscale-0 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/5 cursor-pointer relative overflow-hidden">
           <div
-            class="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-primary/5 to-transparent rounded-bl-full -mr-8 -mt-8 transition-all group-hover:from-primary/10"
-          ></div>
-          <div
-            class="w-24 h-24 bg-contain bg-center bg-no-repeat"
-            data-alt="HP Logo"
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB6BkP1DtF93oMMWYWtfYdcIWW-w8807RCXtRbUa-Gzbxr8UtuylOhMOXGVQuf55bfwxFuz7ku842vC_1yxPq97dzrH-1nDkCBajoKaKNOvUx-yVMmhawGdh1KgpYUpnbN59tS_pE_DGf0eh28Zfdyn2x_mB1e7Z5ffmG9m6g6tYTN7DNb3fNLI_ipnG5p-uZKP6R1OE7N-J4iIT2mzhrT23Mqqw71B5lQk4XN3_rhRbPSkMcZeYHU3iHKMeIQ0Mnmr8JdO73BNtN1r");'
-          ></div>
+            class="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-primary/5 to-transparent rounded-bl-full -mr-8 -mt-8 transition-all group-hover:from-primary/10">
+          </div>
+          <div class="w-24 h-24 bg-contain bg-center bg-no-repeat" data-alt="HP Logo"
+            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB6BkP1DtF93oMMWYWtfYdcIWW-w8807RCXtRbUa-Gzbxr8UtuylOhMOXGVQuf55bfwxFuz7ku842vC_1yxPq97dzrH-1nDkCBajoKaKNOvUx-yVMmhawGdh1KgpYUpnbN59tS_pE_DGf0eh28Zfdyn2x_mB1e7Z5ffmG9m6g6tYTN7DNb3fNLI_ipnG5p-uZKP6R1OE7N-J4iIT2mzhrT23Mqqw71B5lQk4XN3_rhRbPSkMcZeYHU3iHKMeIQ0Mnmr8JdO73BNtN1r");'>
+          </div>
           <span class="text-[#0d121b] dark:text-white font-bold text-lg">HP</span>
         </div>
         <!-- Card: Dell -->
         <div
-          class="logo-card group bg-surface-light dark:bg-surface-dark rounded-xl border border-[#e7ebf3] dark:border-[#2d3748] p-8 flex flex-col items-center justify-center gap-4 grayscale hover:grayscale-0 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/5 cursor-pointer relative overflow-hidden"
-        >
+          class="logo-card group bg-surface-light dark:bg-surface-dark rounded-xl border border-[#e7ebf3] dark:border-[#2d3748] p-8 flex flex-col items-center justify-center gap-4 grayscale hover:grayscale-0 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/5 cursor-pointer relative overflow-hidden">
           <div
-            class="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-primary/5 to-transparent rounded-bl-full -mr-8 -mt-8 transition-all group-hover:from-primary/10"
-          ></div>
-          <div
-            class="w-24 h-24 bg-contain bg-center bg-no-repeat"
-            data-alt="Dell Logo"
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBAAZOMrRjrg966RUOc7nRLaYSRVzyTAnJxC8rLk56B9Ead2MdaLSJqjmi-CTjDvc-LcgpMoWcIUd6fGnLJ7gsa74pZqgx43_wP1qr-jc77jibklGoT-Nayux3q1FGlHnz7Cp2KFcJgV2XOd3WFG7jkw9jamBa1Ha8xaQMhT4ZEiaFAI-DNV2QwSBAhJsEdoDUC4tJqcc2CuxzaIU1q7dC8HghSTVjRtVHtN8woL763lt7poq2nGXVecCvyapYR9IdPKOTy59kKDSqv");'
-          ></div>
+            class="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-primary/5 to-transparent rounded-bl-full -mr-8 -mt-8 transition-all group-hover:from-primary/10">
+          </div>
+          <div class="w-24 h-24 bg-contain bg-center bg-no-repeat" data-alt="Dell Logo"
+            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBAAZOMrRjrg966RUOc7nRLaYSRVzyTAnJxC8rLk56B9Ead2MdaLSJqjmi-CTjDvc-LcgpMoWcIUd6fGnLJ7gsa74pZqgx43_wP1qr-jc77jibklGoT-Nayux3q1FGlHnz7Cp2KFcJgV2XOd3WFG7jkw9jamBa1Ha8xaQMhT4ZEiaFAI-DNV2QwSBAhJsEdoDUC4tJqcc2CuxzaIU1q7dC8HghSTVjRtVHtN8woL763lt7poq2nGXVecCvyapYR9IdPKOTy59kKDSqv");'>
+          </div>
           <span class="text-[#0d121b] dark:text-white font-bold text-lg">Dell</span>
         </div>
         <!-- Card: Asus -->
         <div
-          class="logo-card group bg-surface-light dark:bg-surface-dark rounded-xl border border-[#e7ebf3] dark:border-[#2d3748] p-8 flex flex-col items-center justify-center gap-4 grayscale hover:grayscale-0 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/5 cursor-pointer relative overflow-hidden"
-        >
+          class="logo-card group bg-surface-light dark:bg-surface-dark rounded-xl border border-[#e7ebf3] dark:border-[#2d3748] p-8 flex flex-col items-center justify-center gap-4 grayscale hover:grayscale-0 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/5 cursor-pointer relative overflow-hidden">
           <div
-            class="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-primary/5 to-transparent rounded-bl-full -mr-8 -mt-8 transition-all group-hover:from-primary/10"
-          ></div>
-          <div
-            class="w-24 h-24 bg-contain bg-center bg-no-repeat"
-            data-alt="Asus Logo"
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAzPLzW3CJUxkL11rdrX-Vk6uObyAIye7pq7qXkSJzEfzERMcnUD5-InYYNeoXdY08WIU_AjXAjbHxvTxy_Mxmz4MryPuzzGTPPiECyqfCTxpfYSy6Z1M-6Ote00PmadEToPp3Ylxvx88FtangXNO_w6FUBgSIHi7TKwWJ2s-q2-eIbvN_0fUckfsH37s15Kn8Db7I6sSoFS4QXfPZocLRWUJOFXTYUrKaeQjEou1mKdI_BGfH2198UfbM7p5-Re-qwhulyUIfiI-Bk");'
-          ></div>
+            class="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-primary/5 to-transparent rounded-bl-full -mr-8 -mt-8 transition-all group-hover:from-primary/10">
+          </div>
+          <div class="w-24 h-24 bg-contain bg-center bg-no-repeat" data-alt="Asus Logo"
+            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAzPLzW3CJUxkL11rdrX-Vk6uObyAIye7pq7qXkSJzEfzERMcnUD5-InYYNeoXdY08WIU_AjXAjbHxvTxy_Mxmz4MryPuzzGTPPiECyqfCTxpfYSy6Z1M-6Ote00PmadEToPp3Ylxvx88FtangXNO_w6FUBgSIHi7TKwWJ2s-q2-eIbvN_0fUckfsH37s15Kn8Db7I6sSoFS4QXfPZocLRWUJOFXTYUrKaeQjEou1mKdI_BGfH2198UfbM7p5-Re-qwhulyUIfiI-Bk");'>
+          </div>
           <span class="text-[#0d121b] dark:text-white font-bold text-lg">Asus</span>
         </div>
         <!-- Placeholder for Layout Balance -->
         <div
-          class="logo-card group bg-surface-light dark:bg-surface-dark rounded-xl border border-dashed border-[#e7ebf3] dark:border-[#2d3748] p-8 flex flex-col items-center justify-center gap-2 hover:border-primary/50 hover:bg-primary/5 cursor-pointer"
-        >
+          class="logo-card group bg-surface-light dark:bg-surface-dark rounded-xl border border-dashed border-[#e7ebf3] dark:border-[#2d3748] p-8 flex flex-col items-center justify-center gap-2 hover:border-primary/50 hover:bg-primary/5 cursor-pointer">
           <span class="material-symbols-outlined text-gray-400 group-hover:text-primary">add</span>
           <span class="text-gray-400 font-medium text-sm group-hover:text-primary">Join Network</span>
         </div>
@@ -210,57 +182,42 @@
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
         <!-- Cisco -->
         <div
-          class="logo-card group bg-surface-light dark:bg-surface-dark rounded-xl border border-[#e7ebf3] dark:border-[#2d3748] p-6 flex flex-col items-center justify-center gap-3 grayscale hover:grayscale-0 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 cursor-pointer"
-        >
-          <div
-            class="w-16 h-16 bg-contain bg-center bg-no-repeat"
-            data-alt="Cisco Logo"
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAsidfHFXgBqq3pFZ4_Bz6MVmvbGK3A5Glw_TqNMI8qZUgZIiGaXFU6Uko6KNPdy558Ou-Q4Om5-VB1MFMVuoNPmm5qppvzTMmwOt788wFx6oe1c1W5SVdUWOmC1ClsVxo-XZGWglQmmBJJ7WLfdUF9TULLvxppM7dm7qapXG82SbYOdXi7nm_SzgV2c_uap177FcTrut7e7nUjrxyJHScpPAtr4tadr1o3TnskLXzmnd0ueB3U4zg1zV9SyuJ1Z-yIEjW3pmFXt8ry");'
-          ></div>
+          class="logo-card group bg-surface-light dark:bg-surface-dark rounded-xl border border-[#e7ebf3] dark:border-[#2d3748] p-6 flex flex-col items-center justify-center gap-3 grayscale hover:grayscale-0 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 cursor-pointer">
+          <div class="w-16 h-16 bg-contain bg-center bg-no-repeat" data-alt="Cisco Logo"
+            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAsidfHFXgBqq3pFZ4_Bz6MVmvbGK3A5Glw_TqNMI8qZUgZIiGaXFU6Uko6KNPdy558Ou-Q4Om5-VB1MFMVuoNPmm5qppvzTMmwOt788wFx6oe1c1W5SVdUWOmC1ClsVxo-XZGWglQmmBJJ7WLfdUF9TULLvxppM7dm7qapXG82SbYOdXi7nm_SzgV2c_uap177FcTrut7e7nUjrxyJHScpPAtr4tadr1o3TnskLXzmnd0ueB3U4zg1zV9SyuJ1Z-yIEjW3pmFXt8ry");'>
+          </div>
           <span class="text-[#0d121b] dark:text-white font-semibold text-base">Cisco</span>
         </div>
         <!-- Ruijie -->
         <div
-          class="logo-card group bg-surface-light dark:bg-surface-dark rounded-xl border border-[#e7ebf3] dark:border-[#2d3748] p-6 flex flex-col items-center justify-center gap-3 grayscale hover:grayscale-0 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 cursor-pointer"
-        >
-          <div
-            class="w-16 h-16 bg-contain bg-center bg-no-repeat"
-            data-alt="Ruijie Logo"
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB-NghzMZbckcgOs9L0NA2kdNmoxDdxZUn1OM6eyDilLu-PMu4TRqotOgH7kGCdBQx9NPSTBiq7lV8kFAjAsSbchx00v_4zKQUJvpFr9PKxj6WK_0s7zlQKZxQFyfGKBE3MiA0n-L2D3CHrsTgWrm9BQCczNd6EMaumuiWiL_tMbQ-piTU4NOlCDccqGyMwrZdisnCWxym-Cylv1jaOHXKmQoG9qDF_ZXu9mjvmToeez_l8VbDuFC-D9KPbLbsQvdqwuvOumXxYfQdm");'
-          ></div>
+          class="logo-card group bg-surface-light dark:bg-surface-dark rounded-xl border border-[#e7ebf3] dark:border-[#2d3748] p-6 flex flex-col items-center justify-center gap-3 grayscale hover:grayscale-0 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 cursor-pointer">
+          <div class="w-16 h-16 bg-contain bg-center bg-no-repeat" data-alt="Ruijie Logo"
+            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB-NghzMZbckcgOs9L0NA2kdNmoxDdxZUn1OM6eyDilLu-PMu4TRqotOgH7kGCdBQx9NPSTBiq7lV8kFAjAsSbchx00v_4zKQUJvpFr9PKxj6WK_0s7zlQKZxQFyfGKBE3MiA0n-L2D3CHrsTgWrm9BQCczNd6EMaumuiWiL_tMbQ-piTU4NOlCDccqGyMwrZdisnCWxym-Cylv1jaOHXKmQoG9qDF_ZXu9mjvmToeez_l8VbDuFC-D9KPbLbsQvdqwuvOumXxYfQdm");'>
+          </div>
           <span class="text-[#0d121b] dark:text-white font-semibold text-base">Ruijie</span>
         </div>
         <!-- Ruckus -->
         <div
-          class="logo-card group bg-surface-light dark:bg-surface-dark rounded-xl border border-[#e7ebf3] dark:border-[#2d3748] p-6 flex flex-col items-center justify-center gap-3 grayscale hover:grayscale-0 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 cursor-pointer"
-        >
-          <div
-            class="w-16 h-16 bg-contain bg-center bg-no-repeat"
-            data-alt="Ruckus Logo"
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBtNf7gmuuYgVJv3MUuWVLQk8lItzqMRC3XVVPuO-NsLUx5zGP5TlGv7m1D6qrLBHfhw1Brcg7b5EA0RHWZ8eltMvE0o_R0D8BThiqD5HrViU9tAsljhUsMhG3LPIyEvbVM5AyoSG3hjGNt6Yryrkg_zkOSNd0S6r2zTNu8i7yGsXp84zd9X4nVo6vtZdnpRtRa2Se6yt1iFCQR4k5N9V_PHqVgbUUobI9GhnjIrIdQfKRx5bYrGA8Ow5xN19oi4HyNPYTJAfcSrt7F");'
-          ></div>
+          class="logo-card group bg-surface-light dark:bg-surface-dark rounded-xl border border-[#e7ebf3] dark:border-[#2d3748] p-6 flex flex-col items-center justify-center gap-3 grayscale hover:grayscale-0 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 cursor-pointer">
+          <div class="w-16 h-16 bg-contain bg-center bg-no-repeat" data-alt="Ruckus Logo"
+            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBtNf7gmuuYgVJv3MUuWVLQk8lItzqMRC3XVVPuO-NsLUx5zGP5TlGv7m1D6qrLBHfhw1Brcg7b5EA0RHWZ8eltMvE0o_R0D8BThiqD5HrViU9tAsljhUsMhG3LPIyEvbVM5AyoSG3hjGNt6Yryrkg_zkOSNd0S6r2zTNu8i7yGsXp84zd9X4nVo6vtZdnpRtRa2Se6yt1iFCQR4k5N9V_PHqVgbUUobI9GhnjIrIdQfKRx5bYrGA8Ow5xN19oi4HyNPYTJAfcSrt7F");'>
+          </div>
           <span class="text-[#0d121b] dark:text-white font-semibold text-base">Ruckus</span>
         </div>
         <!-- CommScope -->
         <div
-          class="logo-card group bg-surface-light dark:bg-surface-dark rounded-xl border border-[#e7ebf3] dark:border-[#2d3748] p-6 flex flex-col items-center justify-center gap-3 grayscale hover:grayscale-0 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 cursor-pointer"
-        >
-          <div
-            class="w-16 h-16 bg-contain bg-center bg-no-repeat"
-            data-alt="CommScope Logo"
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCkjWE6o539gPNacHHFkZYgkqthgu7-CkszncrWizRzTBxLAbo8HYFr2VL1ksNCGeGsAhOCcST5Bdf8Xc6OXIwx8CaoRWPEj2LhPWYZBVws46acx9P8oDxRNp1B-uNQwb9ZSDsd7uYdCappu9350oRFiarKoli4eC91zBMBUJfi4z7swu7vFfnnSFgR-Hjmy7ien91mKCep5URHGQ8NEGI7UA_vxfryr_L66JuEENqslxGbbySq1RMNkBBMj75hmBkVIgtC5EjP77O_");'
-          ></div>
+          class="logo-card group bg-surface-light dark:bg-surface-dark rounded-xl border border-[#e7ebf3] dark:border-[#2d3748] p-6 flex flex-col items-center justify-center gap-3 grayscale hover:grayscale-0 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 cursor-pointer">
+          <div class="w-16 h-16 bg-contain bg-center bg-no-repeat" data-alt="CommScope Logo"
+            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCkjWE6o539gPNacHHFkZYgkqthgu7-CkszncrWizRzTBxLAbo8HYFr2VL1ksNCGeGsAhOCcST5Bdf8Xc6OXIwx8CaoRWPEj2LhPWYZBVws46acx9P8oDxRNp1B-uNQwb9ZSDsd7uYdCappu9350oRFiarKoli4eC91zBMBUJfi4z7swu7vFfnnSFgR-Hjmy7ien91mKCep5URHGQ8NEGI7UA_vxfryr_L66JuEENqslxGbbySq1RMNkBBMj75hmBkVIgtC5EjP77O_");'>
+          </div>
           <span class="text-[#0d121b] dark:text-white font-semibold text-base">CommScope</span>
         </div>
         <!-- Rosenberger -->
         <div
-          class="logo-card group bg-surface-light dark:bg-surface-dark rounded-xl border border-[#e7ebf3] dark:border-[#2d3748] p-6 flex flex-col items-center justify-center gap-3 grayscale hover:grayscale-0 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 cursor-pointer"
-        >
-          <div
-            class="w-16 h-16 bg-contain bg-center bg-no-repeat"
-            data-alt="Rosenberger Logo"
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDIgJlc7VJtb-n4wkoRneKpABBHfPrsR_g4FgoO9dVG2jWjs4saGFSN_4kxU2FN4ebxKGiF61Ou8fjO88tVStge5t_3pihJczddjAX81nAWmBxGZnzUMsPFodzhL05xuTVrppMtcd-_LRtUtXzv0v2NB48qzSsWb5mj-Lo5pyKbKKHu6SoPJEvKx97U8s315fRRu0C-LU9d71h-6oEq8E0S9QN1lyRzuBKbqYOfnhHs8HUFLiEQqR5E6tQ_BIc6xoqbR3EOr0pRvLL2");'
-          ></div>
+          class="logo-card group bg-surface-light dark:bg-surface-dark rounded-xl border border-[#e7ebf3] dark:border-[#2d3748] p-6 flex flex-col items-center justify-center gap-3 grayscale hover:grayscale-0 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 cursor-pointer">
+          <div class="w-16 h-16 bg-contain bg-center bg-no-repeat" data-alt="Rosenberger Logo"
+            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDIgJlc7VJtb-n4wkoRneKpABBHfPrsR_g4FgoO9dVG2jWjs4saGFSN_4kxU2FN4ebxKGiF61Ou8fjO88tVStge5t_3pihJczddjAX81nAWmBxGZnzUMsPFodzhL05xuTVrppMtcd-_LRtUtXzv0v2NB48qzSsWb5mj-Lo5pyKbKKHu6SoPJEvKx97U8s315fRRu0C-LU9d71h-6oEq8E0S9QN1lyRzuBKbqYOfnhHs8HUFLiEQqR5E6tQ_BIc6xoqbR3EOr0pRvLL2");'>
+          </div>
           <span class="text-[#0d121b] dark:text-white font-semibold text-base">Rosenberger</span>
         </div>
       </div>
@@ -281,35 +238,26 @@
       <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
         <!-- Hikvision -->
         <div
-          class="logo-card group bg-surface-light dark:bg-surface-dark rounded-xl border border-[#e7ebf3] dark:border-[#2d3748] p-8 flex flex-col items-center justify-center gap-4 grayscale hover:grayscale-0 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/5 cursor-pointer"
-        >
-          <div
-            class="w-20 h-20 bg-contain bg-center bg-no-repeat"
-            data-alt="Hikvision Logo"
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDL70YZl8tOKsmti7iplllMARus__E6emIBtfeHwqIRRbSPnXd4DyUrpWhl4hESHf-C601B3jc_60p6ccFG1KtBTGrttZlX6OZ1zMgh0k8MJhoq1jwdK380LoXwh5vpbIBFhQTrYTtqJuuoVBmmnxTkuYGsrEFqfrHlhkx_cjRqe77htLH64tzrR3jc2M_dnHpo4s4b_d1USOBFFwyif4_9ymAucUuD2LNgkXow-79GQxUWVfkE7mRh0lMkZmNneM5A5fzINLdMfycX");'
-          ></div>
+          class="logo-card group bg-surface-light dark:bg-surface-dark rounded-xl border border-[#e7ebf3] dark:border-[#2d3748] p-8 flex flex-col items-center justify-center gap-4 grayscale hover:grayscale-0 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/5 cursor-pointer">
+          <div class="w-20 h-20 bg-contain bg-center bg-no-repeat" data-alt="Hikvision Logo"
+            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDL70YZl8tOKsmti7iplllMARus__E6emIBtfeHwqIRRbSPnXd4DyUrpWhl4hESHf-C601B3jc_60p6ccFG1KtBTGrttZlX6OZ1zMgh0k8MJhoq1jwdK380LoXwh5vpbIBFhQTrYTtqJuuoVBmmnxTkuYGsrEFqfrHlhkx_cjRqe77htLH64tzrR3jc2M_dnHpo4s4b_d1USOBFFwyif4_9ymAucUuD2LNgkXow-79GQxUWVfkE7mRh0lMkZmNneM5A5fzINLdMfycX");'>
+          </div>
           <span class="text-[#0d121b] dark:text-white font-bold text-lg">Hikvision</span>
         </div>
         <!-- Dahua -->
         <div
-          class="logo-card group bg-surface-light dark:bg-surface-dark rounded-xl border border-[#e7ebf3] dark:border-[#2d3748] p-8 flex flex-col items-center justify-center gap-4 grayscale hover:grayscale-0 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/5 cursor-pointer"
-        >
-          <div
-            class="w-20 h-20 bg-contain bg-center bg-no-repeat"
-            data-alt="Dahua Logo"
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBIqR58pNrAbyizx7YN5I1DgQF_SXixUxvoQ7uBXTeergxayEoHbR0Rzy5mm9dWQcg4oF7sz3Q8eZd84IuVWfB03I3j8e0RhLohlmjSoojMcdjwI68orL7zQHsWvfzqbAf_nIsteZBXUVBUFBMaEQKqrLx7lqnVHrbtaiDkxWZCR0cBqPkEUoum5m7vOd7a08cTOPaEhbwS2Av77qEMxlzGGqb6MEg6lypkjRo1wm8b5x8H91vn2bGXY7r-ezra3_vGQB2rqZA5JLno");'
-          ></div>
+          class="logo-card group bg-surface-light dark:bg-surface-dark rounded-xl border border-[#e7ebf3] dark:border-[#2d3748] p-8 flex flex-col items-center justify-center gap-4 grayscale hover:grayscale-0 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/5 cursor-pointer">
+          <div class="w-20 h-20 bg-contain bg-center bg-no-repeat" data-alt="Dahua Logo"
+            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBIqR58pNrAbyizx7YN5I1DgQF_SXixUxvoQ7uBXTeergxayEoHbR0Rzy5mm9dWQcg4oF7sz3Q8eZd84IuVWfB03I3j8e0RhLohlmjSoojMcdjwI68orL7zQHsWvfzqbAf_nIsteZBXUVBUFBMaEQKqrLx7lqnVHrbtaiDkxWZCR0cBqPkEUoum5m7vOd7a08cTOPaEhbwS2Av77qEMxlzGGqb6MEg6lypkjRo1wm8b5x8H91vn2bGXY7r-ezra3_vGQB2rqZA5JLno");'>
+          </div>
           <span class="text-[#0d121b] dark:text-white font-bold text-lg">Dahua</span>
         </div>
         <!-- ZKTeco -->
         <div
-          class="logo-card group bg-surface-light dark:bg-surface-dark rounded-xl border border-[#e7ebf3] dark:border-[#2d3748] p-8 flex flex-col items-center justify-center gap-4 grayscale hover:grayscale-0 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/5 cursor-pointer"
-        >
-          <div
-            class="w-20 h-20 bg-contain bg-center bg-no-repeat"
-            data-alt="ZKTeco Logo"
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD1WW2SKpZimiD3FtTwZAgkgE3ZnyBJLzEQBNAO4yLQ34ZR7hWDrZgNU2MFgPXF9Rc_v3rz0xrXYZY11Na9eMEt1D7AfdSIhFc2p6FbNktNkIyUqtG_JCRFy0eHMDezQk0w66pjKyNqu01cYh9yqCyXnQyQENio3RXYibDFThis_zSvhCvzply7Q0Mpz7DRwtJKmNZrHXzksTbCKwQ7FBqf4QtwsGfXkFxzUsLyqMpeTxYuBHGnTc9DHQPrVBc6-F4ggsazazzTvUV2");'
-          ></div>
+          class="logo-card group bg-surface-light dark:bg-surface-dark rounded-xl border border-[#e7ebf3] dark:border-[#2d3748] p-8 flex flex-col items-center justify-center gap-4 grayscale hover:grayscale-0 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/5 cursor-pointer">
+          <div class="w-20 h-20 bg-contain bg-center bg-no-repeat" data-alt="ZKTeco Logo"
+            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD1WW2SKpZimiD3FtTwZAgkgE3ZnyBJLzEQBNAO4yLQ34ZR7hWDrZgNU2MFgPXF9Rc_v3rz0xrXYZY11Na9eMEt1D7AfdSIhFc2p6FbNktNkIyUqtG_JCRFy0eHMDezQk0w66pjKyNqu01cYh9yqCyXnQyQENio3RXYibDFThis_zSvhCvzply7Q0Mpz7DRwtJKmNZrHXzksTbCKwQ7FBqf4QtwsGfXkFxzUsLyqMpeTxYuBHGnTc9DHQPrVBc6-F4ggsazazzTvUV2");'>
+          </div>
           <span class="text-[#0d121b] dark:text-white font-bold text-lg">ZKTeco</span>
         </div>
       </div>
@@ -330,68 +278,50 @@
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
         <!-- VMWare -->
         <div
-          class="logo-card group bg-surface-light dark:bg-surface-dark rounded-xl border border-[#e7ebf3] dark:border-[#2d3748] p-4 flex flex-col items-center justify-center gap-2 grayscale hover:grayscale-0 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 cursor-pointer h-32"
-        >
-          <div
-            class="w-12 h-12 bg-contain bg-center bg-no-repeat"
-            data-alt="VMWare Logo"
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB3zgl-PwQNkMNXB4HWtkKxsVO8r9rF-rwb4-ju3aJ-IXzL0EWleOePVxNZXmPVqg0wKKlmChF7eZYY_3PcW6odOTuGcTGSwPguRG2qAuUdNDtcffmKulZKU4WOHXTLfPfcYalWbN7ky3TAV2thbfE6WgomdMYHIrYnKYrP7sF3u5znQjGO9gCuq7P7NMDKeB9UCvxo_4MKGXlP6LXt2NM93TB2EiYWQAeFOAZPWOBSrZgJOcjep8L2eC-CGK9DEBoYcYIshd8gPoQF");'
-          ></div>
+          class="logo-card group bg-surface-light dark:bg-surface-dark rounded-xl border border-[#e7ebf3] dark:border-[#2d3748] p-4 flex flex-col items-center justify-center gap-2 grayscale hover:grayscale-0 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 cursor-pointer h-32">
+          <div class="w-12 h-12 bg-contain bg-center bg-no-repeat" data-alt="VMWare Logo"
+            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB3zgl-PwQNkMNXB4HWtkKxsVO8r9rF-rwb4-ju3aJ-IXzL0EWleOePVxNZXmPVqg0wKKlmChF7eZYY_3PcW6odOTuGcTGSwPguRG2qAuUdNDtcffmKulZKU4WOHXTLfPfcYalWbN7ky3TAV2thbfE6WgomdMYHIrYnKYrP7sF3u5znQjGO9gCuq7P7NMDKeB9UCvxo_4MKGXlP6LXt2NM93TB2EiYWQAeFOAZPWOBSrZgJOcjep8L2eC-CGK9DEBoYcYIshd8gPoQF");'>
+          </div>
           <span class="text-[#0d121b] dark:text-white font-medium text-sm text-center">VMWare</span>
         </div>
         <!-- Oracle -->
         <div
-          class="logo-card group bg-surface-light dark:bg-surface-dark rounded-xl border border-[#e7ebf3] dark:border-[#2d3748] p-4 flex flex-col items-center justify-center gap-2 grayscale hover:grayscale-0 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 cursor-pointer h-32"
-        >
-          <div
-            class="w-12 h-12 bg-contain bg-center bg-no-repeat"
-            data-alt="Oracle Logo"
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAPxLN_ulixAd4ah5iLWjzWYb7JVrZeygFd2oN74ZQuuZ1_G3vmBSV3zr3dmHppu_iuPSnXKzpt10NrOsqkMVKQqfN9xnW08tC_naeOS5-mmuP9H_2Co_iif5wfOpkcIWaBODpdimvi-6c8ipvzwI55oY58mzhyVW9fnmCRP3ROJxzHF-5HKNPZa7VK30wfY0a1uNDvxOFmJrteZ3zWzHGrzAF4J7cj9Ar3tQgjrRAQtLuSIlaQIQE4bqfJiGChWYORpiRPpT0omK7C");'
-          ></div>
+          class="logo-card group bg-surface-light dark:bg-surface-dark rounded-xl border border-[#e7ebf3] dark:border-[#2d3748] p-4 flex flex-col items-center justify-center gap-2 grayscale hover:grayscale-0 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 cursor-pointer h-32">
+          <div class="w-12 h-12 bg-contain bg-center bg-no-repeat" data-alt="Oracle Logo"
+            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAPxLN_ulixAd4ah5iLWjzWYb7JVrZeygFd2oN74ZQuuZ1_G3vmBSV3zr3dmHppu_iuPSnXKzpt10NrOsqkMVKQqfN9xnW08tC_naeOS5-mmuP9H_2Co_iif5wfOpkcIWaBODpdimvi-6c8ipvzwI55oY58mzhyVW9fnmCRP3ROJxzHF-5HKNPZa7VK30wfY0a1uNDvxOFmJrteZ3zWzHGrzAF4J7cj9Ar3tQgjrRAQtLuSIlaQIQE4bqfJiGChWYORpiRPpT0omK7C");'>
+          </div>
           <span class="text-[#0d121b] dark:text-white font-medium text-sm text-center">Oracle</span>
         </div>
         <!-- Fortigate -->
         <div
-          class="logo-card group bg-surface-light dark:bg-surface-dark rounded-xl border border-[#e7ebf3] dark:border-[#2d3748] p-4 flex flex-col items-center justify-center gap-2 grayscale hover:grayscale-0 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 cursor-pointer h-32"
-        >
-          <div
-            class="w-12 h-12 bg-contain bg-center bg-no-repeat"
-            data-alt="Fortigate Logo"
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBL5Y_tXzo-UEzaQBPhugT8vxuRCddvcoBw8LAfQUGggZX6JWjvJGaKbFNEw8BTR3AnnBdFC3CnSgr-9Up5wpYYoUPMX119nDX3_w8wgBTp6E-FwMN58HUZGThiE4jQUGlNCacA18rPg-SXKFNkSC250hz18eDxzO5sYYrH5h4Ud9LoJZcT4NxHk4l8VJe6cpr_VRTtO2C15eLRwpoA0Ke5s3_wGPog_nmfr3qvAzWXqCubZoCEq9BKwByN67yJAuQxQvGbavpPb7PZ");'
-          ></div>
+          class="logo-card group bg-surface-light dark:bg-surface-dark rounded-xl border border-[#e7ebf3] dark:border-[#2d3748] p-4 flex flex-col items-center justify-center gap-2 grayscale hover:grayscale-0 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 cursor-pointer h-32">
+          <div class="w-12 h-12 bg-contain bg-center bg-no-repeat" data-alt="Fortigate Logo"
+            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBL5Y_tXzo-UEzaQBPhugT8vxuRCddvcoBw8LAfQUGggZX6JWjvJGaKbFNEw8BTR3AnnBdFC3CnSgr-9Up5wpYYoUPMX119nDX3_w8wgBTp6E-FwMN58HUZGThiE4jQUGlNCacA18rPg-SXKFNkSC250hz18eDxzO5sYYrH5h4Ud9LoJZcT4NxHk4l8VJe6cpr_VRTtO2C15eLRwpoA0Ke5s3_wGPog_nmfr3qvAzWXqCubZoCEq9BKwByN67yJAuQxQvGbavpPb7PZ");'>
+          </div>
           <span class="text-[#0d121b] dark:text-white font-medium text-sm text-center">Fortigate</span>
         </div>
         <!-- Veeam -->
         <div
-          class="logo-card group bg-surface-light dark:bg-surface-dark rounded-xl border border-[#e7ebf3] dark:border-[#2d3748] p-4 flex flex-col items-center justify-center gap-2 grayscale hover:grayscale-0 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 cursor-pointer h-32"
-        >
-          <div
-            class="w-12 h-12 bg-contain bg-center bg-no-repeat"
-            data-alt="Veeam Logo"
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDEGE45VooOoKsh8_TcA__NGBX1mr0IBvEUhLMuafIdL1pfkN6vHYQy8KcrsdfJ6Sl9j7o8wcRspIpbrJ3U8IJCPOx3u3e3KPI9UcMuwzBRbrUygFZLjhmOra4ekOkYJ7YottMnxD7yd4vg4AoNIXbsB8yu29eKpb4nvGCIE-9I1DcJbyy_BVtmA4JouLoNIKb3eWfnXIZQSP3V7Jet03MkPCFW8VCL25XGyGg377M_hvIVZptNv0uuY2RH2-gCb47RaLK6LvCbayoI");'
-          ></div>
+          class="logo-card group bg-surface-light dark:bg-surface-dark rounded-xl border border-[#e7ebf3] dark:border-[#2d3748] p-4 flex flex-col items-center justify-center gap-2 grayscale hover:grayscale-0 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 cursor-pointer h-32">
+          <div class="w-12 h-12 bg-contain bg-center bg-no-repeat" data-alt="Veeam Logo"
+            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDEGE45VooOoKsh8_TcA__NGBX1mr0IBvEUhLMuafIdL1pfkN6vHYQy8KcrsdfJ6Sl9j7o8wcRspIpbrJ3U8IJCPOx3u3e3KPI9UcMuwzBRbrUygFZLjhmOra4ekOkYJ7YottMnxD7yd4vg4AoNIXbsB8yu29eKpb4nvGCIE-9I1DcJbyy_BVtmA4JouLoNIKb3eWfnXIZQSP3V7Jet03MkPCFW8VCL25XGyGg377M_hvIVZptNv0uuY2RH2-gCb47RaLK6LvCbayoI");'>
+          </div>
           <span class="text-[#0d121b] dark:text-white font-medium text-sm text-center">Veeam</span>
         </div>
         <!-- MasterControl -->
         <div
-          class="logo-card group bg-surface-light dark:bg-surface-dark rounded-xl border border-[#e7ebf3] dark:border-[#2d3748] p-4 flex flex-col items-center justify-center gap-2 grayscale hover:grayscale-0 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 cursor-pointer h-32"
-        >
-          <div
-            class="w-12 h-12 bg-contain bg-center bg-no-repeat"
-            data-alt="MasterControl Logo"
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDzvr56bJ4vW_LNJSTvKKBf-qx1UiGF5yAOfmk0g62gAU2bzF_Iz390dIDodYlWxTVhIoJGvv0IBMQPLoEDF4Y8a4gdjgw6s5IGgAcOqVWEKxdjCPkKmi6QbeAMrinNpXy7QOW39G7FupSjQsXrajdIWQR-Jr0HXt8JQcGWLM7KJnYoAXn5VTA_ULb5iT8CeYbe7eilnbP_AWlLkogAv-FRddWZ7N2BhmaSc2skMVXGP0RH5RbDEsDpF3chBpxuwURrNsbIGhmPsReL");'
-          ></div>
+          class="logo-card group bg-surface-light dark:bg-surface-dark rounded-xl border border-[#e7ebf3] dark:border-[#2d3748] p-4 flex flex-col items-center justify-center gap-2 grayscale hover:grayscale-0 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 cursor-pointer h-32">
+          <div class="w-12 h-12 bg-contain bg-center bg-no-repeat" data-alt="MasterControl Logo"
+            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDzvr56bJ4vW_LNJSTvKKBf-qx1UiGF5yAOfmk0g62gAU2bzF_Iz390dIDodYlWxTVhIoJGvv0IBMQPLoEDF4Y8a4gdjgw6s5IGgAcOqVWEKxdjCPkKmi6QbeAMrinNpXy7QOW39G7FupSjQsXrajdIWQR-Jr0HXt8JQcGWLM7KJnYoAXn5VTA_ULb5iT8CeYbe7eilnbP_AWlLkogAv-FRddWZ7N2BhmaSc2skMVXGP0RH5RbDEsDpF3chBpxuwURrNsbIGhmPsReL");'>
+          </div>
           <span class="text-[#0d121b] dark:text-white font-medium text-sm text-center">Master Control</span>
         </div>
         <!-- SolarWinds -->
         <div
-          class="logo-card group bg-surface-light dark:bg-surface-dark rounded-xl border border-[#e7ebf3] dark:border-[#2d3748] p-4 flex flex-col items-center justify-center gap-2 grayscale hover:grayscale-0 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 cursor-pointer h-32"
-        >
-          <div
-            class="w-12 h-12 bg-contain bg-center bg-no-repeat"
-            data-alt="SolarWinds Logo"
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBaK5IIAFGooTrVX-auDKvpEFDVw6xO53a9Orxm0qgqCZ3u9xrooMOD-ElfcnHWn2Vc3RfdXzX9jzljQrHOyqN9TqBJzHbXLZd4o6FmH6_yE-nKRjtfY4PaFpXqOywzs9JLzZQrQxnvGe2FLhwCGgvXcIC_igDF0a56pJQdzy1GXGQOfaLfqTWrCs8LMyVaLtI1wDQh6myIH_-EIDeQ-Q_IgaoeD0dbyhy3VhRJlAzjs8jXPEJoKlidlOzLy70EVFSMJ2RLht1WKkct");'
-          ></div>
+          class="logo-card group bg-surface-light dark:bg-surface-dark rounded-xl border border-[#e7ebf3] dark:border-[#2d3748] p-4 flex flex-col items-center justify-center gap-2 grayscale hover:grayscale-0 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 cursor-pointer h-32">
+          <div class="w-12 h-12 bg-contain bg-center bg-no-repeat" data-alt="SolarWinds Logo"
+            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBaK5IIAFGooTrVX-auDKvpEFDVw6xO53a9Orxm0qgqCZ3u9xrooMOD-ElfcnHWn2Vc3RfdXzX9jzljQrHOyqN9TqBJzHbXLZd4o6FmH6_yE-nKRjtfY4PaFpXqOywzs9JLzZQrQxnvGe2FLhwCGgvXcIC_igDF0a56pJQdzy1GXGQOfaLfqTWrCs8LMyVaLtI1wDQh6myIH_-EIDeQ-Q_IgaoeD0dbyhy3VhRJlAzjs8jXPEJoKlidlOzLy70EVFSMJ2RLht1WKkct");'>
+          </div>
           <span class="text-[#0d121b] dark:text-white font-medium text-sm text-center">Solar Winds</span>
         </div>
       </div>
@@ -414,8 +344,7 @@
           Contact Sales
         </button>
         <button
-          class="h-12 px-8 rounded-lg bg-transparent border border-[#e7ebf3] dark:border-[#2d3748] text-[#0d121b] dark:text-white font-bold hover:bg-gray-50 dark:hover:bg-[#1e2736] transition-colors"
-        >
+          class="h-12 px-8 rounded-lg bg-transparent border border-[#e7ebf3] dark:border-[#2d3748] text-[#0d121b] dark:text-white font-bold hover:bg-gray-50 dark:hover:bg-[#1e2736] transition-colors">
           Apply to be a Partner
         </button>
       </div>
