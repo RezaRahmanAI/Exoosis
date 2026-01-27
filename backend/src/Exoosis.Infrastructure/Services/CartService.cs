@@ -23,44 +23,48 @@ public class CartService : ICartService
 
     public async Task<CartDto> AddToCartAsync(string userId, AddToCartDto addToCartDto, CancellationToken cancellationToken = default)
     {
-        var cart = await GetOrCreateCartAsync(userId, cancellationToken);
-        var existingItem = cart.Items.FirstOrDefault(i => i.ProductId == addToCartDto.ProductId);
+        return await ExecuteCartMutationAsync(userId, async cart =>
+        {
+            var existingItem = cart.Items.FirstOrDefault(i => i.ProductId == addToCartDto.ProductId);
 
-        if (existingItem != null)
-        {
-            existingItem.Quantity += addToCartDto.Quantity;
-        }
-        else
-        {
-            var product = await _context.Products.FindAsync(new object[] { addToCartDto.ProductId }, cancellationToken);
-            if (product != null) 
+            if (existingItem != null)
             {
-                 cart.Items.Add(new CartItem
-                 {
-                     ProductId = addToCartDto.ProductId,
-                     Quantity = addToCartDto.Quantity,
-                     CartId = cart.Id
-                 });
+                existingItem.Quantity += addToCartDto.Quantity;
+                return;
             }
-        }
 
-        await _context.SaveChangesAsync(cancellationToken);
-        
-        // Reload to include product details if added new
-        return await GetCartAsync(userId, cancellationToken); 
+            var product = await _context.Products.FindAsync(new object[] { addToCartDto.ProductId }, cancellationToken);
+            if (product == null)
+            {
+                return;
+            }
+
+            cart.Items.Add(new CartItem
+            {
+                ProductId = addToCartDto.ProductId,
+                Quantity = addToCartDto.Quantity,
+                CartId = cart.Id
+            });
+        }, cancellationToken);
     }
 
     public async Task<CartDto> UpdateQuantityAsync(string userId, Guid cartItemId, int quantity, CancellationToken cancellationToken = default)
     {
-        var cart = await GetOrCreateCartAsync(userId, cancellationToken);
-        var item = cart.Items.FirstOrDefault(i => i.Id == cartItemId);
-        
-        // Handling potential mismatch if frontend sends ProductId instead of ItemId
-        if (item == null)
-             item = cart.Items.FirstOrDefault(i => i.ProductId == cartItemId || i.Id == cartItemId);
-        
-        if (item != null)
+        return await ExecuteCartMutationAsync(userId, cart =>
         {
+            var item = cart.Items.FirstOrDefault(i => i.Id == cartItemId);
+
+            // Handling potential mismatch if frontend sends ProductId instead of ItemId
+            if (item == null)
+            {
+                item = cart.Items.FirstOrDefault(i => i.ProductId == cartItemId || i.Id == cartItemId);
+            }
+
+            if (item == null)
+            {
+                return Task.CompletedTask;
+            }
+
             if (quantity <= 0)
             {
                 _context.CartItems.Remove(item);
@@ -69,34 +73,37 @@ public class CartService : ICartService
             {
                 item.Quantity = quantity;
             }
-            await _context.SaveChangesAsync(cancellationToken);
-        }
 
-        return await GetCartAsync(userId, cancellationToken);
+            return Task.CompletedTask;
+        }, cancellationToken);
     }
 
     public async Task<CartDto> RemoveItemAsync(string userId, Guid cartItemId, CancellationToken cancellationToken = default)
     {
-        var cart = await GetOrCreateCartAsync(userId, cancellationToken);
-         var item = cart.Items.FirstOrDefault(i => i.Id == cartItemId);
-
-        if (item != null)
+        return await ExecuteCartMutationAsync(userId, cart =>
         {
-            _context.CartItems.Remove(item);
-            await _context.SaveChangesAsync(cancellationToken);
-        }
+            var item = cart.Items.FirstOrDefault(i => i.Id == cartItemId);
 
-        return await GetCartAsync(userId, cancellationToken);
+            if (item != null)
+            {
+                _context.CartItems.Remove(item);
+            }
+
+            return Task.CompletedTask;
+        }, cancellationToken);
     }
 
     public async Task ClearCartAsync(string userId, CancellationToken cancellationToken = default)
     {
-        var cart = await GetOrCreateCartAsync(userId, cancellationToken);
-        if (cart.Items.Any())
+        await ExecuteCartMutationAsync(userId, cart =>
         {
-            _context.CartItems.RemoveRange(cart.Items);
-            await _context.SaveChangesAsync(cancellationToken);
-        }
+            if (cart.Items.Any())
+            {
+                _context.CartItems.RemoveRange(cart.Items);
+            }
+
+            return Task.CompletedTask;
+        }, cancellationToken);
     }
 
     private async Task<Cart> GetOrCreateCartAsync(string userId, CancellationToken cancellationToken)
@@ -133,5 +140,26 @@ public class CartService : ICartService
                 Quantity = i.Quantity
             }).ToList()
         };
+    }
+
+    private async Task<CartDto> ExecuteCartMutationAsync(string userId, Func<Cart, Task> mutation, CancellationToken cancellationToken)
+    {
+        for (var attempt = 0; attempt < 2; attempt++)
+        {
+            var cart = await GetOrCreateCartAsync(userId, cancellationToken);
+            await mutation(cart);
+
+            try
+            {
+                await _context.SaveChangesAsync(cancellationToken);
+                return await GetCartAsync(userId, cancellationToken);
+            }
+            catch (DbUpdateConcurrencyException) when (attempt == 0)
+            {
+                _context.ChangeTracker.Clear();
+            }
+        }
+
+        return await GetCartAsync(userId, cancellationToken);
     }
 }
