@@ -1,12 +1,13 @@
-using Exoosis.Application.DTOs;
+using System.Threading.Tasks;
+using Exoosis.Application.DTOs.Cart;
 
 namespace Exoosis.Application.Services;
 
 public interface ICartService
 {
-    Task<CartDto> GetCartAsync(string userId, CancellationToken cancellationToken = default);
-    Task<CartDto> AddToCartAsync(string userId, AddToCartDto addToCartDto, CancellationToken cancellationToken = default);
-    Task<CartDto> UpdateQuantityAsync(string userId, Guid cartItemId, int quantity, CancellationToken cancellationToken = default);
-    Task<CartDto> RemoveItemAsync(string userId, Guid cartItemId, CancellationToken cancellationToken = default);
-    Task ClearCartAsync(string userId, CancellationToken cancellationToken = default);
+    Task<CartDto> GetCartAsync(string userId);
+    Task AddToCartAsync(AddToCartDto addToCartDto);
+    Task UpdateCartItemAsync(UpdateCartItemDto updateCartItemDto);
+    Task RemoveFromCartAsync(string userId, Guid cartItemId);
+    Task ClearCartAsync(string userId);
 }

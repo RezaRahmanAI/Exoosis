@@ -10,7 +10,7 @@ import { ProductDetail } from '../../../core/models/entities';
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './product-details.component.html',
-  styleUrl: './product-details.component.css'
+  styleUrl: './product-details.component.css',
 })
 export class ProductDetailsComponent implements OnInit {
   product?: ProductDetail;
@@ -21,7 +21,7 @@ export class ProductDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private productsService: ProductService,
-    private cartService: CartService
+    private cartService: CartService,
   ) {}
 
   ngOnInit() {
@@ -40,7 +40,7 @@ export class ProductDetailsComponent implements OnInit {
       error: () => {
         this.errorMessage = 'Unable to load product details right now.';
         this.isLoading = false;
-      }
+      },
     });
   }
 
@@ -48,7 +48,25 @@ export class ProductDetailsComponent implements OnInit {
     if (!this.product) {
       return;
     }
-    this.cartService.addToCart(this.product, this.quantity).subscribe();
+
+    // Mock userId - in production, get from AuthService
+    const userId = 'user-123';
+
+    this.cartService
+      .addToCart({
+        userId: userId,
+        productId: this.product.id,
+        quantity: this.quantity,
+      })
+      .subscribe({
+        next: () => {
+          alert(`${this.quantity} x ${this.product!.name} added to cart!`);
+        },
+        error: (err: any) => {
+          console.error('Error adding to cart:', err);
+          alert('Failed to add item to cart. Please try again.');
+        },
+      });
   }
 
   updateQuantity(delta: number) {

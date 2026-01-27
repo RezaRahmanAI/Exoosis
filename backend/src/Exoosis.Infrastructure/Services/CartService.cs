@@ -1,8 +1,8 @@
-using Microsoft.EntityFrameworkCore;
-using Exoosis.Application.DTOs;
+using Exoosis.Application.DTOs.Cart;
 using Exoosis.Application.Services;
 using Exoosis.Domain.Entities;
 using Exoosis.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace Exoosis.Infrastructure.Services;
 
@@ -15,151 +15,130 @@ public class CartService : ICartService
         _context = context;
     }
 
-    public async Task<CartDto> GetCartAsync(string userId, CancellationToken cancellationToken = default)
+    public async Task<CartDto> GetCartAsync(string userId)
     {
-        var cart = await GetOrCreateCartAsync(userId, cancellationToken);
+        var cart = await GetCartByUserId(userId);
+
+        if (cart == null)
+        {
+            return new CartDto
+            {
+                UserId = userId,
+                Items = new List<CartItemDto>(),
+                GrandTotal = 0
+            };
+        }
+
         return MapToDto(cart);
     }
 
-    public async Task<CartDto> AddToCartAsync(string userId, AddToCartDto addToCartDto, CancellationToken cancellationToken = default)
+    public async Task AddToCartAsync(AddToCartDto addToCartDto)
     {
-        return await ExecuteCartMutationAsync(userId, async cart =>
+        var cart = await GetCartByUserId(addToCartDto.UserId);
+        if (cart == null)
         {
-            var existingItem = cart.Items.FirstOrDefault(i => i.ProductId == addToCartDto.ProductId);
-
-            if (existingItem != null)
+            cart = new Cart
             {
-                existingItem.Quantity += addToCartDto.Quantity;
-                return;
-            }
+                UserId = addToCartDto.UserId,
+                Items = new List<CartItem>()
+            };
+            _context.Carts.Add(cart);
+        }
 
-            var product = await _context.Products.FindAsync(new object[] { addToCartDto.ProductId }, cancellationToken);
+        var existingItem = cart.Items.FirstOrDefault(i => i.ProductId == addToCartDto.ProductId);
+        if (existingItem != null)
+        {
+            existingItem.Quantity += addToCartDto.Quantity;
+        }
+        else
+        {
+            var product = await _context.Products.FindAsync(addToCartDto.ProductId);
             if (product == null)
             {
-                return;
+                throw new Exception("Product not found"); // Should use a custom NotFoundException
             }
+
+            // Check stock? Assuming sufficient stock for now as per minimal requirements,
+            // but ideally: if (product.StockQuantity < addToCartDto.Quantity) ...
 
             cart.Items.Add(new CartItem
             {
                 ProductId = addToCartDto.ProductId,
-                Quantity = addToCartDto.Quantity,
-                CartId = cart.Id
+                Quantity = addToCartDto.Quantity
             });
-        }, cancellationToken);
+        }
+
+        await _context.SaveChangesAsync();
     }
 
-    public async Task<CartDto> UpdateQuantityAsync(string userId, Guid cartItemId, int quantity, CancellationToken cancellationToken = default)
+    public async Task UpdateCartItemAsync(UpdateCartItemDto updateCartItemDto)
     {
-        return await ExecuteCartMutationAsync(userId, cart =>
+        var cart = await GetCartByUserId(updateCartItemDto.UserId);
+        if (cart == null) return;
+
+        var item = cart.Items.FirstOrDefault(i => i.Id == updateCartItemDto.CartItemId);
+        if (item != null)
         {
-            var item = cart.Items.FirstOrDefault(i => i.Id == cartItemId);
-
-            // Handling potential mismatch if frontend sends ProductId instead of ItemId
-            if (item == null)
+            if (updateCartItemDto.Quantity <= 0)
             {
-                item = cart.Items.FirstOrDefault(i => i.ProductId == cartItemId || i.Id == cartItemId);
-            }
-
-            if (item == null)
-            {
-                return Task.CompletedTask;
-            }
-
-            if (quantity <= 0)
-            {
-                _context.CartItems.Remove(item);
+                cart.Items.Remove(item);
             }
             else
             {
-                item.Quantity = quantity;
+                item.Quantity = updateCartItemDto.Quantity;
             }
-
-            return Task.CompletedTask;
-        }, cancellationToken);
+            await _context.SaveChangesAsync();
+        }
     }
 
-    public async Task<CartDto> RemoveItemAsync(string userId, Guid cartItemId, CancellationToken cancellationToken = default)
+    public async Task RemoveFromCartAsync(string userId, Guid cartItemId)
     {
-        return await ExecuteCartMutationAsync(userId, cart =>
+        var cart = await GetCartByUserId(userId);
+        if (cart == null) return;
+
+        var item = cart.Items.FirstOrDefault(i => i.Id == cartItemId);
+        if (item != null)
         {
-            var item = cart.Items.FirstOrDefault(i => i.Id == cartItemId);
-
-            if (item != null)
-            {
-                _context.CartItems.Remove(item);
-            }
-
-            return Task.CompletedTask;
-        }, cancellationToken);
+            cart.Items.Remove(item);
+            await _context.SaveChangesAsync();
+        }
     }
 
-    public async Task ClearCartAsync(string userId, CancellationToken cancellationToken = default)
+    public async Task ClearCartAsync(string userId)
     {
-        await ExecuteCartMutationAsync(userId, cart =>
-        {
-            if (cart.Items.Any())
-            {
-                _context.CartItems.RemoveRange(cart.Items);
-            }
-
-            return Task.CompletedTask;
-        }, cancellationToken);
+         var cart = await GetCartByUserId(userId);
+         if (cart != null)
+         {
+             _context.Carts.Remove(cart);
+             await _context.SaveChangesAsync();
+         }
     }
 
-    private async Task<Cart> GetOrCreateCartAsync(string userId, CancellationToken cancellationToken)
+    private async Task<Cart?> GetCartByUserId(string userId)
     {
-        var cart = await _context.Carts
+        return await _context.Carts
             .Include(c => c.Items)
             .ThenInclude(i => i.Product)
-            .FirstOrDefaultAsync(c => c.UserId == userId, cancellationToken);
-
-        if (cart == null)
-        {
-            cart = new Cart { UserId = userId };
-            _context.Carts.Add(cart);
-            await _context.SaveChangesAsync(cancellationToken);
-        }
-
-        return cart;
+            .FirstOrDefaultAsync(c => c.UserId == userId);
     }
 
-    // Changed to return CartDto instead of List<CartItemDto> to match Interface
     private CartDto MapToDto(Cart cart)
     {
         return new CartDto
         {
             Id = cart.Id,
             UserId = cart.UserId,
+            // Re-calculate grand total here to ensure it's up to date with product prices
+            GrandTotal = cart.Items.Sum(i => i.Quantity * (i.Product?.Price ?? 0)),
             Items = cart.Items.Select(i => new CartItemDto
             {
                 Id = i.Id,
                 ProductId = i.ProductId,
                 ProductName = i.Product?.Name ?? "Unknown Product",
-                ProductImage = i.Product?.ImageUrls?.Split(',').FirstOrDefault() ?? "",
+                ProductImageUrl = i.Product?.ImageUrls?.Split(',').FirstOrDefault() ?? "",
                 Price = i.Product?.Price ?? 0,
                 Quantity = i.Quantity
             }).ToList()
         };
-    }
-
-    private async Task<CartDto> ExecuteCartMutationAsync(string userId, Func<Cart, Task> mutation, CancellationToken cancellationToken)
-    {
-        for (var attempt = 0; attempt < 2; attempt++)
-        {
-            var cart = await GetOrCreateCartAsync(userId, cancellationToken);
-            await mutation(cart);
-
-            try
-            {
-                await _context.SaveChangesAsync(cancellationToken);
-                return await GetCartAsync(userId, cancellationToken);
-            }
-            catch (DbUpdateConcurrencyException) when (attempt == 0)
-            {
-                _context.ChangeTracker.Clear();
-            }
-        }
-
-        return await GetCartAsync(userId, cancellationToken);
     }
 }

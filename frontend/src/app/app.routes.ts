@@ -11,7 +11,6 @@ import { CategoryListComponent } from './features/categories/category-list/categ
 import { EnterpriseSoftwareComponent } from './features/enterprise-software/enterprise-software.component';
 import { SoftwareDetailsComponent } from './features/solutions/software-details/software-details.component';
 import { ContactComponent } from './features/contact/contact.component';
-import { CartComponent } from './features/cart/cart.component';
 import { LoginComponent } from './features/auth/login/login.component';
 import { SignupComponent } from './features/auth/signup/signup.component';
 import { ForgotPasswordComponent } from './features/auth/forgot-password/forgot-password.component';
@@ -33,7 +32,11 @@ export const routes: Routes = [
   { path: 'products', component: ProductListComponent },
   { path: 'products/:id', component: ProductDetailsComponent },
   { path: 'categories', component: CategoryListComponent },
-  { path: 'cart', component: CartComponent },
+  {
+    path: 'cart',
+    loadComponent: () =>
+      import('./features/cart/cart-page/cart-page.component').then((m) => m.CartPageComponent),
+  },
   { path: 'enterprise-software', component: EnterpriseSoftwareComponent },
   { path: 'partners/:id', component: PartnerDetailsComponent },
   { path: 'partners', component: PartnersComponent },

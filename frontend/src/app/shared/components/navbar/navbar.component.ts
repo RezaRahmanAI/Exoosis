@@ -11,7 +11,7 @@ import { SettingsService } from '../../../core/services/settings.service';
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink, RouterLinkActive],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+  styleUrl: './navbar.component.css',
 })
 export class NavbarComponent {
   isMenuOpen = false;
@@ -20,19 +20,11 @@ export class NavbarComponent {
     private cartService: CartService,
     private authService: AuthService,
     private settingsService: SettingsService,
-    private router: Router
+    private router: Router,
   ) {}
 
   get cartCount$() {
     return this.cartService.cartCount$;
-  }
-
-  get cartItems$() {
-    return this.cartService.cartItems$;
-  }
-
-  get cartTotal$() {
-    return this.cartService.cartTotal$;
   }
 
   get user$() {
