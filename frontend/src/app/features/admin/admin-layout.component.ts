@@ -26,6 +26,14 @@ import { RouterLink, RouterOutlet } from '@angular/router';
             <span class="material-symbols-outlined">handshake</span>
             <span>Brands</span>
           </a>
+          <a routerLink="/dashboard/categories" routerLinkActive="bg-primary/20 border-l-4 border-primary" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors">
+            <span class="material-symbols-outlined">category</span>
+            <span>Categories</span>
+          </a>
+          <a routerLink="/dashboard/products" routerLinkActive="bg-primary/20 border-l-4 border-primary" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors">
+            <span class="material-symbols-outlined">inventory_2</span>
+            <span>Products</span>
+          </a>
           <a routerLink="/dashboard/jobs" routerLinkActive="bg-primary/20 border-l-4 border-primary" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors">
             <span class="material-symbols-outlined">work</span>
             <span>Jobs</span>
