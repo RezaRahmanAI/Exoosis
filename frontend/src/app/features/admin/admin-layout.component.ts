@@ -23,6 +23,14 @@ import { RouterLink, RouterOutlet } from '@angular/router';
             <span>Dashboard</span>
           </a>
           <a
+            routerLink="/dashboard/hero"
+            routerLinkActive="bg-primary/20 border-l-4 border-primary"
+            class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors"
+          >
+            <span class="material-symbols-outlined">image</span>
+            <span>Hero Banner</span>
+          </a>
+          <a
             routerLink="/dashboard/solutions"
             routerLinkActive="bg-primary/20 border-l-4 border-primary"
             class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors"

@@ -25,9 +25,22 @@ public class ExoosisDbContext : DbContext
     public DbSet<Cart> Carts { get; set; }
     public DbSet<CartItem> CartItems { get; set; }
     public DbSet<Testimonial> Testimonials { get; set; }
+    public DbSet<HeroContent> HeroContents { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<HeroContent>(entity =>
+        {
+            entity.HasKey(x => x.Id);
+            entity.Property(x => x.BadgeText).HasMaxLength(150);
+            entity.Property(x => x.Title).HasMaxLength(250).IsRequired();
+            entity.Property(x => x.SubText).HasMaxLength(1000).IsRequired();
+            entity.Property(x => x.Image1Url).HasMaxLength(500).IsRequired();
+            entity.Property(x => x.Image2Url).HasMaxLength(500).IsRequired();
+            entity.Property(x => x.Image3Url).HasMaxLength(500).IsRequired();
+            entity.HasQueryFilter(x => !x.IsDeleted);
+        });
+
         var stringListConverter = new ValueConverter<List<string>, string>(
             value => JsonSerializer.Serialize(value ?? new List<string>(), (JsonSerializerOptions?)null),
             value => string.IsNullOrWhiteSpace(value)

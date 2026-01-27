@@ -33,6 +33,7 @@ builder.Services.AddScoped<ITeamMemberService, TeamMemberService>();
 builder.Services.AddScoped<ISolutionService, SolutionService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<IHeroContentService, HeroContentService>();
 
 builder.Services.Configure<BkashSettings>(builder.Configuration.GetSection("BkashSettings"));
 builder.Services.AddHttpClient<IBkashService, BkashService>();

@@ -34,3 +34,15 @@ export interface ApiProduct {
   createdAt: string;
   updatedAt?: string | null;
 }
+
+export interface HeroContent {
+  id: string;
+  badgeText: string;
+  title: string;
+  subText: string;
+  image1Url: string;
+  image2Url: string;
+  image3Url: string;
+  isActive: boolean;
+  createdAt: string;
+}

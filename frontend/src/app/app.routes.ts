@@ -133,6 +133,11 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'hero',
+        loadComponent: () =>
+          import('./features/admin/hero/admin-hero.component').then((m) => m.AdminHeroComponent),
+      },
+      {
         path: 'orders',
         loadComponent: () =>
           import('./features/admin/orders/orders.component').then((m) => m.AdminOrdersComponent),
@@ -214,6 +219,11 @@ export const routes: Routes = [
           import('./features/admin/testimonials/testimonials.component').then(
             (m) => m.AdminTestimonialsComponent,
           ),
+      },
+      {
+        path: 'hero',
+        loadComponent: () =>
+          import('./features/admin/hero/admin-hero.component').then((m) => m.AdminHeroComponent),
       },
       {
         path: 'orders',
