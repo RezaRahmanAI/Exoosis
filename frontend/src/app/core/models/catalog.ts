@@ -2,6 +2,7 @@ export interface ApiCategory {
   id: string;
   name: string;
   description?: string | null;
+  imageUrl?: string | null;
   isActive: boolean;
   createdAt: string;
   updatedAt?: string | null;

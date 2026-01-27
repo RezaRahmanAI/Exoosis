@@ -3,6 +3,8 @@ import { BrandService } from '../../core/services/brand.service';
 import { SolutionService } from '../../core/services/solution.service';
 import { ProductService } from '../../core/services/product.service';
 import { ApiService } from '../../core/services/api.service';
+import { CategoryService } from '../../core/services/category.service';
+import { ApiCategory } from '../../core/models/catalog';
 import { Solution, Partner, Testimonial, ProductDetail } from '../../core/models/entities';
 import { ApiResponse } from '../../core/models/api-response';
 import { environment } from '../../../environments/environment';
@@ -41,12 +43,7 @@ export class HomeComponent implements OnInit {
   solutions: Solution[] = [];
   logos: Partner[] = [];
   featuredProducts: ProductDetail[] = [];
-  categories = [
-    { icon: 'monitor', name: 'Monitors', desc: '4K, Curved & Ultrawide' },
-    { icon: 'hub', name: 'Docking Stations', desc: 'Thunderbolt 4 & USB-C' },
-    { icon: 'keyboard', name: 'Input Devices', desc: 'Ergonomic Keyboards & Mice' },
-    { icon: 'lan', name: 'Networking', desc: 'Switches, Cables & Routers' },
-  ];
+  categories: any[] = [];
 
   laptops = [
     {
@@ -188,6 +185,7 @@ export class HomeComponent implements OnInit {
   ];
 
   constructor(
+    private categoryService: CategoryService,
     private api: ApiService,
     private solutionService: SolutionService,
     private productService: ProductService,
@@ -220,5 +218,9 @@ export class HomeComponent implements OnInit {
         },
       });
     }
+
+    this.categoryService.getCategories().subscribe((data: ApiCategory[]) => {
+      this.categories = data.filter((c: ApiCategory) => c.isActive).slice(0, 4);
+    });
   }
 }

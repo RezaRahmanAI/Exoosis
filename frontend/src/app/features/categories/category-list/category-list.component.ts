@@ -10,7 +10,7 @@ interface CategoryCard {
   name: ProductDetail['category'];
   count: number;
   description: string;
-  icon: string;
+  imageUrl: string;
   brands: string[];
 }
 
@@ -19,7 +19,7 @@ interface CategoryCard {
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './category-list.component.html',
-  styleUrl: './category-list.component.css'
+  styleUrl: './category-list.component.css',
 })
 export class CategoryListComponent implements OnInit {
   categoryCards: CategoryCard[] = [];
@@ -28,25 +28,29 @@ export class CategoryListComponent implements OnInit {
 
   constructor(
     private categoriesService: CategoryService,
-    private productsService: ProductService
+    private productsService: ProductService,
   ) {}
 
   ngOnInit() {
     forkJoin({
       categories: this.categoriesService.getCategories(),
-      products: this.productsService.getProducts()
+      products: this.productsService.getProducts(),
     }).subscribe({
       next: ({ categories, products }) => {
-        this.categoryCards = categories.map(category => {
-          const productsInCategory = products.filter(product => product.category === category.name);
-          const brands = Array.from(new Set(productsInCategory.map(product => product.brand))).slice(0, 4);
+        this.categoryCards = categories.map((category) => {
+          const productsInCategory = products.filter(
+            (product) => product.category === category.name,
+          );
+          const brands = Array.from(
+            new Set(productsInCategory.map((product) => product.brand)),
+          ).slice(0, 4);
 
           return {
             name: category.name,
             count: productsInCategory.length,
             description: category.description ?? '',
-            icon: 'category',
-            brands
+            imageUrl: category.imageUrl || '',
+            brands,
           };
         });
         this.isLoading = false;
@@ -54,7 +58,7 @@ export class CategoryListComponent implements OnInit {
       error: () => {
         this.errorMessage = 'Unable to load categories right now.';
         this.isLoading = false;
-      }
+      },
     });
   }
 }

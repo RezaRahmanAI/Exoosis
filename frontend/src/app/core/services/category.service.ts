@@ -6,7 +6,7 @@ import { ApiResponse } from '../models/api-response';
 import { ApiCategory } from '../models/catalog';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CategoryService {
   private loadingSubject = new BehaviorSubject<boolean>(false);
@@ -17,22 +17,26 @@ export class CategoryService {
 
   constructor(private api: ApiService) {}
 
-  getCategories(params?: { search?: string; page?: number; pageSize?: number }): Observable<ApiCategory[]> {
+  getCategories(params?: {
+    search?: string;
+    page?: number;
+    pageSize?: number;
+  }): Observable<ApiCategory[]> {
     const httpParams = new HttpParams({
       fromObject: {
         ...(params?.search ? { search: params.search } : {}),
         ...(params?.page ? { page: params.page } : {}),
-        ...(params?.pageSize ? { pageSize: params.pageSize } : {})
-      }
+        ...(params?.pageSize ? { pageSize: params.pageSize } : {}),
+      },
     });
 
     this.loadingSubject.next(true);
     this.errorSubject.next(null);
 
     return this.api.get<ApiResponse<ApiCategory[]>>('/categories', httpParams).pipe(
-      map(response => response.data ?? []),
-      catchError(error => this.handleError(error)),
-      finalize(() => this.loadingSubject.next(false))
+      map((response) => response.data ?? []),
+      catchError((error) => this.handleError(error)),
+      finalize(() => this.loadingSubject.next(false)),
     );
   }
 
@@ -41,31 +45,44 @@ export class CategoryService {
     this.errorSubject.next(null);
 
     return this.api.get<ApiResponse<ApiCategory>>(`/categories/${id}`).pipe(
-      map(response => response.data),
-      catchError(error => this.handleError(error)),
-      finalize(() => this.loadingSubject.next(false))
+      map((response) => response.data),
+      catchError((error) => this.handleError(error)),
+      finalize(() => this.loadingSubject.next(false)),
     );
   }
 
-  createCategory(payload: { name: string; description?: string | null; isActive?: boolean }): Observable<ApiCategory> {
+  createCategory(payload: {
+    name: string;
+    description?: string | null;
+    isActive?: boolean;
+    imageUrl?: string | null;
+  }): Observable<ApiCategory> {
     this.loadingSubject.next(true);
     this.errorSubject.next(null);
 
     return this.api.post<ApiResponse<ApiCategory>>('/categories', payload).pipe(
-      map(response => response.data),
-      catchError(error => this.handleError(error)),
-      finalize(() => this.loadingSubject.next(false))
+      map((response) => response.data),
+      catchError((error) => this.handleError(error)),
+      finalize(() => this.loadingSubject.next(false)),
     );
   }
 
-  updateCategory(id: string, payload: { name: string; description?: string | null; isActive?: boolean }): Observable<ApiCategory> {
+  updateCategory(
+    id: string,
+    payload: {
+      name: string;
+      description?: string | null;
+      isActive?: boolean;
+      imageUrl?: string | null;
+    },
+  ): Observable<ApiCategory> {
     this.loadingSubject.next(true);
     this.errorSubject.next(null);
 
     return this.api.put<ApiResponse<ApiCategory>>(`/categories/${id}`, payload).pipe(
-      map(response => response.data),
-      catchError(error => this.handleError(error)),
-      finalize(() => this.loadingSubject.next(false))
+      map((response) => response.data),
+      catchError((error) => this.handleError(error)),
+      finalize(() => this.loadingSubject.next(false)),
     );
   }
 
@@ -74,9 +91,9 @@ export class CategoryService {
     this.errorSubject.next(null);
 
     return this.api.delete<ApiResponse<string>>(`/categories/${id}`).pipe(
-      map(response => response.data),
-      catchError(error => this.handleError(error)),
-      finalize(() => this.loadingSubject.next(false))
+      map((response) => response.data),
+      catchError((error) => this.handleError(error)),
+      finalize(() => this.loadingSubject.next(false)),
     );
   }
 
