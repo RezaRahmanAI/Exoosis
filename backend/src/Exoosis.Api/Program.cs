@@ -31,6 +31,7 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ITeamMemberService, TeamMemberService>();
 builder.Services.AddScoped<ISolutionService, SolutionService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<ICartService, CartService>();
 
 builder.Services.AddAutoMapper(typeof(CatalogProfile).Assembly);
 

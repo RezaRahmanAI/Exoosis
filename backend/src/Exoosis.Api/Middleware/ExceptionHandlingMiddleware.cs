@@ -27,7 +27,7 @@ public class ExceptionHandlingMiddleware
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-            var response = ApiResponse<string>.Fail("An unexpected error occurred.");
+            var response = ApiResponse<string>.Fail($"An unexpected error occurred: {ex.Message}", new[] { ex.StackTrace });
             var payload = JsonSerializer.Serialize(response);
             await context.Response.WriteAsync(payload);
         }

@@ -22,8 +22,9 @@ public class ExoosisDbContext : DbContext
     public DbSet<WebsiteSettings> WebsiteSettings => Set<WebsiteSettings>();
     public DbSet<Order> Orders => Set<Order>();
     public DbSet<OrderItem> OrderItems => Set<OrderItem>();
-    public DbSet<Cart> Carts => Set<Cart>();
-    public DbSet<CartItem> CartItems => Set<CartItem>();
+    public DbSet<Cart> Carts { get; set; }
+    public DbSet<CartItem> CartItems { get; set; }
+    public DbSet<Testimonial> Testimonials { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
