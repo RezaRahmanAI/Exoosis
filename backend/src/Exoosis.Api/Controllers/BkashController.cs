@@ -1,10 +1,15 @@
+using System.Text.Json.Serialization;
+using Exoosis.Application.DTOs.Payments;
 using Exoosis.Application.Services;
+using Exoosis.Infrastructure.External.Bkash;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace Exoosis.Api.Controllers;
 
 public class CreatePaymentRequest
 {
+    [JsonPropertyName("amount")]
     public decimal Amount { get; set; }
 }
 
@@ -13,10 +18,12 @@ public class CreatePaymentRequest
 public class BkashController : ControllerBase
 {
     private readonly IBkashService _bkashService;
+    private readonly BkashSettings _settings;
 
-    public BkashController(IBkashService bkashService)
+    public BkashController(IBkashService bkashService, IOptions<BkashSettings> settings)
     {
         _bkashService = bkashService;
+        _settings = settings.Value;
     }
 
     [HttpPost("create-payment")]
@@ -24,14 +31,19 @@ public class BkashController : ControllerBase
     {
         try
         {
-            if (request == null || request.Amount <= 0)
+            if (request == null)
             {
-                return BadRequest("Invalid amount received.");
+                return BadRequest(new { message = "Empty request body received." });
+            }
+
+            if (request.Amount <= 0)
+            {
+                return BadRequest(new { message = $"Invalid amount: {request.Amount}. Amount must be greater than 0." });
             }
 
             var invoiceNumber = $"INV-{DateTime.Now.Ticks}";
             
-            // Try actual bKash first, but don't blow up if it fails immediately (e.g. dummy credentials)
+            // Try actual bKash first
             BkashCreatePaymentResponse? response = null;
             try 
             {
@@ -42,19 +54,22 @@ public class BkashController : ControllerBase
                 Console.WriteLine($"bKash API Error: {ex.Message}");
             }
             
-            if (response != null && response.StatusCode == "0000")
+            if (response != null && response.StatusCode == "0000" && !string.IsNullOrEmpty(response.BkashURL))
             {
                 return Ok(response);
             }
 
-            // Fallback for "checking purpose" / Simulation Mode
-            // This ensures it ALWAYS works for development as requested
+            // Fallback for Local Development / Simulation Mode
+            // Point to the frontend port (4200) for the callback
+            var frontendUrl = "http://localhost:4200";
+            var mockPaymentID = $"MOCK-{Guid.NewGuid().ToString().Substring(0, 8)}";
+            
             return Ok(new BkashCreatePaymentResponse
             {
-                PaymentID = $"MOCK-{Guid.NewGuid()}",
-                BkashURL = $"{Request.Scheme}://{Request.Host}/checkout/callback?status=success&paymentID=MOCK-{Guid.NewGuid()}",
+                PaymentID = mockPaymentID,
+                BkashURL = $"{frontendUrl}/checkout/callback?status=success&paymentID={mockPaymentID}",
                 StatusCode = "0000",
-                StatusMessage = "Simulated Success for Local Development"
+                StatusMessage = "Simulated Success for Testing"
             });
         }
         catch (Exception ex)

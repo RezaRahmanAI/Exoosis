@@ -136,6 +136,12 @@ export class CheckoutComponent implements OnInit {
       next: (cart) => {
         const amount = Math.round(cart.grandTotal * 1.1); // Including 10% tax as per cart page
 
+        if (amount <= 0) {
+          this.errorMessage = 'Cart total must be greater than zero to proceed with payment.';
+          this.loading = false;
+          return;
+        }
+
         this.bkashService.createPayment(amount).subscribe({
           next: (res) => {
             if (res.bkashURL) {
@@ -177,8 +183,7 @@ export class CheckoutComponent implements OnInit {
       error: (err) => {
         console.error('Execution Error:', err);
         this.paymentStatus = 'failed';
-        this.errorMessage =
-          typeof err.error === 'string' ? err.error : err.error?.message || 'Execution failed';
+        typeof err.error === 'string' ? err.error : err.error?.message || 'Execution failed';
         this.loading = false;
       },
     });
