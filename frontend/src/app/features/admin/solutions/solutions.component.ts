@@ -261,6 +261,7 @@ export class AdminSolutionsComponent implements OnInit {
   private buildPayload(): Partial<Solution> {
     return {
       ...this.currentSol,
+      category: Number(this.currentSol.category), // Ensure category is a number
       technologyStack: this.parseList(this.technologyStackText),
     };
   }
