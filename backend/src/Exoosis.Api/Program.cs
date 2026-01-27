@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using System.Text;
 using Exoosis.Api.Middleware;
 using Exoosis.Application.Interfaces;
@@ -39,15 +40,24 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
         var jwtKey = builder.Configuration["Jwt:Key"] ?? "development_key";
+        var issuer = builder.Configuration["Jwt:Issuer"] ?? "Exoosis";
+        var audience = builder.Configuration["Jwt:Audience"] ?? "Exoosis";
+        var keyBytes = Encoding.UTF8.GetBytes(jwtKey);
+        if (keyBytes.Length < 32)
+        {
+            using var sha256 = SHA256.Create();
+            keyBytes = sha256.ComputeHash(keyBytes);
+        }
+
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
             ValidateAudience = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+            ValidIssuer = issuer,
+            ValidAudience = audience,
+            IssuerSigningKey = new SymmetricSecurityKey(keyBytes)
         };
     });
 
