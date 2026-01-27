@@ -20,6 +20,10 @@ public class ExoosisDbContext : DbContext
     public DbSet<Solution> Solutions => Set<Solution>();
     public DbSet<User> Users => Set<User>();
     public DbSet<WebsiteSettings> WebsiteSettings => Set<WebsiteSettings>();
+    public DbSet<Order> Orders => Set<Order>();
+    public DbSet<OrderItem> OrderItems => Set<OrderItem>();
+    public DbSet<Cart> Carts => Set<Cart>();
+    public DbSet<CartItem> CartItems => Set<CartItem>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -189,6 +193,26 @@ public class ExoosisDbContext : DbContext
                 .HasConversion(seoConverter)
                 .HasMaxLength(4000);
             entity.HasQueryFilter(x => !x.IsDeleted);
+        });
+
+        modelBuilder.Entity<Order>(entity =>
+        {
+            entity.HasKey(x => x.Id);
+            entity.HasQueryFilter(x => !x.IsDeleted);
+            entity.HasMany(x => x.OrderItems)
+                .WithOne(x => x.Order)
+                .HasForeignKey(x => x.OrderId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<Cart>(entity =>
+        {
+            entity.HasKey(x => x.Id);
+            entity.HasQueryFilter(x => !x.IsDeleted);
+            entity.HasMany(x => x.Items)
+                .WithOne(x => x.Cart)
+                .HasForeignKey(x => x.CartId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
     }
 

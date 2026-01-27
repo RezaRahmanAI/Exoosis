@@ -45,111 +45,178 @@ export const routes: Routes = [
   { path: 'profile', component: ProfileComponent, canActivate: [authGuard] },
   { path: 'my-orders', component: MyOrdersComponent, canActivate: [authGuard] },
   { path: 'settings', component: UserSettingsComponent, canActivate: [authGuard] },
-  { 
-    path: 'career/:id', 
-    loadComponent: () => import('./features/career/job-details/job-details.component').then(m => m.JobDetailsComponent) 
+  {
+    path: 'career/:id',
+    loadComponent: () =>
+      import('./features/career/job-details/job-details.component').then(
+        (m) => m.JobDetailsComponent,
+      ),
   },
   {
     path: 'admin',
     component: AdminLayoutComponent,
     canActivate: [adminGuard],
     children: [
-      { 
-        path: '', 
-        loadComponent: () => import('./features/admin/dashboard/dashboard.component').then(m => m.DashboardComponent) 
+      {
+        path: '',
+        loadComponent: () =>
+          import('./features/admin/dashboard/dashboard.component').then(
+            (m) => m.DashboardComponent,
+          ),
       },
-      { 
-        path: 'dashboard', 
-        loadComponent: () => import('./features/admin/dashboard/dashboard.component').then(m => m.DashboardComponent) 
+      {
+        path: 'dashboard',
+        loadComponent: () =>
+          import('./features/admin/dashboard/dashboard.component').then(
+            (m) => m.DashboardComponent,
+          ),
       },
-      { 
-        path: 'settings', 
-        loadComponent: () => import('./features/admin/settings/admin-settings.component').then(m => m.AdminSettingsComponent) 
+      {
+        path: 'settings',
+        loadComponent: () =>
+          import('./features/admin/settings/admin-settings.component').then(
+            (m) => m.AdminSettingsComponent,
+          ),
       },
-      { 
-        path: 'change-password', 
-        loadComponent: () => import('./features/admin/change-password/admin-change-password.component').then(m => m.AdminChangePasswordComponent) 
+      {
+        path: 'change-password',
+        loadComponent: () =>
+          import('./features/admin/change-password/admin-change-password.component').then(
+            (m) => m.AdminChangePasswordComponent,
+          ),
       },
-      { 
-        path: 'solutions', 
-        loadComponent: () => import('./features/admin/solutions/solutions.component').then(m => m.AdminSolutionsComponent) 
+      {
+        path: 'solutions',
+        loadComponent: () =>
+          import('./features/admin/solutions/solutions.component').then(
+            (m) => m.AdminSolutionsComponent,
+          ),
       },
-      { 
-        path: 'brands', 
-        loadComponent: () => import('./features/admin/brands/brands.component').then(m => m.AdminBrandsComponent) 
+      {
+        path: 'brands',
+        loadComponent: () =>
+          import('./features/admin/brands/brands.component').then((m) => m.AdminBrandsComponent),
       },
       {
         path: 'categories',
-        loadComponent: () => import('./features/admin/categories/categories.component').then(m => m.AdminCategoriesComponent)
+        loadComponent: () =>
+          import('./features/admin/categories/categories.component').then(
+            (m) => m.AdminCategoriesComponent,
+          ),
       },
       {
         path: 'products',
-        loadComponent: () => import('./features/admin/products/products.component').then(m => m.AdminProductsComponent)
+        loadComponent: () =>
+          import('./features/admin/products/products.component').then(
+            (m) => m.AdminProductsComponent,
+          ),
       },
-      { 
-        path: 'jobs', 
-        loadComponent: () => import('./features/admin/jobs/jobs.component').then(m => m.AdminJobsComponent) 
+      {
+        path: 'jobs',
+        loadComponent: () =>
+          import('./features/admin/jobs/jobs.component').then((m) => m.AdminJobsComponent),
       },
-      { 
-        path: 'team', 
-        loadComponent: () => import('./features/admin/team/team.component').then(m => m.AdminTeamComponent) 
+      {
+        path: 'team',
+        loadComponent: () =>
+          import('./features/admin/team/team.component').then((m) => m.AdminTeamComponent),
       },
-      { 
+      {
         path: 'testimonials',
-        loadComponent: () => import('./features/admin/testimonials/testimonials.component').then(m => m.AdminTestimonialsComponent)
-      }
-    ]
+        loadComponent: () =>
+          import('./features/admin/testimonials/testimonials.component').then(
+            (m) => m.AdminTestimonialsComponent,
+          ),
+      },
+      {
+        path: 'orders',
+        loadComponent: () =>
+          import('./features/admin/orders/orders.component').then((m) => m.AdminOrdersComponent),
+      },
+    ],
   },
   {
     path: 'dashboard',
     component: AdminLayoutComponent,
     canActivate: [adminGuard],
     children: [
-      { 
-        path: '', 
-        loadComponent: () => import('./features/admin/dashboard/dashboard.component').then(m => m.DashboardComponent) 
+      {
+        path: '',
+        loadComponent: () =>
+          import('./features/admin/dashboard/dashboard.component').then(
+            (m) => m.DashboardComponent,
+          ),
       },
-      { 
-        path: 'dashboard', 
-        loadComponent: () => import('./features/admin/dashboard/dashboard.component').then(m => m.DashboardComponent) 
+      {
+        path: 'dashboard',
+        loadComponent: () =>
+          import('./features/admin/dashboard/dashboard.component').then(
+            (m) => m.DashboardComponent,
+          ),
       },
-      { 
-        path: 'settings', 
-        loadComponent: () => import('./features/admin/settings/admin-settings.component').then(m => m.AdminSettingsComponent) 
+      {
+        path: 'settings',
+        loadComponent: () =>
+          import('./features/admin/settings/admin-settings.component').then(
+            (m) => m.AdminSettingsComponent,
+          ),
       },
-      { 
-        path: 'change-password', 
-        loadComponent: () => import('./features/admin/change-password/admin-change-password.component').then(m => m.AdminChangePasswordComponent) 
+      {
+        path: 'change-password',
+        loadComponent: () =>
+          import('./features/admin/change-password/admin-change-password.component').then(
+            (m) => m.AdminChangePasswordComponent,
+          ),
       },
-      { 
-        path: 'solutions', 
-        loadComponent: () => import('./features/admin/solutions/solutions.component').then(m => m.AdminSolutionsComponent) 
+      {
+        path: 'solutions',
+        loadComponent: () =>
+          import('./features/admin/solutions/solutions.component').then(
+            (m) => m.AdminSolutionsComponent,
+          ),
       },
-      { 
-        path: 'brands', 
-        loadComponent: () => import('./features/admin/brands/brands.component').then(m => m.AdminBrandsComponent) 
+      {
+        path: 'brands',
+        loadComponent: () =>
+          import('./features/admin/brands/brands.component').then((m) => m.AdminBrandsComponent),
       },
       {
         path: 'categories',
-        loadComponent: () => import('./features/admin/categories/categories.component').then(m => m.AdminCategoriesComponent)
+        loadComponent: () =>
+          import('./features/admin/categories/categories.component').then(
+            (m) => m.AdminCategoriesComponent,
+          ),
       },
       {
         path: 'products',
-        loadComponent: () => import('./features/admin/products/products.component').then(m => m.AdminProductsComponent)
+        loadComponent: () =>
+          import('./features/admin/products/products.component').then(
+            (m) => m.AdminProductsComponent,
+          ),
       },
-      { 
-        path: 'jobs', 
-        loadComponent: () => import('./features/admin/jobs/jobs.component').then(m => m.AdminJobsComponent) 
+      {
+        path: 'jobs',
+        loadComponent: () =>
+          import('./features/admin/jobs/jobs.component').then((m) => m.AdminJobsComponent),
       },
-      { 
-        path: 'team', 
-        loadComponent: () => import('./features/admin/team/team.component').then(m => m.AdminTeamComponent) 
+      {
+        path: 'team',
+        loadComponent: () =>
+          import('./features/admin/team/team.component').then((m) => m.AdminTeamComponent),
       },
-      { 
+      {
         path: 'testimonials',
-        loadComponent: () => import('./features/admin/testimonials/testimonials.component').then(m => m.AdminTestimonialsComponent)
-      }
-    ]
+        loadComponent: () =>
+          import('./features/admin/testimonials/testimonials.component').then(
+            (m) => m.AdminTestimonialsComponent,
+          ),
+      },
+      {
+        path: 'orders',
+        loadComponent: () =>
+          import('./features/admin/orders/orders.component').then((m) => m.AdminOrdersComponent),
+      },
+    ],
   },
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: '' },
 ];
