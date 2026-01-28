@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { HeroContent } from '../../../core/models/catalog';
@@ -13,6 +13,8 @@ import { catchError, take } from 'rxjs/operators';
   templateUrl: './hero-section.component.html',
 })
 export class HeroSectionComponent implements OnInit {
+  private heroService = inject(HeroContentService);
+
   @Input() set content(value: HeroContent | null | undefined) {
     this.resolvedContent = value ?? null;
   }
@@ -20,8 +22,6 @@ export class HeroSectionComponent implements OnInit {
   resolvedContent: HeroContent | null = null;
   loading$ = this.heroService.loading$;
   error$ = this.heroService.error$;
-
-  constructor(private heroService: HeroContentService) {}
 
   ngOnInit(): void {
     if (!this.resolvedContent) {
