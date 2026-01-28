@@ -60,6 +60,13 @@ export interface Testimonial {
   image: string;
 }
 
+export interface RespectedClient {
+  id: string;
+  name: string;
+  logoUrl?: string | null;
+  isActive: boolean;
+}
+
 export interface ProductDetail {
   id: string;
   name: string;

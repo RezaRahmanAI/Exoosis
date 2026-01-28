@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { BrandService } from '../../core/services/brand.service';
 import { SolutionService } from '../../core/services/solution.service';
 import { ProductService } from '../../core/services/product.service';
 import { ApiService } from '../../core/services/api.service';
 import { CategoryService } from '../../core/services/category.service';
+import { RespectedClientService } from '../../core/services/respected-client.service';
 import { ApiCategory } from '../../core/models/catalog';
-import { Solution, Partner, Testimonial, ProductDetail } from '../../core/models/entities';
+import { Solution, Testimonial, ProductDetail, RespectedClient } from '../../core/models/entities';
 import { ApiResponse } from '../../core/models/api-response';
 import { environment } from '../../../environments/environment';
 import { HeroSectionComponent } from './sections/hero-section.component';
-import { PartnersSectionComponent } from './sections/partners-section.component';
+import { RespectedClientsSectionComponent } from './sections/respected-clients-section.component';
 import { SolutionsSectionComponent } from './sections/solutions-section.component';
 import { PartsAccessoriesSectionComponent } from './sections/parts-accessories-section.component';
 import { PeripheralsSectionComponent } from './sections/peripherals-section.component';
@@ -25,7 +25,7 @@ import { BulkProcurementSectionComponent } from './sections/bulk-procurement-sec
   standalone: true,
   imports: [
     HeroSectionComponent,
-    PartnersSectionComponent,
+    RespectedClientsSectionComponent,
     SolutionsSectionComponent,
     PartsAccessoriesSectionComponent,
     PeripheralsSectionComponent,
@@ -41,9 +41,9 @@ import { BulkProcurementSectionComponent } from './sections/bulk-procurement-sec
 })
 export class HomeComponent implements OnInit {
   solutions: Solution[] = [];
-  logos: Partner[] = [];
   featuredProducts: ProductDetail[] = [];
   categories: any[] = [];
+  clients: RespectedClient[] = [];
   laptops = [
     {
       title: 'HP EliteBooks',
@@ -150,6 +150,58 @@ export class HomeComponent implements OnInit {
     },
   ];
 
+  private readonly fallbackClients: RespectedClient[] = [
+    {
+      id: '1',
+      name: 'Pubali Bank',
+      logoUrl:
+        'https://lh3.googleusercontent.com/aida-public/AB6AXuDjwsIA0cEQU4-BnWhf7KCg0B92gAneQjMhOvvFplkDN85Sx5n_vZNUUrA4u-PyE6iO88T04KpbJf44_DeEtn08ru3O_QnyDbp59wg-YfeTtkpODsKzS2W361f6zWHNXF2L0JkrIEoLBdBBgXAW-fAr1VRnzJVb1YDAJKFFWD7K6jRROZs93qcq1KFZMglwTUCZx8Tz6qDDhWMCr48TwUaqidSdwEBaGK8tqM7s62AyE2-EMCjyb4Zc6BOQySv86JjRCwKOfv11oQVk',
+      isActive: true,
+    },
+    {
+      id: '2',
+      name: 'NCC Bank',
+      logoUrl:
+        'https://lh3.googleusercontent.com/aida-public/AB6AXuBKHxOUKPcz7zkxPVwKYpv6au1nTVeUc97cUsafJnl59rd8AL0Lj8rLKseP1NsxOWwPLN0s9xcataahJDBCuJmzwPQP7XGy4127_kXsg27mF5UwsWcHQls6L-qI2TfFTaMq1kB4CDpP2ZNLEIwZ-hXTvBnwwPizfKKbXs7B-nupizYqEsX1AWqkHxd6ReYFKd9rBidiyMtB_Q60qHq-SmakP1n8ZCRSGpDa2AOuvn4xvrOzVDXE7pfxpZ6OhC-mBa0ni161zO25jAWC',
+      isActive: true,
+    },
+    {
+      id: '3',
+      name: 'Incepta Pharma',
+      logoUrl:
+        'https://lh3.googleusercontent.com/aida-public/AB6AXuD8qDG66edMBzTaLSYAvHpK2dp1ZVMiLGINwEe1D-BRkJyIFQb3-s3FtarZ_Doq2sdjM3CzSPP0KRcK4yKZ_-o_ZC8i0yMyWFcfXSgBBPgLxJTMgjpq1PAcEwyNP8GLjHK7uHnHey1OJKhyjO--BBclGR6B_beysFNjSyvZsa8LgChGufY_uOdms6iMNOz61mPEJGRbwNsMKyv-GVMD8AuUNc_fTD6fqeLclyhYg-YXh0pwvZ3Jmlyaqiswhh6J3LMWVVzka9lidDu9',
+      isActive: true,
+    },
+    {
+      id: '4',
+      name: 'Pacific Pharma',
+      logoUrl:
+        'https://lh3.googleusercontent.com/aida-public/AB6AXuA0nZ87eSEivNfEdOWYkAxMxHF6-jgBoRWRZJKUuR-yu-NkO9Obx4GPBSimwzTDiTDDlcPRCZP-qh4fwHSqHAkMhxJI9JlvsozN0yzJsANd9O2oZCAtHINEbaSQl5z59V97tn7qWPuJN9Xg1n1n92Ss2wYlgvoh1P-c3L7R3d_JkOgLoAM7YPzjbCVN2J3q54HfqBSJ975Yp2cJGCliDwayw-MD75-qPmmtwxxk4GMfR8vn3_I9LDVSbR55t9I7TIFSFmk_3atJcuhq',
+      isActive: true,
+    },
+    {
+      id: '5',
+      name: 'Bangladesh Eye Hospital',
+      logoUrl:
+        'https://lh3.googleusercontent.com/aida-public/AB6AXuAZIkU8BlCJEySHIdv-thMIr145UO65KrHQKxILx_V11t5vNz2iWwA9pMZwuoFLy7k-2vzgPYpBJ2Kxq-mifx09lmOznRrRDLoxcxFriuATrTetvNhX4P1yGAW3iPjFUeW_TMxXYleTkyiGfZ87wzdKF-Yvdt28PgSFSsHRZEbAeW46v7tZGN3Suh2emvkRQuUMcw1POfWOZ3TuyvRNeopYp4xPTpJtbPGDcL9b89a-ek3bCz52R8Z78VCZNBRy6WoDANtXR8vvpUoo',
+      isActive: true,
+    },
+    {
+      id: '6',
+      name: 'Padma Bank',
+      logoUrl:
+        'https://lh3.googleusercontent.com/aida-public/AB6AXuBJ5XbVKhHMwf_XcCCzWfyaE7ESOIAMbvDy0x1p87scQYbSbLzS8ycMuEAnZebH2pTvCyZHkfTJnIq9U5tlPB29miwfGRBAq2naLob2sd8Ecfc_oMrcA2rfcsPjzaRnVpuHjdP9hDUpNLt--YwHbveeU4PpErSBdEDKr4bl-hL8kJ2HqOs31exmMnjv7PuIz-kZTUdXRjFwf5mdOwyI1vqO7RHWZRX2br86EJvR6kMS_rjlZ7X84rUnM6MW6gZNRgyXIJAAfQbcBLVt',
+      isActive: true,
+    },
+    {
+      id: '7',
+      name: 'Bangladesh Police',
+      logoUrl:
+        'https://lh3.googleusercontent.com/aida-public/AB6AXuAt8SCYniong0KnxDtNACA_ohHxtLEcSZ09l_y8rGVVqdDfSfBCaj6BmOgMZgKvGGmkhZ7z3iqMint8lv4hMhMY21fOG9BqreGhqknsrCJeqiH7Ef7kcV0nMH6Zsr2_2yD01774uyCDYPAhU9e7oofEw8lfsedHRroSt9WnQTwm9VcKXb1y4uw8duGAKBx9nmIFW0nUc4Irq5bS9vJKYV1bbQk9ShLlrHFXzdXCurIIrv8I8IyBxNYfwniX0EtDvuAjhxfnJo2N0kTY',
+      isActive: true,
+    },
+  ];
+
   insights = [
     {
       category: 'Infrastructure',
@@ -188,17 +240,13 @@ export class HomeComponent implements OnInit {
     private api: ApiService,
     private solutionService: SolutionService,
     private productService: ProductService,
-    private brandService: BrandService,
+    private respectedClientService: RespectedClientService,
   ) {}
 
   ngOnInit() {
     this.solutionService.getSolutions().subscribe((data) => {
       // Display first 3 solutions
       this.solutions = data.slice(0, 3);
-    });
-
-    this.brandService.getBrands().subscribe((data) => {
-      this.logos = data.filter((brand) => brand.isActive);
     });
 
     this.productService.getProducts({ isFeatured: true }).subscribe((data) => {
@@ -214,6 +262,19 @@ export class HomeComponent implements OnInit {
         },
         error: () => {
           this.testimonials = this.fallbackTestimonials;
+        },
+      });
+    }
+
+    if (environment.useMockData) {
+      this.clients = this.fallbackClients;
+    } else {
+      this.respectedClientService.getClients().subscribe({
+        next: (data) => {
+          this.clients = data;
+        },
+        error: () => {
+          this.clients = this.fallbackClients;
         },
       });
     }

@@ -133,6 +133,13 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'respected-clients',
+        loadComponent: () =>
+          import('./features/admin/respected-clients/respected-clients.component').then(
+            (m) => m.AdminRespectedClientsComponent,
+          ),
+      },
+      {
         path: 'hero',
         loadComponent: () =>
           import('./features/admin/hero/admin-hero.component').then((m) => m.AdminHeroComponent),
@@ -218,6 +225,13 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/admin/testimonials/testimonials.component').then(
             (m) => m.AdminTestimonialsComponent,
+          ),
+      },
+      {
+        path: 'respected-clients',
+        loadComponent: () =>
+          import('./features/admin/respected-clients/respected-clients.component').then(
+            (m) => m.AdminRespectedClientsComponent,
           ),
       },
       {

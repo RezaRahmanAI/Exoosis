@@ -95,6 +95,14 @@ import { RouterLink, RouterOutlet } from '@angular/router';
             <span>Testimonials</span>
           </a>
           <a
+            routerLink="/dashboard/respected-clients"
+            routerLinkActive="bg-primary/20 border-l-4 border-primary"
+            class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors"
+          >
+            <span class="material-symbols-outlined">verified_user</span>
+            <span>Respected Clients</span>
+          </a>
+          <a
             routerLink="/dashboard/settings"
             routerLinkActive="bg-primary/20 border-l-4 border-primary"
             class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors"

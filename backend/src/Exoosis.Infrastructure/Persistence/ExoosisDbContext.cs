@@ -27,6 +27,7 @@ public class ExoosisDbContext : DbContext
     public DbSet<CartItem> CartItems { get; set; }
     public DbSet<Testimonial> Testimonials { get; set; }
     public DbSet<HeroContent> HeroContents { get; set; }
+    public DbSet<RespectedClient> RespectedClients { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -39,6 +40,15 @@ public class ExoosisDbContext : DbContext
             entity.Property(x => x.Image1Url).HasMaxLength(500).IsRequired();
             entity.Property(x => x.Image2Url).HasMaxLength(500).IsRequired();
             entity.Property(x => x.Image3Url).HasMaxLength(500).IsRequired();
+            entity.HasQueryFilter(x => !x.IsDeleted);
+        });
+
+        modelBuilder.Entity<RespectedClient>(entity =>
+        {
+            entity.HasKey(x => x.Id);
+            entity.Property(x => x.Name).HasMaxLength(200).IsRequired();
+            entity.Property(x => x.LogoUrl).HasMaxLength(500);
+            entity.HasIndex(x => x.Name).IsUnique(false);
             entity.HasQueryFilter(x => !x.IsDeleted);
         });
 
