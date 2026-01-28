@@ -4,8 +4,7 @@ import { SolutionService } from '../../core/services/solution.service';
 import { ProductService } from '../../core/services/product.service';
 import { ApiService } from '../../core/services/api.service';
 import { CategoryService } from '../../core/services/category.service';
-import { HeroContentService } from '../../core/services/hero-content.service';
-import { ApiCategory, HeroContent } from '../../core/models/catalog';
+import { ApiCategory } from '../../core/models/catalog';
 import { Solution, Partner, Testimonial, ProductDetail } from '../../core/models/entities';
 import { ApiResponse } from '../../core/models/api-response';
 import { environment } from '../../../environments/environment';
@@ -45,8 +44,6 @@ export class HomeComponent implements OnInit {
   logos: Partner[] = [];
   featuredProducts: ProductDetail[] = [];
   categories: any[] = [];
-  heroContent?: HeroContent | null;
-
   laptops = [
     {
       title: 'HP EliteBooks',
@@ -192,7 +189,6 @@ export class HomeComponent implements OnInit {
     private solutionService: SolutionService,
     private productService: ProductService,
     private brandService: BrandService,
-    private heroService: HeroContentService,
   ) {}
 
   ngOnInit() {
@@ -226,8 +222,5 @@ export class HomeComponent implements OnInit {
       this.categories = data.filter((c: ApiCategory) => c.isActive).slice(0, 4);
     });
 
-    this.heroService.getActive().subscribe((data) => {
-      this.heroContent = data;
-    });
   }
 }

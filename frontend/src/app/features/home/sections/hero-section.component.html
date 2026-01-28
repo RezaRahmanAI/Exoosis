@@ -1,19 +1,29 @@
 <!-- Hero Section -->
 <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden mesh-bg">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div
+      *ngIf="(error$ | async) as error"
+      class="mb-6 inline-flex items-center gap-2 rounded-full border border-red-200 bg-red-50 px-4 py-2 text-sm font-semibold text-red-700 dark:border-red-400/40 dark:bg-red-900/30 dark:text-red-200">
+      {{ error }}
+    </div>
+    <div
+      *ngIf="(loading$ | async)"
+      class="mb-6 inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-700 dark:border-blue-400/40 dark:bg-blue-900/30 dark:text-blue-200">
+      Loading hero content...
+    </div>
     <div class="grid lg:grid-cols-2 gap-12 items-center">
       <div class="max-w-2xl">
         <div
           class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/30 border border-blue-100 dark:border-blue-800 mb-6">
           <span class="flex h-2 w-2 rounded-full bg-primary"></span>
           <span class="text-xs font-semibold text-primary dark:text-blue-300 uppercase tracking-wide">{{
-            content?.badgeText || 'Enterprise Technology Partner' }}</span>
+            resolvedContent?.badgeText || 'Enterprise Technology Partner' }}</span>
         </div>
         <h1 class="text-4xl lg:text-6xl font-bold tracking-tight mb-8 text-gray-900 dark:text-white leading-[1.1]"
-          [innerHTML]="content?.title || 'Powering Digital Transformation with <br /><span class=\'gradient-text\'>Scenario-Oriented Solutions</span>'">
+          [innerHTML]="resolvedContent?.title || 'Powering Digital Transformation with <br /><span class=\'gradient-text\'>Scenario-Oriented Solutions</span>'">
         </h1>
         <p class="text-xl text-gray-600 dark:text-gray-300 mb-10 leading-relaxed max-w-lg">
-          {{ content?.subText || 'Your trusted partner for enterprise IT hardware, high-performance computing, and
+          {{ resolvedContent?.subText || 'Your trusted partner for enterprise IT hardware, high-performance computing, and
           robust network infrastructure in Bangladesh.' }}
         </p>
         <div class="flex flex-wrap gap-4">
@@ -29,18 +39,18 @@
         </div>
         <div
           class="absolute top-10 right-20 w-48 h-32 rounded-lg shadow-xl overflow-hidden transform rotate-3 hover:rotate-0 transition-transform duration-500 z-20 ring-1 ring-white/20">
-          <img [alt]="content?.title" class="w-full h-full object-cover"
-            [src]="content?.image1Url || 'https://lh3.googleusercontent.com/aida-public/AB6AXuCxKoVT8Bn7wZKE_sMh38GXTKWKm4rIQZqCOfmXU3UlXHRY4JpdESQleVRsg9ZifHGGsDI-JLCa4mWtYMNw0MgkJja40GSJP8nf7vQ7prgm2VkYZWFnSKU5rk_LG4Di99d2sgRGiuUGxdTMsLIAVppE_e0--R8I4y3YeW7PNovVGKnV_BXh3enTlv9W-TFu2FCM3UUbKAacbek9V_qbMBjYSnNMguO4lm5e21mgOTPawCVALQ3C_KqEhDgXM482n9D_Rn2Ijedzs0VU'" />
+          <img [alt]="resolvedContent?.title" class="w-full h-full object-cover"
+            [src]="resolvedContent?.image1Url || 'https://lh3.googleusercontent.com/aida-public/AB6AXuCxKoVT8Bn7wZKE_sMh38GXTKWKm4rIQZqCOfmXU3UlXHRY4JpdESQleVRsg9ZifHGGsDI-JLCa4mWtYMNw0MgkJja40GSJP8nf7vQ7prgm2VkYZWFnSKU5rk_LG4Di99d2sgRGiuUGxdTMsLIAVppE_e0--R8I4y3YeW7PNovVGKnV_BXh3enTlv9W-TFu2FCM3UUbKAacbek9V_qbMBjYSnNMguO4lm5e21mgOTPawCVALQ3C_KqEhDgXM482n9D_Rn2Ijedzs0VU'" />
         </div>
         <div
           class="absolute top-48 left-10 w-64 h-48 rounded-lg shadow-2xl overflow-hidden transform -rotate-2 hover:rotate-0 transition-transform duration-500 z-30 ring-1 ring-white/20">
-          <img [alt]="content?.title" class="w-full h-full object-cover"
-            [src]="content?.image2Url || 'https://lh3.googleusercontent.com/aida-public/AB6AXuCALu8AoJ9x6w84v4gGjTIqxZn3XaHRJvvb2H62xHgwaFNY67uCYo8-F3vpjvtmAJ3tQI6bCvwwnkPA-PjmRx9Z_SW_q9J2EwOLd7xX_EG8PvCkqH8qVkqeBywW-cvPdoxkBAud1_2E_YoXfYjGy5EjdH99kQVjwUEGaLf8YCercz1rg9mgjjdwnAfMQVm9UWn9624aIUaJk7W5lRi6Id_y9Gy2GOB0aB32VtdDJULCf-TWgnnP_J75YOxujHfhkDO4HHOuJRGMSoUf'" />
+          <img [alt]="resolvedContent?.title" class="w-full h-full object-cover"
+            [src]="resolvedContent?.image2Url || 'https://lh3.googleusercontent.com/aida-public/AB6AXuCALu8AoJ9x6w84v4gGjTIqxZn3XaHRJvvb2H62xHgwaFNY67uCYo8-F3vpjvtmAJ3tQI6bCvwwnkPA-PjmRx9Z_SW_q9J2EwOLd7xX_EG8PvCkqH8qVkqeBywW-cvPdoxkBAud1_2E_YoXfYjGy5EjdH99kQVjwUEGaLf8YCercz1rg9mgjjdwnAfMQVm9UWn9624aIUaJk7W5lRi6Id_y9Gy2GOB0aB32VtdDJULCf-TWgnnP_J75YOxujHfhkDO4HHOuJRGMSoUf'" />
         </div>
         <div
           class="absolute bottom-20 right-10 w-56 h-72 rounded-lg shadow-2xl overflow-hidden transform rotate-2 hover:rotate-0 transition-transform duration-500 z-10 border-4 border-white dark:border-gray-800">
-          <img [alt]="content?.title" class="w-full h-full object-cover"
-            [src]="content?.image3Url || 'https://lh3.googleusercontent.com/aida-public/AB6AXuDXmKYAnZR2hGsVBeYQG1UMvVdEfthXH_EE6tJboT0JeIRWW6xXnNSueucHlVDWYEQqR__K2vmt5lhzYogzszmY8dHE_8mJ20F2bibctUKwl16lI9N3_eDdvIJVphrJNqAlbXJbI9_WXyI6s6HqbWe_0Q7NwI5d5oR7IXupj87-I0EclTocupCJZxHibLa34oIPrYo04WIRweHQ6Ez7hbIFL4Lze6w0AAg2MA2BDvLwKvBiT-1pafKJfNlwPX1IXaUNs1Ej7TfR8iOB'" />
+          <img [alt]="resolvedContent?.title" class="w-full h-full object-cover"
+            [src]="resolvedContent?.image3Url || 'https://lh3.googleusercontent.com/aida-public/AB6AXuDXmKYAnZR2hGsVBeYQG1UMvVdEfthXH_EE6tJboT0JeIRWW6xXnNSueucHlVDWYEQqR__K2vmt5lhzYogzszmY8dHE_8mJ20F2bibctUKwl16lI9N3_eDdvIJVphrJNqAlbXJbI9_WXyI6s6HqbWe_0Q7NwI5d5oR7IXupj87-I0EclTocupCJZxHibLa34oIPrYo04WIRweHQ6Ez7hbIFL4Lze6w0AAg2MA2BDvLwKvBiT-1pafKJfNlwPX1IXaUNs1Ej7TfR8iOB'" />
         </div>
       </div>
     </div>
