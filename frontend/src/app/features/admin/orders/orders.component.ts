@@ -14,6 +14,13 @@ interface Order {
   items: any[];
 }
 
+interface ApiResponse<T> {
+  success: boolean;
+  message: string;
+  data: T;
+  errors?: string[];
+}
+
 @Component({
   selector: 'app-orders',
   standalone: true,
@@ -128,8 +135,9 @@ export class AdminOrdersComponent implements OnInit {
   }
 
   loadOrders() {
-    this.api.get<Order[]>('/orders').subscribe((data) => {
-      this.orders = data;
+    this.api.get<ApiResponse<Order[]> | Order[]>('/orders').subscribe((data) => {
+      const orders = Array.isArray(data) ? data : data?.data;
+      this.orders = Array.isArray(orders) ? orders : [];
     });
   }
 
