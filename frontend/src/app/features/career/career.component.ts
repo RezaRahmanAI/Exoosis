@@ -22,6 +22,24 @@ export class CareerComponent implements OnInit {
   constructor(private api: ApiService) {}
 
   ngOnInit() {
-    this.api.get<Job[]>('/jobs').subscribe(data => this.jobs = data);
+    this.api.get<unknown>('/jobs').subscribe(data => {
+      this.jobs = this.normalizeJobs(data);
+    });
+  }
+
+  private normalizeJobs(data: unknown): Job[] {
+    if (Array.isArray(data)) {
+      return data as Job[];
+    }
+
+    if (data && typeof data === 'object') {
+      const record = data as { jobs?: Job[]; data?: Job[]; items?: Job[] };
+      const jobs = record.jobs ?? record.data ?? record.items;
+      if (Array.isArray(jobs)) {
+        return jobs;
+      }
+    }
+
+    return [];
   }
 }

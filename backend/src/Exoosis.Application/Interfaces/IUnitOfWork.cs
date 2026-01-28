@@ -8,6 +8,7 @@ public interface IUnitOfWork
     IRepository<Brand> Brands { get; }
     IRepository<Product> Products { get; }
     IRepository<TeamMember> TeamMembers { get; }
+    IRepository<Job> Jobs { get; }
     IRepository<Solution> Solutions { get; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

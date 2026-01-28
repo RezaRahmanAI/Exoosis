@@ -15,6 +15,7 @@ public class UnitOfWork : IUnitOfWork
         Brands = new EfRepository<Brand>(dbContext);
         Products = new EfRepository<Product>(dbContext);
         TeamMembers = new EfRepository<TeamMember>(dbContext);
+        Jobs = new EfRepository<Job>(dbContext);
         Solutions = new EfRepository<Solution>(dbContext);
     }
 
@@ -22,6 +23,7 @@ public class UnitOfWork : IUnitOfWork
     public IRepository<Brand> Brands { get; }
     public IRepository<Product> Products { get; }
     public IRepository<TeamMember> TeamMembers { get; }
+    public IRepository<Job> Jobs { get; }
     public IRepository<Solution> Solutions { get; }
 
     public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

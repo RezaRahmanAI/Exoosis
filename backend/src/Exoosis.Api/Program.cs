@@ -30,6 +30,7 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IBrandService, BrandService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ITeamMemberService, TeamMemberService>();
+builder.Services.AddScoped<IJobService, JobService>();
 builder.Services.AddScoped<ISolutionService, SolutionService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<ICartService, CartService>();

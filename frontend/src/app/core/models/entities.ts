@@ -17,7 +17,7 @@ export interface Solution {
 }
 
 export interface Job {
-  id: number;
+  id: string;
   title: string;
   location: string;
   type: string;
@@ -227,7 +227,7 @@ export interface EnterpriseSoftware {
 }
 
 export interface JobApplicationPayload {
-  jobId: number;
+  jobId: string;
   fullName: string;
   email: string;
   phone: string;
