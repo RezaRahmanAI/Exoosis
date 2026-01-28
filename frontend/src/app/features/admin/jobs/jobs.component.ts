@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../../../core/services/api.service';
 import { Job } from '../../../core/models/entities';
-import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-admin-jobs',
@@ -126,7 +125,6 @@ export class AdminJobsComponent implements OnInit {
   currentJob: Partial<Job> = {};
   responsibilitiesStr = '';
   requirementsStr = '';
-  private readonly mockStorageKey = 'exoosis_mock_jobs';
 
   constructor(private api: ApiService) {}
 
@@ -135,18 +133,13 @@ export class AdminJobsComponent implements OnInit {
   }
 
   loadJobs() {
-    if (environment.useMockData) {
-      this.jobs = this.loadMockJobs();
-      return;
-    }
-
     this.api.get<unknown>('/jobs').subscribe({
       next: (data) => {
         this.jobs = this.normalizeJobs(data);
       },
       error: () => {
-        this.jobs = this.loadMockJobs();
-      }
+        this.jobs = [];
+      },
     });
   }
 
@@ -176,21 +169,6 @@ export class AdminJobsComponent implements OnInit {
       this.currentJob.datePosted = `${parts[1]} ${parts[2]}, ${parts[3]}`;
     }
 
-    if (environment.useMockData) {
-      const jobs = this.loadMockJobs();
-      if (this.currentJob.id) {
-        const updated = jobs.map(job => job.id === this.currentJob.id ? this.currentJob as Job : job);
-        this.saveMockJobs(updated);
-      } else {
-        const nextId = jobs.length ? Math.max(...jobs.map(job => job.id)) + 1 : 1;
-        const created = { ...this.currentJob, id: nextId } as Job;
-        this.saveMockJobs([created, ...jobs]);
-      }
-      this.loadJobs();
-      this.closeModal();
-      return;
-    }
-
     if (this.currentJob.id) {
       this.api.put<Job>(`/jobs/${this.currentJob.id}`, this.currentJob).subscribe(() => {
         this.loadJobs();
@@ -206,58 +184,7 @@ export class AdminJobsComponent implements OnInit {
 
   deleteJob(id: number) {
     if (confirm('Are you sure you want to delete this job posting?')) {
-      if (environment.useMockData) {
-        const jobs = this.loadMockJobs().filter(job => job.id !== id);
-        this.saveMockJobs(jobs);
-        this.loadJobs();
-        return;
-      }
-
       this.api.delete(`/jobs/${id}`).subscribe(() => this.loadJobs());
-    }
-  }
-
-  private loadMockJobs(): Job[] {
-    const stored = localStorage.getItem(this.mockStorageKey);
-    if (!stored) {
-      const seeded: Job[] = [
-        {
-          id: 1,
-          title: 'Senior Solutions Architect',
-          location: 'Dhaka',
-          type: 'Full-time',
-          typeIcon: 'schedule',
-          category: 'Engineering',
-          description: 'Lead enterprise solution design for flagship clients.',
-          responsibilities: ['Client discovery', 'Technical workshops', 'Solution design'],
-          requirements: ['5+ years experience', 'Cloud architecture', 'Stakeholder management'],
-          team: 'Delivery',
-          salary: 'Competitive',
-          datePosted: 'Aug 15, 2024'
-        },
-        {
-          id: 2,
-          title: 'Customer Success Manager',
-          location: 'Remote',
-          type: 'Hybrid',
-          typeIcon: 'work_history',
-          category: 'Customer Success',
-          description: 'Own enterprise onboarding journeys and adoption plans.',
-          responsibilities: ['Onboarding', 'Renewals', 'Quarterly reviews'],
-          requirements: ['SaaS experience', 'Account management', 'Strong communication'],
-          team: 'Customer Success',
-          salary: 'Negotiable',
-          datePosted: 'Aug 10, 2024'
-        }
-      ];
-      localStorage.setItem(this.mockStorageKey, JSON.stringify(seeded));
-      return seeded;
-    }
-
-    try {
-      return JSON.parse(stored) as Job[];
-    } catch {
-      return [];
     }
   }
 
@@ -277,7 +204,4 @@ export class AdminJobsComponent implements OnInit {
     return [];
   }
 
-  private saveMockJobs(jobs: Job[]) {
-    localStorage.setItem(this.mockStorageKey, JSON.stringify(jobs));
-  }
 }
