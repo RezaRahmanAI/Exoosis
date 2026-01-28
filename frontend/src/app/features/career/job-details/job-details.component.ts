@@ -15,7 +15,7 @@ import { Job, JobApplicationPayload } from '../../../core/models/entities';
 export class JobDetailsComponent implements OnInit {
   job?: Job;
   application: JobApplicationPayload = {
-    jobId: 0,
+    jobId: '',
     fullName: '',
     email: '',
     phone: '',
@@ -37,9 +37,12 @@ export class JobDetailsComponent implements OnInit {
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.api.get<Job>(`/jobs/${id}`).subscribe(data => {
-        this.job = data;
-        this.application.jobId = data.id;
+      this.api.get<unknown>(`/jobs/${id}`).subscribe(data => {
+        const job = this.normalizeJob(data);
+        if (job) {
+          this.job = job;
+          this.application.jobId = job.id;
+        }
       });
     }
   }
@@ -55,7 +58,7 @@ export class JobDetailsComponent implements OnInit {
         this.isSubmitting = false;
         this.submitSuccess = true;
         this.application = {
-          jobId: this.job?.id ?? 0,
+          jobId: this.job?.id ?? '',
           fullName: '',
           email: '',
           phone: '',
@@ -71,5 +74,20 @@ export class JobDetailsComponent implements OnInit {
         this.submitError = 'Unable to submit your application. Please try again.';
       }
     });
+  }
+
+  private normalizeJob(data: unknown): Job | undefined {
+    if (!data) {
+      return undefined;
+    }
+
+    if (typeof data === 'object') {
+      const record = data as { data?: Job };
+      if (record.data) {
+        return record.data;
+      }
+    }
+
+    return data as Job;
   }
 }

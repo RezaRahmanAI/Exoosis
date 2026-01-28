@@ -17,6 +17,7 @@ public class ExoosisDbContext : DbContext
     public DbSet<Brand> Brands => Set<Brand>();
     public DbSet<Product> Products => Set<Product>();
     public DbSet<TeamMember> TeamMembers => Set<TeamMember>();
+    public DbSet<Job> Jobs => Set<Job>();
     public DbSet<Solution> Solutions => Set<Solution>();
     public DbSet<User> Users => Set<User>();
     public DbSet<WebsiteSettings> WebsiteSettings => Set<WebsiteSettings>();
@@ -108,6 +109,28 @@ public class ExoosisDbContext : DbContext
             entity.Property(x => x.ImageUrl).HasMaxLength(500);
             entity.Property(x => x.LinkedInUrl).HasMaxLength(500);
             entity.HasIndex(x => x.Name).IsUnique(false);
+            entity.HasQueryFilter(x => !x.IsDeleted);
+        });
+
+        modelBuilder.Entity<Job>(entity =>
+        {
+            entity.HasKey(x => x.Id);
+            entity.Property(x => x.Title).HasMaxLength(200).IsRequired();
+            entity.Property(x => x.Location).HasMaxLength(150).IsRequired();
+            entity.Property(x => x.Type).HasMaxLength(50).IsRequired();
+            entity.Property(x => x.TypeIcon).HasMaxLength(100).IsRequired();
+            entity.Property(x => x.Category).HasMaxLength(150).IsRequired();
+            entity.Property(x => x.Description).HasMaxLength(4000);
+            entity.Property(x => x.Team).HasMaxLength(150);
+            entity.Property(x => x.Salary).HasMaxLength(150);
+            entity.Property(x => x.DatePosted).HasMaxLength(50);
+            entity.Property(x => x.Responsibilities)
+                .HasConversion(stringListConverter)
+                .Metadata.SetValueComparer(stringListComparer);
+            entity.Property(x => x.Requirements)
+                .HasConversion(stringListConverter)
+                .Metadata.SetValueComparer(stringListComparer);
+            entity.HasIndex(x => x.Title).IsUnique(false);
             entity.HasQueryFilter(x => !x.IsDeleted);
         });
 

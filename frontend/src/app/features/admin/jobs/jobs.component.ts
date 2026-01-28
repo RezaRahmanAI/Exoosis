@@ -182,7 +182,7 @@ export class AdminJobsComponent implements OnInit {
     }
   }
 
-  deleteJob(id: number) {
+  deleteJob(id: string) {
     if (confirm('Are you sure you want to delete this job posting?')) {
       this.api.delete(`/jobs/${id}`).subscribe(() => this.loadJobs());
     }

@@ -3,6 +3,7 @@ using Exoosis.Application.DTOs.Brands;
 using Exoosis.Application.DTOs.Categories;
 using Exoosis.Application.DTOs.Hero;
 using Exoosis.Application.DTOs.Products;
+using Exoosis.Application.DTOs.Jobs;
 using Exoosis.Application.DTOs.Solutions;
 using Exoosis.Application.DTOs.TeamMembers;
 using Exoosis.Domain.Entities;
@@ -30,6 +31,10 @@ public class CatalogProfile : Profile
         CreateMap<TeamMember, TeamMemberDto>();
         CreateMap<CreateTeamMemberRequest, TeamMember>();
         CreateMap<UpdateTeamMemberRequest, TeamMember>();
+
+        CreateMap<Job, JobDto>();
+        CreateMap<CreateJobRequest, Job>();
+        CreateMap<UpdateJobRequest, Job>();
 
         CreateMap<Solution, SolutionDto>();
         CreateMap<CreateSolutionRequest, Solution>();
