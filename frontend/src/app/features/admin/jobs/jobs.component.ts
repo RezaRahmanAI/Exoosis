@@ -140,7 +140,14 @@ export class AdminJobsComponent implements OnInit {
       return;
     }
 
-    this.api.get<Job[]>('/jobs').subscribe(data => this.jobs = data);
+    this.api.get<unknown>('/jobs').subscribe({
+      next: (data) => {
+        this.jobs = this.normalizeJobs(data);
+      },
+      error: () => {
+        this.jobs = this.loadMockJobs();
+      }
+    });
   }
 
   openModal(job: Job | null = null) {
@@ -252,6 +259,22 @@ export class AdminJobsComponent implements OnInit {
     } catch {
       return [];
     }
+  }
+
+  private normalizeJobs(data: unknown): Job[] {
+    if (Array.isArray(data)) {
+      return data as Job[];
+    }
+
+    if (data && typeof data === 'object') {
+      const record = data as { jobs?: Job[]; data?: Job[]; items?: Job[] };
+      const jobs = record.jobs ?? record.data ?? record.items;
+      if (Array.isArray(jobs)) {
+        return jobs;
+      }
+    }
+
+    return [];
   }
 
   private saveMockJobs(jobs: Job[]) {
