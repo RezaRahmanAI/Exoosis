@@ -3,7 +3,7 @@
     [title]="pageHeroContent?.title || 'EXOSISTECH product catalog'"
     [description]="pageHeroContent?.description || 'Discover curated hardware and software bundles for modern enterprise teams. Filter by category, explore product highlights, and request quotes in one place.'"
     [eyebrow]="pageHeroContent?.eyebrow"
-    [badge]="pageHeroContent?.badge"
+    [badge]="pageHeroContent?.badge ?? undefined"
     [badgeIcon]="pageHeroContent?.badgeIcon || 'auto_awesome'">
     <nav pageHeaderBreadcrumbs aria-label="Breadcrumb" class="flex">
       <ol class="inline-flex items-center space-x-1 text-sm text-slate-500 dark:text-slate-400">

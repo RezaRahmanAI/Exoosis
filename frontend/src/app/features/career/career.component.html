@@ -1,6 +1,6 @@
 <main class="flex-1 flex flex-col">
   <app-page-header
-    [badge]="pageHeroContent?.badge || \"We're Hiring\""
+    [badge]="pageHeroContent?.badge ?? 'We\'re Hiring'"
     [badgeIcon]="pageHeroContent?.badgeIcon || 'rocket_launch'"
     [title]="pageHeroContent?.title || 'Build the Future of Digital Infrastructure'"
     [description]="pageHeroContent?.description || 'Join a team of innovators solving Dhaka’s toughest tech challenges. We are looking for passionate individuals to grow with us.'"
