@@ -1,9 +1,10 @@
-<main class="min-h-screen bg-slate-50 px-4 pt-28 pb-16">
-  <div class="mx-auto w-full max-w-4xl">
-    <h1 class="text-3xl font-bold text-slate-900">My Orders</h1>
-    <p class="mt-2 text-sm text-slate-500">Track and review your recent purchases.</p>
-
-    <div class="mt-8 space-y-4">
+<main class="min-h-screen bg-slate-50">
+  <app-page-header
+    title="My Orders"
+    description="Track and review your recent purchases.">
+  </app-page-header>
+  <section class="page-container pb-16 pt-8">
+    <div class="mx-auto w-full max-w-4xl space-y-4">
       <div *ngIf="isLoading" class="rounded-2xl border border-slate-200 bg-white p-6 text-sm text-slate-500">
         Loading your orders...
       </div>
@@ -27,5 +28,5 @@
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </main>

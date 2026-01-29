@@ -1,58 +1,50 @@
 <main class="bg-white dark:bg-background-dark min-h-screen">
-  <section class="page-container pt-20 pb-6">
-    <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-      <div class="space-y-3">
-        <nav aria-label="Breadcrumb" class="flex">
-          <ol class="inline-flex items-center space-x-1 text-sm text-slate-500 dark:text-slate-400">
-            <li class="inline-flex items-center">
-              <a class="inline-flex items-center gap-1 hover:text-primary" routerLink="/">
-                <span class="material-symbols-outlined text-lg">home</span>
-                Home
-              </a>
-            </li>
-            <li class="flex items-center">
-              <span class="material-symbols-outlined text-slate-400 text-lg">chevron_right</span>
-              <a class="ml-1 hover:text-primary" routerLink="/categories">Categories</a>
-            </li>
-            <li class="flex items-center">
-              <span class="material-symbols-outlined text-slate-400 text-lg">chevron_right</span>
-              <span class="ml-1 font-semibold text-navy-blue dark:text-white">All Products</span>
-            </li>
-          </ol>
-        </nav>
-        <h1 class="text-3xl font-bold text-navy-blue dark:text-white">EXOSISTECH product catalog</h1>
-        <p class="max-w-2xl text-sm text-slate-500 dark:text-slate-300">
-          Discover curated hardware and software bundles for modern enterprise teams. Filter by category, explore
-          product
-          highlights, and request quotes in one place.
-        </p>
-      </div>
-      <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
-        <label
-          class="flex w-full min-w-[240px] items-center rounded-full border border-slate-200 bg-white px-4 py-2.5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
-          <span class="material-symbols-outlined text-slate-400 text-lg">search</span>
-          <input
-            class="ml-3 w-full border-none bg-transparent text-sm text-slate-600 focus:outline-none focus:ring-0 dark:text-slate-200"
-            type="text" placeholder="Search products" [(ngModel)]="searchTerm" />
-        </label>
-        <div
-          class="rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-wide text-slate-600 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200">
-          {{ filteredProducts.length }} products
-        </div>
-        <div class="relative">
-          <select
-            class="appearance-none rounded-full border border-slate-200 bg-white px-5 py-2 text-xs font-semibold uppercase tracking-wide text-slate-600 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200">
-            <option>Most Relevant</option>
-            <option>Newest Arrivals</option>
-            <option>Price: Low to High</option>
-            <option>Price: High to Low</option>
-          </select>
-          <span
-            class="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">expand_more</span>
-        </div>
-      </div>
+  <app-page-header
+    title="EXOSISTECH product catalog"
+    description="Discover curated hardware and software bundles for modern enterprise teams. Filter by category, explore product highlights, and request quotes in one place.">
+    <nav pageHeaderBreadcrumbs aria-label="Breadcrumb" class="flex">
+      <ol class="inline-flex items-center space-x-1 text-sm text-slate-500 dark:text-slate-400">
+        <li class="inline-flex items-center">
+          <a class="inline-flex items-center gap-1 hover:text-primary" routerLink="/">
+            <span class="material-symbols-outlined text-lg">home</span>
+            Home
+          </a>
+        </li>
+        <li class="flex items-center">
+          <span class="material-symbols-outlined text-slate-400 text-lg">chevron_right</span>
+          <a class="ml-1 hover:text-primary" routerLink="/categories">Categories</a>
+        </li>
+        <li class="flex items-center">
+          <span class="material-symbols-outlined text-slate-400 text-lg">chevron_right</span>
+          <span class="ml-1 font-semibold text-navy-blue dark:text-white">All Products</span>
+        </li>
+      </ol>
+    </nav>
+    <label
+      pageHeaderActions
+      class="flex w-full min-w-[240px] items-center rounded-full border border-slate-200 bg-white px-4 py-2.5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+      <span class="material-symbols-outlined text-slate-400 text-lg">search</span>
+      <input
+        class="ml-3 w-full border-none bg-transparent text-sm text-slate-600 focus:outline-none focus:ring-0 dark:text-slate-200"
+        type="text" placeholder="Search products" [(ngModel)]="searchTerm" />
+    </label>
+    <div
+      pageHeaderActions
+      class="rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-wide text-slate-600 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200">
+      {{ filteredProducts.length }} products
     </div>
-  </section>
+    <div pageHeaderActions class="relative">
+      <select
+        class="appearance-none rounded-full border border-slate-200 bg-white px-5 py-2 text-xs font-semibold uppercase tracking-wide text-slate-600 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200">
+        <option>Most Relevant</option>
+        <option>Newest Arrivals</option>
+        <option>Price: Low to High</option>
+        <option>Price: High to Low</option>
+      </select>
+      <span
+        class="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">expand_more</span>
+    </div>
+  </app-page-header>
 
   <section class="page-container pb-16">
     <div *ngIf="isLoading" class="flex items-center justify-center py-20">
