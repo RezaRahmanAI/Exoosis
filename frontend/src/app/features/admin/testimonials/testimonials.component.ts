@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../../../core/services/api.service';
 import { Testimonial } from '../../../core/models/entities';
-import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-admin-testimonials',
@@ -86,7 +85,6 @@ export class AdminTestimonialsComponent implements OnInit {
   testimonials: Testimonial[] = [];
   isModalOpen = false;
   currentTestimonial: Partial<Testimonial> = {};
-  private readonly mockStorageKey = 'exoosis_mock_testimonials';
 
   constructor(private api: ApiService) {}
 
@@ -95,17 +93,19 @@ export class AdminTestimonialsComponent implements OnInit {
   }
 
   loadTestimonials() {
-    if (environment.useMockData) {
-      this.testimonials = this.loadMockTestimonials();
-      return;
-    }
-
-    this.api.get<Testimonial[]>('/testimonials').subscribe(data => this.testimonials = data);
+    this.api.get<Testimonial[]>('/testimonials').subscribe({
+      next: (data) => {
+        this.testimonials = data;
+      },
+      error: () => {
+        this.testimonials = [];
+      },
+    });
   }
 
   openModal(testimonial: Testimonial | null = null) {
     this.currentTestimonial = testimonial ? { ...testimonial } : {
-      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAvOFJbtXss0-oOURmaN1XCNQ5v3AnbTlbAzq45HxpDt2bLlHmFJvFRP08mC7jebApLqIa5LeuXEprsCCfgmTIQQT5mV7m3k8zT-FSSo8Wf7R2b98lk3irtXZdM5xVN2HLaH7Rx68cFE5wenKrf2VtrPoCgJfT-wKs8v2ApTlSjzuPhsGLuw7pP395_VBJkS7CoW5sWG7VQRQ8XGugo5Mdj2Ul1bc0oVahkLkIYG8tnEKOIfYlQq3uI7_ftO1P_FRCWxpq5gJ85M7hP'
+      image: ''
     };
     this.isModalOpen = true;
   }
@@ -115,21 +115,6 @@ export class AdminTestimonialsComponent implements OnInit {
   }
 
   saveTestimonial() {
-    if (environment.useMockData) {
-      const testimonials = this.loadMockTestimonials();
-      if (this.currentTestimonial.id) {
-        const updated = testimonials.map(item => item.id === this.currentTestimonial.id ? this.currentTestimonial as Testimonial : item);
-        this.saveMockTestimonials(updated);
-      } else {
-        const nextId = testimonials.length ? Math.max(...testimonials.map(item => item.id)) + 1 : 1;
-        const created = { ...this.currentTestimonial, id: nextId } as Testimonial;
-        this.saveMockTestimonials([created, ...testimonials]);
-      }
-      this.loadTestimonials();
-      this.closeModal();
-      return;
-    }
-
     if (this.currentTestimonial.id) {
       this.api.put<Testimonial>(`/testimonials/${this.currentTestimonial.id}`, this.currentTestimonial).subscribe(() => {
         this.loadTestimonials();
@@ -145,50 +130,7 @@ export class AdminTestimonialsComponent implements OnInit {
 
   deleteTestimonial(id: number) {
     if (confirm('Are you sure you want to remove this testimonial?')) {
-      if (environment.useMockData) {
-        const testimonials = this.loadMockTestimonials().filter(item => item.id !== id);
-        this.saveMockTestimonials(testimonials);
-        this.loadTestimonials();
-        return;
-      }
-
       this.api.delete(`/testimonials/${id}`).subscribe(() => this.loadTestimonials());
     }
-  }
-
-  private loadMockTestimonials(): Testimonial[] {
-    const stored = localStorage.getItem(this.mockStorageKey);
-    if (!stored) {
-      const seeded: Testimonial[] = [
-        {
-          id: 1,
-          quote: 'The EXOSISTECH team helped us modernize our operations in record time.',
-          author: 'Nadia Rahman',
-          role: 'COO',
-          company: 'Bright Logistics',
-          image: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=facearea&w=200&h=200&q=80'
-        },
-        {
-          id: 2,
-          quote: 'Reliable hardware bundles and a proactive support team.',
-          author: 'Tahmid Hasan',
-          role: 'IT Manager',
-          company: 'Vertex Bank',
-          image: 'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=facearea&w=200&h=200&q=80'
-        }
-      ];
-      localStorage.setItem(this.mockStorageKey, JSON.stringify(seeded));
-      return seeded;
-    }
-
-    try {
-      return JSON.parse(stored) as Testimonial[];
-    } catch {
-      return [];
-    }
-  }
-
-  private saveMockTestimonials(testimonials: Testimonial[]) {
-    localStorage.setItem(this.mockStorageKey, JSON.stringify(testimonials));
   }
 }

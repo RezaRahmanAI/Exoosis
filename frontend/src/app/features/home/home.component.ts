@@ -118,37 +118,6 @@ export class HomeComponent implements OnInit {
   ];
 
   testimonials: Testimonial[] = [];
-  private readonly fallbackTestimonials: Testimonial[] = [
-    {
-      id: 1,
-      quote:
-        'Exoosis delivered a seamless infrastructure refresh with zero downtime and proactive support.',
-      author: 'Aminul Islam',
-      role: 'IT Operations Manager',
-      company: 'Delta Logistics',
-      image:
-        'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80',
-    },
-    {
-      id: 2,
-      quote:
-        'Their team helped us modernize our workplace tech stack while keeping costs predictable.',
-      author: 'Nusrat Jahan',
-      role: 'Procurement Lead',
-      company: 'Skyline Holdings',
-      image:
-        'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=200&q=80',
-    },
-    {
-      id: 3,
-      quote: 'From hardware sourcing to deployment, Exoosis handled every detail with precision.',
-      author: 'Musa Rahman',
-      role: 'Head of Infrastructure',
-      company: 'Nexa Bank',
-      image:
-        'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=200&q=80',
-    },
-  ];
 
   private readonly fallbackClients: RespectedClient[] = [
     {
@@ -253,18 +222,14 @@ export class HomeComponent implements OnInit {
       this.featuredProducts = data;
     });
 
-    if (environment.useMockData) {
-      this.testimonials = this.fallbackTestimonials;
-    } else {
-      this.api.get<ApiResponse<Testimonial[]>>('/testimonials').subscribe({
-        next: (response) => {
-          this.testimonials = response.data || [];
-        },
-        error: () => {
-          this.testimonials = this.fallbackTestimonials;
-        },
-      });
-    }
+    this.api.get<ApiResponse<Testimonial[]>>('/testimonials').subscribe({
+      next: (response) => {
+        this.testimonials = response.data || [];
+      },
+      error: () => {
+        this.testimonials = [];
+      },
+    });
 
     if (environment.useMockData) {
       this.clients = this.fallbackClients;
