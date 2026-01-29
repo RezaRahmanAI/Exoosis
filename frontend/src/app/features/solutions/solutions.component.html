@@ -1,8 +1,10 @@
 <main class="min-h-screen bg-slate-50 dark:bg-slate-950">
   <app-page-header
-    eyebrow="Solutions"
-    title="Software Portfolio by Industry"
-    description="Explore our industrial, corporate, and banking software suites. Filter by industry or search to find the perfect platform for your organization.">
+    [eyebrow]="pageHeroContent?.eyebrow || 'Solutions'"
+    [title]="pageHeroContent?.title || 'Software Portfolio by Industry'"
+    [description]="pageHeroContent?.description || 'Explore our industrial, corporate, and banking software suites. Filter by industry or search to find the perfect platform for your organization.'"
+    [badge]="pageHeroContent?.badge"
+    [badgeIcon]="pageHeroContent?.badgeIcon || 'auto_awesome'">
     <div pageHeaderActions class="w-full lg:w-80">
       <label class="sr-only" for="solution-search">Search software</label>
       <input id="solution-search" type="text" [(ngModel)]="searchTerm" placeholder="Search software"

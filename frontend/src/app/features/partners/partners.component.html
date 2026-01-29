@@ -1,9 +1,10 @@
 <main class="flex-1">
   <app-page-header
-    badge="Trusted Global Network"
-    badgeIcon="verified"
-    title="Our Strategic Partners"
-    description="Delivering world-class technology solutions through global collaboration with industry leaders. We connect you with the best in the business.">
+    [badge]="pageHeroContent?.badge || 'Trusted Global Network'"
+    [badgeIcon]="pageHeroContent?.badgeIcon || 'verified'"
+    [title]="pageHeroContent?.title || 'Our Strategic Partners'"
+    [description]="pageHeroContent?.description || 'Delivering world-class technology solutions through global collaboration with industry leaders. We connect you with the best in the business.'"
+    [eyebrow]="pageHeroContent?.eyebrow">
     <button
       pageHeaderActions
       class="flex items-center justify-center rounded-lg h-12 px-8 bg-primary text-white text-base font-bold hover:bg-primary/90 transition-all shadow-lg shadow-primary/25">

@@ -6,6 +6,10 @@ import { ProductService } from '../../../core/services/product.service';
 import { CartService } from '../../../core/services/cart.service';
 import { ProductDetail } from '../../../core/models/entities';
 import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
+import { PageHeroContentService } from '../../../core/services/page-hero-content.service';
+import { PageHeroContent } from '../../../core/models/catalog';
+import { of } from 'rxjs';
+import { catchError, take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-list',
@@ -21,14 +25,26 @@ export class ProductListComponent implements OnInit {
   isLoading = true;
   errorMessage = '';
   private initialCategory: ProductDetail['category'] | null = null;
+  pageHeroContent: PageHeroContent | null = null;
 
   constructor(
     private productsService: ProductService,
     private cartService: CartService,
     private route: ActivatedRoute,
+    private pageHeroService: PageHeroContentService,
   ) {}
 
   ngOnInit() {
+    this.pageHeroService
+      .getActive('products')
+      .pipe(
+        take(1),
+        catchError(() => of(null)),
+      )
+      .subscribe((data) => {
+        this.pageHeroContent = data;
+      });
+
     this.route.queryParamMap.subscribe((params) => {
       this.initialCategory = params.get('category') as ProductDetail['category'] | null;
       if (this.initialCategory && this.categories.includes(this.initialCategory)) {

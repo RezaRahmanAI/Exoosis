@@ -35,6 +35,9 @@ builder.Services.AddScoped<ISolutionService, SolutionService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<IHeroContentService, HeroContentService>();
+builder.Services.AddScoped<IPageHeroContentService, PageHeroContentService>();
+builder.Services.AddScoped<IAboutMissionContentService, AboutMissionContentService>();
+builder.Services.AddScoped<IAboutCoreValueService, AboutCoreValueService>();
 
 builder.Services.Configure<BkashSettings>(builder.Configuration.GetSection("BkashSettings"));
 builder.Services.AddHttpClient<IBkashService, BkashService>();

@@ -2,6 +2,8 @@ using AutoMapper;
 using Exoosis.Application.DTOs.Brands;
 using Exoosis.Application.DTOs.Categories;
 using Exoosis.Application.DTOs.Hero;
+using Exoosis.Application.DTOs.PageHero;
+using Exoosis.Application.DTOs.About;
 using Exoosis.Application.DTOs.Products;
 using Exoosis.Application.DTOs.Jobs;
 using Exoosis.Application.DTOs.Solutions;
@@ -43,5 +45,17 @@ public class CatalogProfile : Profile
         CreateMap<HeroContent, HeroContentDto>();
         CreateMap<CreateHeroContentRequest, HeroContent>();
         CreateMap<UpdateHeroContentRequest, HeroContent>();
+
+        CreateMap<PageHeroContent, PageHeroContentDto>();
+        CreateMap<CreatePageHeroContentRequest, PageHeroContent>();
+        CreateMap<UpdatePageHeroContentRequest, PageHeroContent>();
+
+        CreateMap<AboutMissionContent, AboutMissionContentDto>();
+        CreateMap<CreateAboutMissionContentRequest, AboutMissionContent>();
+        CreateMap<UpdateAboutMissionContentRequest, AboutMissionContent>();
+
+        CreateMap<AboutCoreValue, AboutCoreValueDto>();
+        CreateMap<CreateAboutCoreValueRequest, AboutCoreValue>();
+        CreateMap<UpdateAboutCoreValueRequest, AboutCoreValue>();
     }
 }

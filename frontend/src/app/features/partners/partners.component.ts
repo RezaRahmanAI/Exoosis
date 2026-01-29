@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
 import { BrandService } from '../../core/services/brand.service';
 import { PartnerCategory } from '../../core/models/entities';
 import { ApiBrand } from '../../core/models/catalog';
 import { PageHeaderComponent } from '../../shared/components/page-header/page-header.component';
+import { PageHeroContentService } from '../../core/services/page-hero-content.service';
+import { PageHeroContent } from '../../core/models/catalog';
+import { of } from 'rxjs';
+import { catchError, take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-partners',
@@ -15,6 +18,7 @@ import { PageHeaderComponent } from '../../shared/components/page-header/page-he
 })
 export class PartnersComponent implements OnInit {
   partners: ApiBrand[] = [];
+  pageHeroContent: PageHeroContent | null = null;
   categories = [
     {
       id: 'computing',
@@ -39,9 +43,22 @@ export class PartnersComponent implements OnInit {
     }
   ];
 
-  constructor(private brandService: BrandService) {}
+  constructor(
+    private brandService: BrandService,
+    private pageHeroService: PageHeroContentService,
+  ) {}
 
   ngOnInit() {
+    this.pageHeroService
+      .getActive('partners')
+      .pipe(
+        take(1),
+        catchError(() => of(null)),
+      )
+      .subscribe((data) => {
+        this.pageHeroContent = data;
+      });
+
     this.brandService.getBrands().subscribe(data => {
       this.partners = data.filter(partner => partner.isActive);
     });

@@ -1,8 +1,10 @@
 <main class="flex-grow">
   <app-page-header
-    eyebrow="Support"
-    title="We're here to help"
-    description="At EXOSISTECH, your experience matters. Whether it's a hardware inquiry or a service complaint, we are committed to resolving every single concern.">
+    [eyebrow]="pageHeroContent?.eyebrow || 'Support'"
+    [title]="pageHeroContent?.title || \"We're here to help\""
+    [description]="pageHeroContent?.description || \"At EXOSISTECH, your experience matters. Whether it's a hardware inquiry or a service complaint, we are committed to resolving every single concern.\""
+    [badge]="pageHeroContent?.badge"
+    [badgeIcon]="pageHeroContent?.badgeIcon || 'auto_awesome'">
     <div pageHeaderBreadcrumbs class="flex items-center gap-2 text-sm">
       <a class="text-[#4c669a] dark:text-[#94a3b8] font-medium hover:underline" href="#">Home</a>
       <span class="text-[#4c669a] dark:text-[#94a3b8] font-medium">/</span>

@@ -143,6 +143,27 @@ export const routes: Routes = [
           import('./features/admin/hero/admin-hero.component').then((m) => m.AdminHeroComponent),
       },
       {
+        path: 'page-hero',
+        loadComponent: () =>
+          import('./features/admin/page-hero/admin-page-hero.component').then(
+            (m) => m.AdminPageHeroComponent,
+          ),
+      },
+      {
+        path: 'about-mission',
+        loadComponent: () =>
+          import('./features/admin/about-mission/admin-about-mission.component').then(
+            (m) => m.AdminAboutMissionComponent,
+          ),
+      },
+      {
+        path: 'about-core-values',
+        loadComponent: () =>
+          import('./features/admin/about-core-values/admin-about-core-values.component').then(
+            (m) => m.AdminAboutCoreValuesComponent,
+          ),
+      },
+      {
         path: 'orders',
         loadComponent: () =>
           import('./features/admin/orders/orders.component').then((m) => m.AdminOrdersComponent),
@@ -236,6 +257,27 @@ export const routes: Routes = [
         path: 'hero',
         loadComponent: () =>
           import('./features/admin/hero/admin-hero.component').then((m) => m.AdminHeroComponent),
+      },
+      {
+        path: 'page-hero',
+        loadComponent: () =>
+          import('./features/admin/page-hero/admin-page-hero.component').then(
+            (m) => m.AdminPageHeroComponent,
+          ),
+      },
+      {
+        path: 'about-mission',
+        loadComponent: () =>
+          import('./features/admin/about-mission/admin-about-mission.component').then(
+            (m) => m.AdminAboutMissionComponent,
+          ),
+      },
+      {
+        path: 'about-core-values',
+        loadComponent: () =>
+          import('./features/admin/about-core-values/admin-about-core-values.component').then(
+            (m) => m.AdminAboutCoreValuesComponent,
+          ),
       },
       {
         path: 'orders',
