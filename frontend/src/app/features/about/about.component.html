@@ -3,7 +3,7 @@
     [eyebrow]="pageHeroContent?.eyebrow || 'About'"
     [title]="pageHeroContent?.title || 'About EXOSISTECH'"
     [description]="pageHeroContent?.description || 'Empowering industry digitalization through scenario-oriented application experiences and cutting-edge hardware solutions.'"
-    [badge]="pageHeroContent?.badge"
+    [badge]="pageHeroContent?.badge ?? undefined"
     [badgeIcon]="pageHeroContent?.badgeIcon || 'auto_awesome'">
   </app-page-header>
 
