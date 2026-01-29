@@ -58,3 +58,6 @@ Thumbs.db
 /backend/src/Exoosis.Infrastructure/obj
 /backend/src/Exoosis.Api/bin/Debug/net8.0
 /backend/.vs/ProjectEvaluation
+/backend/src/Exoosis.Api/bin/Release/net8.0
+/backend/src/Exoosis.Application/bin/Release/net8.0
+/backend/src/Exoosis.Infrastructure/bin/Release/net8.0
