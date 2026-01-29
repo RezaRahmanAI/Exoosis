@@ -1,3 +1,5 @@
+import { PartnerCategory } from './entities';
+
 export interface ApiCategory {
   id: string;
   name: string;
@@ -14,6 +16,7 @@ export interface ApiBrand {
   description?: string | null;
   logoUrl?: string | null;
   isActive: boolean;
+  category: PartnerCategory;
   createdAt: string;
   updatedAt?: string | null;
 }

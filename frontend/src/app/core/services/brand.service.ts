@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, catchError, finalize, map, throwError } fr
 import { ApiService } from './api.service';
 import { ApiResponse } from '../models/api-response';
 import { ApiBrand } from '../models/catalog';
+import { PartnerCategory } from '../models/entities';
 
 @Injectable({
   providedIn: 'root'
@@ -39,7 +40,7 @@ export class BrandService {
     );
   }
 
-  createBrand(payload: { name: string; description?: string | null; logoUrl?: string | null; isActive?: boolean }): Observable<ApiBrand> {
+  createBrand(payload: { name: string; description?: string | null; logoUrl?: string | null; isActive?: boolean; category: PartnerCategory }): Observable<ApiBrand> {
     this.loadingSubject.next(true);
     this.errorSubject.next(null);
 
@@ -50,7 +51,7 @@ export class BrandService {
     );
   }
 
-  updateBrand(id: string, payload: { name: string; description?: string | null; logoUrl?: string | null; isActive?: boolean }): Observable<ApiBrand> {
+  updateBrand(id: string, payload: { name: string; description?: string | null; logoUrl?: string | null; isActive?: boolean; category: PartnerCategory }): Observable<ApiBrand> {
     this.loadingSubject.next(true);
     this.errorSubject.next(null);
 

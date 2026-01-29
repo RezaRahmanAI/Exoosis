@@ -14,6 +14,8 @@ public class CreateBrandRequestValidator : AbstractValidator<CreateBrandRequest>
             .MaximumLength(500);
         RuleFor(x => x.LogoUrl)
             .MaximumLength(500);
+        RuleFor(x => x.Category)
+            .IsInEnum();
     }
 }
 
@@ -28,5 +30,7 @@ public class UpdateBrandRequestValidator : AbstractValidator<UpdateBrandRequest>
             .MaximumLength(500);
         RuleFor(x => x.LogoUrl)
             .MaximumLength(500);
+        RuleFor(x => x.Category)
+            .IsInEnum();
     }
 }

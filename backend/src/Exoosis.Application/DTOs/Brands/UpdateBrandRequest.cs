@@ -1,3 +1,5 @@
+using Exoosis.Domain.Enums;
+
 namespace Exoosis.Application.DTOs.Brands;
 
 public class UpdateBrandRequest
@@ -6,4 +8,5 @@ public class UpdateBrandRequest
     public string? Description { get; set; }
     public string? LogoUrl { get; set; }
     public bool IsActive { get; set; }
+    public BrandCategory Category { get; set; } = BrandCategory.ComputingHardware;
 }

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BrandService } from '../../../core/services/brand.service';
 import { ApiBrand } from '../../../core/models/catalog';
+import { PartnerCategory } from '../../../core/models/entities';
 
 @Component({
   selector: 'app-admin-brands',
@@ -32,6 +33,7 @@ import { ApiBrand } from '../../../core/models/catalog';
               <h3 class="font-bold text-gray-800 truncate">{{brand.name}}</h3>
               <span *ngIf="!brand.isActive" class="px-1.5 py-0.5 rounded-md bg-amber-50 text-amber-600 text-[10px] font-bold uppercase">Inactive</span>
             </div>
+            <p class="text-xs font-semibold text-gray-500 mt-1">{{ categoryLabel(brand.category) }}</p>
             <div class="flex gap-2">
               <button (click)="openModal(brand)" class="text-xs font-bold text-primary hover:underline">Edit</button>
               <button (click)="deleteBrand(brand.id)" class="text-xs font-bold text-red-500 hover:underline">Remove</button>
@@ -57,6 +59,14 @@ import { ApiBrand } from '../../../core/models/catalog';
               <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Logo URL</label>
               <input [(ngModel)]="currentBrand.logoUrl" class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-primary outline-none" placeholder="https://">
             </div>
+            <div>
+              <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Category</label>
+              <select [(ngModel)]="currentBrand.category" class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:border-primary outline-none">
+                <option *ngFor="let option of categoryOptions" [ngValue]="option.value">
+                  {{ option.label }}
+                </option>
+              </select>
+            </div>
             <div class="flex items-center gap-3">
               <input type="checkbox" [(ngModel)]="currentBrand.isActive" id="brandActive" class="size-4 rounded border-gray-300 text-primary focus:ring-primary">
               <label for="brandActive" class="text-sm font-bold text-gray-700">Active Partner</label>
@@ -75,6 +85,11 @@ export class AdminBrandsComponent implements OnInit {
   brands: ApiBrand[] = [];
   isModalOpen = false;
   currentBrand: Partial<ApiBrand> = {};
+  categoryOptions = [
+    { value: PartnerCategory.ComputingHardware, label: 'Computing & Hardware' },
+    { value: PartnerCategory.Network, label: 'Network' },
+    { value: PartnerCategory.Security, label: 'Security' }
+  ];
 
   constructor(private brandService: BrandService) {}
 
@@ -87,7 +102,7 @@ export class AdminBrandsComponent implements OnInit {
   }
 
   openModal(brand: ApiBrand | null = null) {
-    this.currentBrand = brand ? { ...brand } : { isActive: true };
+    this.currentBrand = brand ? { ...brand } : { isActive: true, category: PartnerCategory.ComputingHardware };
     this.isModalOpen = true;
   }
 
@@ -100,7 +115,8 @@ export class AdminBrandsComponent implements OnInit {
       this.brandService.updateBrand(this.currentBrand.id, {
         name: this.currentBrand.name ?? '',
         logoUrl: this.currentBrand.logoUrl,
-        isActive: this.currentBrand.isActive
+        isActive: this.currentBrand.isActive,
+        category: this.currentBrand.category ?? PartnerCategory.ComputingHardware
       }).subscribe(() => {
         this.loadBrands();
         this.closeModal();
@@ -109,7 +125,8 @@ export class AdminBrandsComponent implements OnInit {
       this.brandService.createBrand({
         name: this.currentBrand.name ?? '',
         logoUrl: this.currentBrand.logoUrl,
-        isActive: this.currentBrand.isActive
+        isActive: this.currentBrand.isActive,
+        category: this.currentBrand.category ?? PartnerCategory.ComputingHardware
       }).subscribe(() => {
         this.loadBrands();
         this.closeModal();
@@ -121,5 +138,10 @@ export class AdminBrandsComponent implements OnInit {
     if (confirm('Are you sure you want to remove this brand?')) {
       this.brandService.deleteBrand(id).subscribe(() => this.loadBrands());
     }
+  }
+
+  categoryLabel(category?: PartnerCategory) {
+    const option = this.categoryOptions.find(item => item.value === category);
+    return option?.label ?? 'Unknown';
   }
 }

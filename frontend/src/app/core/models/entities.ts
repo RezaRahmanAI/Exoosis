@@ -4,6 +4,12 @@ export enum SolutionCategory {
   Banking = 2,
 }
 
+export enum PartnerCategory {
+  ComputingHardware = 0,
+  Network = 1,
+  Security = 2,
+}
+
 export interface Solution {
   id: string;
   name: string;
@@ -49,6 +55,7 @@ export interface Partner {
   description?: string | null;
   logoUrl?: string | null;
   isActive: boolean;
+  category: PartnerCategory;
 }
 
 export interface Testimonial {
