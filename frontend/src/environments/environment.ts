@@ -1,4 +1,4 @@
 export const environment = {
-  apiUrl: 'https://localhost:50894/api', 
+  apiUrl: 'https://dssdshuda-001-site1.mtempurl.com/api',
   useMockData: false,
 };
