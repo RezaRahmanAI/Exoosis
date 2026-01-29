@@ -8,8 +8,18 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   imports: [CommonModule, RouterLink, RouterOutlet],
   template: `
     <div class="flex h-screen bg-gray-100">
+      <!-- Mobile overlay -->
+      <div
+        class="fixed inset-0 z-30 bg-black/40 transition-opacity lg:hidden"
+        [class.hidden]="!sidebarOpen"
+        (click)="closeSidebar()"
+      ></div>
+
       <!-- Sidebar -->
-      <aside class="w-64 bg-navy-blue text-white flex-shrink-0">
+      <aside
+        class="fixed inset-y-0 left-0 z-40 w-64 bg-navy-blue text-white flex-shrink-0 transform transition-transform duration-200 lg:static lg:translate-x-0"
+        [ngClass]="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
+      >
         <div class="p-6">
           <h2 class="text-xl font-bold tracking-tight">EXOSIS ADMIN</h2>
         </div>
@@ -18,6 +28,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
             routerLink="/dashboard"
             routerLinkActive="bg-primary/20 border-l-4 border-primary"
             class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors"
+            (click)="closeSidebar()"
           >
             <span class="material-symbols-outlined">dashboard</span>
             <span>Dashboard</span>
@@ -26,6 +37,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
             routerLink="/dashboard/hero"
             routerLinkActive="bg-primary/20 border-l-4 border-primary"
             class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors"
+            (click)="closeSidebar()"
           >
             <span class="material-symbols-outlined">image</span>
             <span>Hero Banner</span>
@@ -34,6 +46,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
             routerLink="/dashboard/solutions"
             routerLinkActive="bg-primary/20 border-l-4 border-primary"
             class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors"
+            (click)="closeSidebar()"
           >
             <span class="material-symbols-outlined">lightbulb</span>
             <span>Solutions</span>
@@ -42,6 +55,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
             routerLink="/dashboard/brands"
             routerLinkActive="bg-primary/20 border-l-4 border-primary"
             class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors"
+            (click)="closeSidebar()"
           >
             <span class="material-symbols-outlined">handshake</span>
             <span>Brands</span>
@@ -50,6 +64,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
             routerLink="/dashboard/categories"
             routerLinkActive="bg-primary/20 border-l-4 border-primary"
             class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors"
+            (click)="closeSidebar()"
           >
             <span class="material-symbols-outlined">category</span>
             <span>Categories</span>
@@ -58,6 +73,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
             routerLink="/dashboard/products"
             routerLinkActive="bg-primary/20 border-l-4 border-primary"
             class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors"
+            (click)="closeSidebar()"
           >
             <span class="material-symbols-outlined">inventory_2</span>
             <span>Products</span>
@@ -66,6 +82,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
             routerLink="/dashboard/orders"
             routerLinkActive="bg-primary/20 border-l-4 border-primary"
             class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors"
+            (click)="closeSidebar()"
           >
             <span class="material-symbols-outlined">shopping_cart</span>
             <span>Orders</span>
@@ -74,6 +91,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
             routerLink="/dashboard/jobs"
             routerLinkActive="bg-primary/20 border-l-4 border-primary"
             class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors"
+            (click)="closeSidebar()"
           >
             <span class="material-symbols-outlined">work</span>
             <span>Jobs</span>
@@ -82,6 +100,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
             routerLink="/dashboard/team"
             routerLinkActive="bg-primary/20 border-l-4 border-primary"
             class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors"
+            (click)="closeSidebar()"
           >
             <span class="material-symbols-outlined">groups</span>
             <span>Team</span>
@@ -90,6 +109,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
             routerLink="/dashboard/testimonials"
             routerLinkActive="bg-primary/20 border-l-4 border-primary"
             class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors"
+            (click)="closeSidebar()"
           >
             <span class="material-symbols-outlined">reviews</span>
             <span>Testimonials</span>
@@ -98,6 +118,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
             routerLink="/dashboard/respected-clients"
             routerLinkActive="bg-primary/20 border-l-4 border-primary"
             class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors"
+            (click)="closeSidebar()"
           >
             <span class="material-symbols-outlined">verified_user</span>
             <span>Respected Clients</span>
@@ -106,6 +127,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
             routerLink="/dashboard/settings"
             routerLinkActive="bg-primary/20 border-l-4 border-primary"
             class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors"
+            (click)="closeSidebar()"
           >
             <span class="material-symbols-outlined">settings</span>
             <span>Website Settings</span>
@@ -114,6 +136,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
             routerLink="/dashboard/change-password"
             routerLinkActive="bg-primary/20 border-l-4 border-primary"
             class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors"
+            (click)="closeSidebar()"
           >
             <span class="material-symbols-outlined">password</span>
             <span>Change Password</span>
@@ -122,6 +145,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
             <a
               routerLink="/"
               class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors opacity-70"
+              (click)="closeSidebar()"
             >
               <span class="material-symbols-outlined">home</span>
               <span>Back to Site</span>
@@ -131,8 +155,18 @@ import { RouterLink, RouterOutlet } from '@angular/router';
       </aside>
 
       <!-- Main Content -->
-      <main class="flex-1 overflow-auto">
-        <header class="bg-white shadow-sm h-16 flex items-center px-8 sticky top-0 z-10">
+      <main class="flex-1 overflow-auto lg:ml-0">
+        <header
+          class="bg-white shadow-sm h-16 flex items-center px-4 md:px-8 sticky top-0 z-10"
+        >
+          <button
+            type="button"
+            class="mr-3 flex items-center justify-center rounded-md border border-gray-200 bg-white p-2 text-gray-600 hover:bg-gray-50 lg:hidden"
+            (click)="toggleSidebar()"
+            aria-label="Toggle sidebar"
+          >
+            <span class="material-symbols-outlined text-xl">menu</span>
+          </button>
           <h1 class="text-lg font-bold text-gray-800">Control Center</h1>
           <div class="ml-auto flex items-center gap-4">
             <span class="text-sm font-medium text-gray-500">Administrator</span>
@@ -158,4 +192,14 @@ import { RouterLink, RouterOutlet } from '@angular/router';
     `,
   ],
 })
-export class AdminLayoutComponent {}
+export class AdminLayoutComponent {
+  sidebarOpen = false;
+
+  toggleSidebar(): void {
+    this.sidebarOpen = !this.sidebarOpen;
+  }
+
+  closeSidebar(): void {
+    this.sidebarOpen = false;
+  }
+}
