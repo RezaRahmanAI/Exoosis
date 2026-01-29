@@ -27,6 +27,9 @@ public class ExoosisDbContext : DbContext
     public DbSet<CartItem> CartItems { get; set; }
     public DbSet<Testimonial> Testimonials { get; set; }
     public DbSet<HeroContent> HeroContents { get; set; }
+    public DbSet<PageHeroContent> PageHeroContents { get; set; }
+    public DbSet<AboutMissionContent> AboutMissionContents { get; set; }
+    public DbSet<AboutCoreValue> AboutCoreValues { get; set; }
     public DbSet<RespectedClient> RespectedClients { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -40,6 +43,39 @@ public class ExoosisDbContext : DbContext
             entity.Property(x => x.Image1Url).HasMaxLength(500).IsRequired();
             entity.Property(x => x.Image2Url).HasMaxLength(500).IsRequired();
             entity.Property(x => x.Image3Url).HasMaxLength(500).IsRequired();
+            entity.HasQueryFilter(x => !x.IsDeleted);
+        });
+
+        modelBuilder.Entity<PageHeroContent>(entity =>
+        {
+            entity.HasKey(x => x.Id);
+            entity.Property(x => x.PageKey).HasMaxLength(100).IsRequired();
+            entity.Property(x => x.Eyebrow).HasMaxLength(150);
+            entity.Property(x => x.Title).HasMaxLength(250).IsRequired();
+            entity.Property(x => x.Description).HasMaxLength(1000).IsRequired();
+            entity.Property(x => x.Badge).HasMaxLength(150);
+            entity.Property(x => x.BadgeIcon).HasMaxLength(100);
+            entity.HasIndex(x => x.PageKey).IsUnique(false);
+            entity.HasQueryFilter(x => !x.IsDeleted);
+        });
+
+        modelBuilder.Entity<AboutMissionContent>(entity =>
+        {
+            entity.HasKey(x => x.Id);
+            entity.Property(x => x.Eyebrow).HasMaxLength(150);
+            entity.Property(x => x.Title).HasMaxLength(250).IsRequired();
+            entity.Property(x => x.Text1).HasMaxLength(1500).IsRequired();
+            entity.Property(x => x.Text2).HasMaxLength(1500).IsRequired();
+            entity.Property(x => x.Quote).HasMaxLength(500).IsRequired();
+            entity.HasQueryFilter(x => !x.IsDeleted);
+        });
+
+        modelBuilder.Entity<AboutCoreValue>(entity =>
+        {
+            entity.HasKey(x => x.Id);
+            entity.Property(x => x.Title).HasMaxLength(150).IsRequired();
+            entity.Property(x => x.Icon).HasMaxLength(100).IsRequired();
+            entity.Property(x => x.Description).HasMaxLength(500).IsRequired();
             entity.HasQueryFilter(x => !x.IsDeleted);
         });
 

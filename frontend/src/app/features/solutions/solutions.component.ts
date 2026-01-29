@@ -6,6 +6,10 @@ import { SolutionCategoryPipe } from '../../core/pipes/solution-category.pipe';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { PageHeaderComponent } from '../../shared/components/page-header/page-header.component';
+import { PageHeroContentService } from '../../core/services/page-hero-content.service';
+import { PageHeroContent } from '../../core/models/catalog';
+import { of } from 'rxjs';
+import { catchError, take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-solutions',
@@ -18,10 +22,24 @@ export class SolutionsComponent implements OnInit {
   softwareCatalog: Solution[] = [];
   searchTerm = '';
   selectedCategory: 'All' | string = 'All';
+  pageHeroContent: PageHeroContent | null = null;
 
-  constructor(private solutionService: SolutionService) {}
+  constructor(
+    private solutionService: SolutionService,
+    private pageHeroService: PageHeroContentService,
+  ) {}
 
   ngOnInit() {
+    this.pageHeroService
+      .getActive('solutions')
+      .pipe(
+        take(1),
+        catchError(() => of(null)),
+      )
+      .subscribe((data) => {
+        this.pageHeroContent = data;
+      });
+
     this.solutionService.getSolutions().subscribe((data) => {
       this.softwareCatalog = data;
     });

@@ -43,6 +43,33 @@ import { RouterLink, RouterOutlet } from '@angular/router';
             <span>Hero Banner</span>
           </a>
           <a
+            routerLink="/dashboard/page-hero"
+            routerLinkActive="bg-primary/20 border-l-4 border-primary"
+            class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors"
+            (click)="closeSidebar()"
+          >
+            <span class="material-symbols-outlined">collections_bookmark</span>
+            <span>Page Heroes</span>
+          </a>
+          <a
+            routerLink="/dashboard/about-mission"
+            routerLinkActive="bg-primary/20 border-l-4 border-primary"
+            class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors"
+            (click)="closeSidebar()"
+          >
+            <span class="material-symbols-outlined">flag</span>
+            <span>About Mission</span>
+          </a>
+          <a
+            routerLink="/dashboard/about-core-values"
+            routerLinkActive="bg-primary/20 border-l-4 border-primary"
+            class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors"
+            (click)="closeSidebar()"
+          >
+            <span class="material-symbols-outlined">verified</span>
+            <span>About Core Values</span>
+          </a>
+          <a
             routerLink="/dashboard/solutions"
             routerLinkActive="bg-primary/20 border-l-4 border-primary"
             class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/5 transition-colors"

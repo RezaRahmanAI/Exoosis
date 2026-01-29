@@ -49,3 +49,35 @@ export interface HeroContent {
   isActive: boolean;
   createdAt: string;
 }
+
+export interface PageHeroContent {
+  id: string;
+  pageKey: string;
+  eyebrow: string;
+  title: string;
+  description: string;
+  badge?: string | null;
+  badgeIcon?: string | null;
+  isActive: boolean;
+  createdAt: string;
+}
+
+export interface AboutMissionContent {
+  id: string;
+  eyebrow: string;
+  title: string;
+  text1: string;
+  text2: string;
+  quote: string;
+  isActive: boolean;
+  createdAt: string;
+}
+
+export interface AboutCoreValue {
+  id: string;
+  title: string;
+  icon: string;
+  description: string;
+  isActive: boolean;
+  createdAt: string;
+}

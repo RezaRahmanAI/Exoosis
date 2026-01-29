@@ -1,9 +1,10 @@
 <main class="flex-1 flex flex-col">
   <app-page-header
-    badge="We're Hiring"
-    badgeIcon="rocket_launch"
-    title="Build the Future of Digital Infrastructure"
-    description="Join a team of innovators solving Dhaka’s toughest tech challenges. We are looking for passionate individuals to grow with us.">
+    [badge]="pageHeroContent?.badge || \"We're Hiring\""
+    [badgeIcon]="pageHeroContent?.badgeIcon || 'rocket_launch'"
+    [title]="pageHeroContent?.title || 'Build the Future of Digital Infrastructure'"
+    [description]="pageHeroContent?.description || 'Join a team of innovators solving Dhaka’s toughest tech challenges. We are looking for passionate individuals to grow with us.'"
+    [eyebrow]="pageHeroContent?.eyebrow">
     <a
       pageHeaderActions
       class="flex cursor-pointer items-center justify-center rounded-full h-12 px-8 bg-primary hover:bg-primary-dark text-white text-base font-bold transition-all hover:scale-105 shadow-lg shadow-primary/30"
