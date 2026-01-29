@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../../../core/services/api.service';
 import { Testimonial } from '../../../core/models/entities';
+import { ApiResponse } from '../../../core/models/api-response';
 
 @Component({
   selector: 'app-admin-testimonials',
@@ -93,9 +94,14 @@ export class AdminTestimonialsComponent implements OnInit {
   }
 
   loadTestimonials() {
-    this.api.get<Testimonial[]>('/testimonials').subscribe({
-      next: (data) => {
-        this.testimonials = data;
+    this.api.get<ApiResponse<Testimonial[]> | Testimonial[]>('/testimonials').subscribe({
+      next: (response) => {
+        if (Array.isArray(response)) {
+          this.testimonials = response;
+          return;
+        }
+
+        this.testimonials = response.data ?? [];
       },
       error: () => {
         this.testimonials = [];
