@@ -9,7 +9,7 @@ import { PageHeaderComponent } from '../../shared/components/page-header/page-he
 @Component({
   selector: 'app-partners',
   standalone: true,
-  imports: [CommonModule, RouterLink, PageHeaderComponent],
+  imports: [CommonModule, PageHeaderComponent],
   templateUrl: './partners.component.html',
   styleUrl: './partners.component.css'
 })
