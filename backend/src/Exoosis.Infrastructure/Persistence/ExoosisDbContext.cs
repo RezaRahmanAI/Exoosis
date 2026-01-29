@@ -84,7 +84,7 @@ public class ExoosisDbContext : DbContext
             entity.Property(x => x.Name).HasMaxLength(150).IsRequired();
             entity.Property(x => x.Description).HasMaxLength(500);
             entity.Property(x => x.LogoUrl).HasMaxLength(500);
-            entity.Property(x => x.Category);
+            entity.Property(x => x.Category).HasConversion<string>();
             entity.HasIndex(x => x.Name).IsUnique(false);
             entity.HasQueryFilter(x => !x.IsDeleted);
         });
