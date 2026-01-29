@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Exoosis.Infrastructure.Migrations
 {
     [DbContext(typeof(ExoosisDbContext))]
-    [Migration("20260129101424_i")]
+    [Migration("20260129104251_i")]
     partial class i
     {
         /// <inheritdoc />
