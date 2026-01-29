@@ -7,7 +7,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   standalone: true,
   imports: [CommonModule, RouterLink, RouterOutlet],
   template: `
-    <div class="flex h-screen bg-gray-100">
+    <div class="flex min-h-[100dvh] bg-gray-100">
       <!-- Mobile overlay -->
       <div
         class="fixed inset-0 z-30 bg-black/40 transition-opacity lg:hidden"
@@ -155,7 +155,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
       </aside>
 
       <!-- Main Content -->
-      <main class="flex-1 overflow-auto lg:ml-0">
+      <main class="flex-1 overflow-auto bg-gray-100 lg:ml-0">
         <header
           class="bg-white shadow-sm h-16 flex items-center px-4 md:px-8 sticky top-0 z-10"
         >
@@ -187,7 +187,8 @@ import { RouterLink, RouterOutlet } from '@angular/router';
     `
       :host {
         display: block;
-        height: 100vh;
+        min-height: 100dvh;
+        background-color: #f3f4f6;
       }
     `,
   ],
