@@ -21,7 +21,7 @@ public class EfRepository<T> : IRepository<T> where T : class
 
     public async Task<IReadOnlyList<T>> ListAsync(Expression<Func<T, bool>>? predicate = null, CancellationToken cancellationToken = default)
     {
-        IQueryable<T> query = _dbContext.Set<T>();
+        IQueryable<T> query = _dbContext.Set<T>().AsNoTracking();
         if (predicate != null)
         {
             query = query.Where(predicate);
@@ -47,6 +47,6 @@ public class EfRepository<T> : IRepository<T> where T : class
 
     public IQueryable<T> Query()
     {
-        return _dbContext.Set<T>().AsQueryable();
+        return _dbContext.Set<T>().AsNoTracking().AsQueryable();
     }
 }

@@ -22,6 +22,7 @@ public class ProductService : IProductService
     public async Task<IReadOnlyList<ProductDto>> GetAllAsync(ProductQueryParameters parameters, CancellationToken cancellationToken = default)
     {
         var query = _unitOfWork.Products.Query()
+            .AsNoTracking()
             .Include(product => product.Category)
             .Include(product => product.Brand)
             .AsQueryable();
