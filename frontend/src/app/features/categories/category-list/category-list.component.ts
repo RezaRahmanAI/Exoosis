@@ -5,6 +5,7 @@ import { forkJoin } from 'rxjs';
 import { CategoryService } from '../../../core/services/category.service';
 import { ProductService } from '../../../core/services/product.service';
 import { ProductDetail } from '../../../core/models/entities';
+import { PageHeaderComponent } from '../../../shared/components/page-header/page-header.component';
 
 interface CategoryCard {
   name: ProductDetail['category'];
@@ -17,7 +18,7 @@ interface CategoryCard {
 @Component({
   selector: 'app-category-list',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, PageHeaderComponent],
   templateUrl: './category-list.component.html',
   styleUrl: './category-list.component.css',
 })

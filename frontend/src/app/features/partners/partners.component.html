@@ -1,41 +1,20 @@
 <main class="flex-1">
-  <!-- Hero Section -->
-  <section class="relative bg-surface-dark pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden">
-    <!-- Background Image with Overlay -->
-    <div class="absolute inset-0 z-0">
-      <div class="w-full h-full bg-cover bg-center opacity-30"
-        data-alt="Abstract blue technology network connections background"
-        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCvh9D44EgTLSm6ASz04C1VmoTfCbJDldKbik2cWh_r888c1Ft_g4AUAV8U6NIamiUKr4idrrvXyhvjdzf46h1VrwF4_SohJwfU1h-IvS6lE5S2ZwaMS0N7yFg4Gm9bE3Y4O4xI9II_DOqtu4ZZ8rObEco34gSOGAuMP62-y4viQ4j0wyuaG4VJ8mg4AwOt_UBgRF2PZgbH-kYdrCK9YCUSiodKs2EVs8RQimw7R0E3R6aNmC0vdjK_STIhie6cchajKICWj8xtlmFW");'>
-      </div>
-      <div class="absolute inset-0 bg-gradient-to-b from-background-dark/80 to-background-dark"></div>
-    </div>
-    <div class="relative z-10 page-container flex flex-col items-center justify-center text-center">
-      <div class="max-w-[800px] flex flex-col gap-6 items-center">
-        <span
-          class="inline-flex items-center gap-1 rounded-full bg-primary/20 px-3 py-1 text-sm font-medium text-primary border border-primary/20">
-          <span class="material-symbols-outlined text-[18px]">verified</span>
-          Trusted Global Network
-        </span>
-        <h1 class="text-white text-4xl md:text-6xl font-black leading-tight tracking-tight">
-          Our Strategic Partners
-        </h1>
-        <p class="text-gray-300 text-lg font-normal leading-relaxed max-w-[600px]">
-          Delivering world-class technology solutions through global collaboration with industry leaders. We
-          connect you with the best in the business.
-        </p>
-        <div class="flex flex-wrap gap-4 justify-center pt-4">
-          <button
-            class="flex items-center justify-center rounded-lg h-12 px-8 bg-primary text-white text-base font-bold hover:bg-primary/90 transition-all shadow-lg shadow-primary/25">
-            Become a Partner
-          </button>
-          <button
-            class="flex items-center justify-center rounded-lg h-12 px-8 bg-white/10 text-white border border-white/20 text-base font-medium hover:bg-white/20 transition-all backdrop-blur-sm">
-            View Solutions
-          </button>
-        </div>
-      </div>
-    </div>
-  </section>
+  <app-page-header
+    badge="Trusted Global Network"
+    badgeIcon="verified"
+    title="Our Strategic Partners"
+    description="Delivering world-class technology solutions through global collaboration with industry leaders. We connect you with the best in the business.">
+    <button
+      pageHeaderActions
+      class="flex items-center justify-center rounded-lg h-12 px-8 bg-primary text-white text-base font-bold hover:bg-primary/90 transition-all shadow-lg shadow-primary/25">
+      Become a Partner
+    </button>
+    <button
+      pageHeaderActions
+      class="flex items-center justify-center rounded-lg h-12 px-8 bg-white text-slate-900 border border-slate-200 text-base font-medium hover:bg-slate-100 transition-all">
+      View Solutions
+    </button>
+  </app-page-header>
   <!-- Partner Directory -->
   <section class="bg-white dark:bg-surface-dark py-16 border-b border-gray-100 dark:border-gray-800">
     <div class="page-container">

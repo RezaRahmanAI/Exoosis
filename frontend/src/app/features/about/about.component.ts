@@ -4,11 +4,12 @@ import { BrandService } from '../../core/services/brand.service';
 import { TeamService } from '../../core/services/team.service';
 import { TeamMember, Partner } from '../../core/models/entities';
 import { SettingsService } from '../../core/services/settings.service';
+import { PageHeaderComponent } from '../../shared/components/page-header/page-header.component';
 
 @Component({
   selector: 'app-about',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, PageHeaderComponent],
   templateUrl: './about.component.html',
   styleUrl: './about.component.css'
 })

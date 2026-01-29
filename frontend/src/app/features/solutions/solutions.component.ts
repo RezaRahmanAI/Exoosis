@@ -5,11 +5,12 @@ import { Solution, SolutionCategory } from '../../core/models/entities';
 import { SolutionCategoryPipe } from '../../core/pipes/solution-category.pipe';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { PageHeaderComponent } from '../../shared/components/page-header/page-header.component';
 
 @Component({
   selector: 'app-solutions',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, SolutionCategoryPipe],
+  imports: [CommonModule, FormsModule, RouterLink, SolutionCategoryPipe, PageHeaderComponent],
   templateUrl: './solutions.component.html',
   styleUrl: './solutions.component.css',
 })
